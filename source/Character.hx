@@ -407,12 +407,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Beast_RIGHT', 24, false);
 				animation.addByPrefix('laugh', 'Beast_LAUGH', 24, false);
 
-				addOffset('idle', -18, 70);
-				addOffset("singUP", 22, 143);
-				addOffset("singRIGHT", -260, 11);
-				addOffset("singLEFT", 177, -24);
-				addOffset("singDOWN", -15, -57);
-				addOffset("laugh", -78, -128);
+				loadOffsetFile(curCharacter);
 
 				antialiasing = true;
 
@@ -427,12 +422,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Beast_RIGHT', 24, false);
 				animation.addByPrefix('laugh', 'Beast_LAUGH', 24, false);
 
-				addOffset('idle', -18, 70);
-				addOffset("singUP", 22, 143);
-				addOffset("singRIGHT", -260, 11);
-				addOffset("singLEFT", 177, -24);
-				addOffset("singDOWN", -15, -57);
-				addOffset("laugh", -78, -128);
+				loadOffsetFile(curCharacter);
 
 				antialiasing = true;
 
@@ -459,11 +449,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Exe Down', 24);
 				animation.addByPrefix('singLEFT', 'Exe left', 24);
 
-				addOffset('idle', 0, 248);
-				addOffset("singUP", 95, 290);
-				addOffset("singRIGHT", 31, 217);
-				addOffset("singLEFT", 236, 243);
-				addOffset("singDOWN", 185, 44);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 			case 'sanic':
@@ -490,11 +476,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Knux Down', 24);
 				animation.addByPrefix('singLEFT', 'Knux Right', 24);
 
-				addOffset('idle', 0, 0);
-				addOffset("singUP", 29, 49);
-				addOffset("singRIGHT", 124, -59);
-				addOffset("singLEFT", -59, -65);
-				addOffset("singDOWN", 26, -95);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -509,11 +491,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Tails DOWN', 24);
 				animation.addByPrefix('singLEFT', 'Tails LEFT', 24);
 
-				addOffset('idle', 0, 0);
-				addOffset("singUP", 29, 49);
-				addOffset("singRIGHT", 14, -16);
-				addOffset("singLEFT", 158, -14);
-				addOffset("singDOWN", 33, -60);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -531,12 +509,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Eggman_Left', 24);
 				animation.addByPrefix('laugh', 'Eggman_Laugh', 35, false);
 
-				addOffset('idle', -5, 5);
-				addOffset("singUP", 110, 231);
-				addOffset("singRIGHT", 40, 174);
-				addOffset("singLEFT", 237, 97);
-				addOffset("singDOWN", 49, -95);
-				addOffset('laugh', -10, 210);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -552,12 +525,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Fleetway Left', 24);
 				animation.addByPrefix('fastanim', 'Fleetway HowFast', 24, false);
 
-				addOffset('idle', 0, 0);
-				addOffset("singUP", 0, 36);
-				addOffset("singRIGHT", -62, -64);
-				addOffset("singLEFT", 221, -129);
-				addOffset("singDOWN", 0, -168);
-				addOffset("fastanim", 0, 0);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -573,12 +541,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('e', 'Fleetway WHAT?!', 24, false);
 				animation.addByPrefix('f', 'Fleetway Grrr', 24, false);
 
-				addOffset('a', 0, 0);
-				addOffset("b", 0, 0);
-				addOffset("c", 0, 0);
-				addOffset("d", 0, 0);
-				addOffset("e", 0, 0);
-				addOffset("f", 0, 0);
+				loadOffsetFile(curCharacter);
 
 				updateHitbox();
 
@@ -598,11 +561,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('d', 'Fleetway Shut Up', 24, false);
 				animation.addByPrefix('e', 'Fleetway Right Alt', 24, true);
 
-				addOffset('a', 0, 0);
-				addOffset("b", 0, 0);
-				addOffset("c", 0, 0);
-				addOffset("d", 0, 0);
-				addOffset("e", 0, 0);
+				loadOffsetFile(curCharacter);
 
 				updateHitbox();
 
@@ -617,7 +576,7 @@ class Character extends FlxSprite
 				frames = tex;
 				animation.addByPrefix('a', 'Fleetway Laser Blas', 24, false);
 
-				addOffset('a', 0, 0);
+				loadOffsetFile(curCharacter);
 
 				updateHitbox();
 

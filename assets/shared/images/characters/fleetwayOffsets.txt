@@ -1,0 +1,6 @@
+idle 0 0
+singUP 0 36
+singRIGHT -62 -64
+singLEFT 221 -129
+singDOWN 0 -168
+fastanim 0 0
