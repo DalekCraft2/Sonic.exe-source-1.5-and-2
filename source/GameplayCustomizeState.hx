@@ -45,7 +45,7 @@ class GameplayCustomizeState extends MusicBeatState
 
         sick = new FlxSprite().loadGraphic(Paths.image('sick','shared'));
         sick.scrollFactor.set();
-        background = new FlxSprite(-600, -200).loadGraphic(Paths.image('SonicStages/floor1','exe'));
+        background = new FlxSprite(-600, -200).loadGraphic(Paths.image('PolishedP1/FLOOR1','exe'));
         
 
 		Conductor.changeBPM(102);
@@ -64,7 +64,7 @@ class GameplayCustomizeState extends MusicBeatState
         
 		var camFollow = new FlxObject(0, 0, 1, 1);
 
-		dad = new Character(100, 100, 'sonic');
+		dad = new Character(100, 100, 'suisex');
 
         bf = new Boyfriend(770, 450, 'bf');
 

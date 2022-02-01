@@ -13,7 +13,7 @@ class GameOverState extends FlxTransitionableState
 	var bfX:Float = 0;
 	var bfY:Float = 0;
 
-	var coolcam:FlxCamera;
+	var coolcamera:FlxCamera;
 
 	public function new(x:Float, y:Float)
 	{
@@ -46,7 +46,7 @@ class GameOverState extends FlxTransitionableState
 		add(bf);
 		bf.playAnim('firstDeath');
 
-		if (PlayState.SONG.song.toLowerCase() == 'milk') bf.alpha = 0;
+		if (PlayState.SONG.song.toLowerCase() == 'asacoco') bf.alpha = 0;
 
 		var bfdeathshit:FlxSprite = new FlxSprite();
 
@@ -55,7 +55,7 @@ class GameOverState extends FlxTransitionableState
 			bf.alpha = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('3DGO', 'exe');
 			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
-			bfdeathshit.cameras = [coolcam];
+			bfdeathshit.cameras = [coolcamera];
 			bfdeathshit.screenCenter();
 			bfdeathshit.animation.play('firstdeath')
 		}

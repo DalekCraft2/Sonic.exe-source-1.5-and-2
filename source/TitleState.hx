@@ -161,7 +161,7 @@ class TitleState extends MusicBeatState
 
 		bg = new FlxSprite(0, 0);
 		bg.frames = Paths.getSparrowAtlas('NewTitleMenuBG', 'exe');
-		bg.animation.addByPrefix('idle', "TitleMenuSSBG instance 1", 24);
+		bg.animation.addByPrefix('idle', "TitleMenuSSBG", 24);
 		bg.animation.play('idle');
 		bg.alpha = .75;
 		bg.scale.x = 3;
@@ -192,8 +192,8 @@ class TitleState extends MusicBeatState
 
 		titleText = new FlxSprite(0, 0);
 		titleText.frames = Paths.getSparrowAtlas('titleEnterNEW');
-		titleText.animation.addByPrefix('idle', "Press Enter to Begin instance 1", 24);
-		titleText.animation.addByPrefix('press', "ENTER PRESSED instance 1", 24, false);
+		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24, false);
 		titleText.antialiasing = true;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
@@ -245,7 +245,7 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
+		var fullText:String = Assets.getText(Paths.txt('data/introText'));
 
 		var firstArray:Array<String> = fullText.split('\n');
 		var swagGoodArray:Array<Array<String>> = [];
@@ -373,7 +373,7 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 
 			PlayStateChangeables.nocheese = false;
-			PlayState.SONG = Song.loadFromJson('milk', 'milk');
+			PlayState.SONG = Song.loadFromJson('asacoco', 'asacoco');
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 1;
 			PlayState.storyWeek = 1;
@@ -381,8 +381,8 @@ class TitleState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			if (!FlxG.save.data.songArray.contains('milk') && !FlxG.save.data.botplay)
-				FlxG.save.data.songArray.push('milk');
+			if (!FlxG.save.data.songArray.contains('asacoco') && !FlxG.save.data.botplay)
+				FlxG.save.data.songArray.push('asacoco');
 			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{
 				LoadingState.loadAndSwitchState(new PlayState());

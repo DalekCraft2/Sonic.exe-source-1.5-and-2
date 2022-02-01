@@ -1,3 +1,11 @@
-Too Slow:sonic:7
-Endless:sonicfun:8
-Execution:sonicLordX:9
+too-seiso:suisex:1
+you-cant-kusa:suisex:1
+triple-talent:suisex:1
+parent:mio:2
+white-moon:mio:2
+koyochaos:mio:2
+ankimo:mio:3
+circus:mio:3
+asacoco:mio:4
+sunshine:TDoll:5
+too-fest:sanic:5

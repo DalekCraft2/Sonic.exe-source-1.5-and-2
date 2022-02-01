@@ -165,7 +165,7 @@ class SoundTestMenu extends MusicBeatState
 		{
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
-			PlayState.SONG = Song.loadFromJson('endless-hard', 'endless');
+			PlayState.SONG = Song.loadFromJson('circus-hard', 'circus');
 			PlayState.isFreeplay = false;
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
@@ -177,14 +177,14 @@ class SoundTestMenu extends MusicBeatState
 			{
 				LoadingState.loadAndSwitchState(new PlayState());
 			});
-			if (!FlxG.save.data.songArray.contains('endless') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('endless');
+			if (!FlxG.save.data.songArray.contains('circus') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('circus');
 		}
 		else if (first == 7 && second == 7)
 			{
 				woahmanstopspammin = false;
 				PlayStateChangeables.nocheese = false;
 				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('cycles-hard', 'cycles');
+				PlayState.SONG = Song.loadFromJson('ankimo-hard', 'ankimo');
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = 2;
 				PlayState.storyWeek = 1;
@@ -195,15 +195,15 @@ class SoundTestMenu extends MusicBeatState
 				{
 					LoadingState.loadAndSwitchState(new PlayState());
 				});
-				if (!FlxG.save.data.songArray.contains('cycles') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('cycles');
+				if (!FlxG.save.data.songArray.contains('ankimo') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('ankimo');
 			}
 		else if (first == 31 && second == 13)
 			{
 				woahmanstopspammin = false;
 				PlayStateChangeables.nocheese = false;
 				PlayState.isFreeplay = false;
-				PlayState.storyPlaylist = ['faker', 'black-sun'];
-				PlayState.SONG = Song.loadFromJson('faker-hard', 'faker');
+				PlayState.storyPlaylist = ['parent', 'white-moon'];
+				PlayState.SONG = Song.loadFromJson('parent-hard', 'parent');
 				PlayState.isStoryMode = false;
 				PlayState.isList = true;
 				PlayState.storyDifficulty = 2;
@@ -215,7 +215,7 @@ class SoundTestMenu extends MusicBeatState
 				{
 					LoadingState.loadAndSwitchState(new PlayState());
 				});
-				if (!FlxG.save.data.songArray.contains('faker') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('faker');
+				if (!FlxG.save.data.songArray.contains('parent') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('parent');
 			}
 		else if (first == 66 && second == 6)
 			{
@@ -240,7 +240,7 @@ class SoundTestMenu extends MusicBeatState
 				woahmanstopspammin = false;
 				PlayStateChangeables.nocheese = false;
 				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('chaos-hard', 'chaos');
+				PlayState.SONG = Song.loadFromJson('koyochaos-hard', 'koyochaos');
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = 2;
 				PlayState.storyWeek = 1;
@@ -251,7 +251,7 @@ class SoundTestMenu extends MusicBeatState
 				{
 					LoadingState.loadAndSwitchState(new PlayState());
 				});
-				if (!FlxG.save.data.songArray.contains('chaos') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('chaos');
+				if (!FlxG.save.data.songArray.contains('koyochaos') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('koyochaos');
 			}
 		else if (first == 0 && second == 0)
 			{

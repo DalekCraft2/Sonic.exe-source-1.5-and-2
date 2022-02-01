@@ -44,7 +44,7 @@ class StoryMenuState extends MusicBeatState
 
 	var selection:Bool = false;
 
-	var songArray = ['too-slow', 'you-cant-run', 'triple-trouble'];
+	var songArray = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
 
 	var staticscreen:FlxSprite;
 	var portrait:FlxSprite;
@@ -54,9 +54,9 @@ class StoryMenuState extends MusicBeatState
 		switch (FlxG.save.data.storyProgress)
 		{
 			case 1:
-				songArray = ['too-slow', 'you-cant-run'];
+				songArray = ['too-seiso', 'you-cant-kusa'];
 			case 2:
-				songArray = ['too-slow', 'you-cant-run', 'triple-trouble'];
+				songArray = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
 		}
 
 		FlxG.sound.playMusic(Paths.music('storymodemenumusic'));
@@ -90,7 +90,7 @@ class StoryMenuState extends MusicBeatState
 		bfIDLELAWL.animation.play('idleLAWLAW', true);
 		add(bfIDLELAWL);
 
-		portrait = new FlxSprite(450, 79).loadGraphic(Paths.image('fpstuff/too-slow'));
+		portrait = new FlxSprite(450, 79).loadGraphic(Paths.image('fpstuff/too-seiso'));
 		portrait.setGraphicSize(Std.int(portrait.width * 0.275));
 		portrait.antialiasing = true;
 		portrait.updateHitbox();
@@ -284,7 +284,7 @@ class StoryMenuState extends MusicBeatState
 
 				if (FlxG.save.data.storyProgress == 0)
 				{
-					PlayState.storyPlaylist = ['too-slow', 'you-cant-run', 'triple-trouble'];
+					PlayState.storyPlaylist = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
 					PlayState.isStoryMode = true;
 					switch (curdiff)
 					{
@@ -303,7 +303,7 @@ class StoryMenuState extends MusicBeatState
 				}
 				else
 				{
-					if (songArray[real] == 'too-slow')
+					if (songArray[real] == 'too-seiso')
 					{
 						switch (curdiff)
 						{
@@ -320,9 +320,9 @@ class StoryMenuState extends MusicBeatState
 					PlayState.isStoryMode = false;
 					LoadingState.loadAndSwitchState(new PlayState());
 				}
-				if (FlxG.save.data.storyProgress == 1 && songArray[real] == 'you-cant-run')
+				if (FlxG.save.data.storyProgress == 1 && songArray[real] == 'you-cant-kusa')
 				{
-					PlayState.storyPlaylist = ['you-cant-run', 'triple-trouble'];
+					PlayState.storyPlaylist = ['you-cant-kusa', 'triple-talent'];
 					PlayState.isStoryMode = true;
 					curDifficulty = '-hard';
 
@@ -332,7 +332,7 @@ class StoryMenuState extends MusicBeatState
 					PlayState.storyWeek = 1;
 				}
 
-				if (songArray[real] == 'too-slow')
+				if (songArray[real] == 'too-seiso')
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{

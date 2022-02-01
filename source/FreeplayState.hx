@@ -29,7 +29,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 
 	var curSelected:Int = 0;
 
-	var songArray:Array<String> = ["endless", 'cycles', "milk", "sunshine", 'faker', 'black-sun', "chaos"];
+	var songArray:Array<String> = ["circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"];
 
 	var boxgrp:FlxTypedSpriteGroup<FlxSprite>;
 
@@ -172,8 +172,8 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 
 			switch (songArray[curSelected]) // Some charts don't include -hard in their file name so i decided to get focken lazy.
 			{
-				case "milk":
-					PlayState.SONG = Song.loadFromJson('milk', 'milk');
+				case "asacoco":
+					PlayState.SONG = Song.loadFromJson('asacoco', 'asacoco');
 				case "sunshine":
 					PlayState.SONG = Song.loadFromJson('sunshine', 'sunshine');
 				default:
@@ -231,7 +231,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		{
 			songtext.alpha = 0;
 			songtext.text = songArray[curSelected + change];
-			if (songArray[curSelected + change] == 'black-sun') songtext.text = 'black sun';
+			if (songArray[curSelected + change] == 'white-moon') songtext.text = 'white moon';
 			FlxTween.tween(songtext ,{alpha: 1, x: (FlxG.width / 2) - (25 / 2 * songArray[curSelected + change].length)}, 0.2, {ease: FlxEase.expoOut});
 			FlxTween.tween(prevsongtext ,{alpha: 0, x: (FlxG.width / 2) - (25 / 2 * songArray[curSelected + change].length)}, 0.2, {ease: FlxEase.expoOut});
 		}

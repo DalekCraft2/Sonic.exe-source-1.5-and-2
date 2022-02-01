@@ -33,7 +33,7 @@ class OptionsMenu extends MusicBeatState
 
 
 	var options:Array<OptionCategory> = [
-		new OptionCategory("Sonic exe", [
+		new OptionCategory("Holo exe", [
 			new JumpscareOption("Displays jumpscares in some songs (this affects the gameplay preformance by alot)"),
 			new Vfx("Enables special visual effects (turning it off helps with memory and preformace)"),
 			new SplashOption("Enables splattering blood on SICK! hits."),
@@ -77,9 +77,9 @@ class OptionsMenu extends MusicBeatState
 			new ShowInput("Display every single input in the score screen."),
 			//new Optimization("No backgrounds, no characters, centered notes, no player 2.")
 			new BotPlay("Showcase your charts and mods with autoplay."),
-			#if
+		
 			new RealBot('The coolest botplay')
-			#end
+		
 		])
 		
 	];

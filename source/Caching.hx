@@ -1,10 +1,20 @@
+#if sys
 package;
 
+import lime.app.Application;
+#if windows
+import Discord.DiscordClient;
+#end
+import openfl.display.BitmapData;
+import openfl.utils.Assets;
+import flixel.ui.FlxBar;
 import haxe.Exception;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+#if cpp
 import sys.FileSystem;
 import sys.io.File;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
@@ -22,139 +32,157 @@ using StringTools;
 
 class Caching extends MusicBeatState
 {
-    
+	var toBeDone = 0;
+	var done = 0;
 
-    var toBeDone = 0;
-    var done = 0;
+	var loaded = false;
 
-    var text:FlxText;
-    var kadeLogo:FlxSprite;
+	var text:FlxText;
+	var kadeLogo:FlxSprite;
+
+	public static var bitmapData:Map<String,FlxGraphic>;
+
+	var images = [];
+	var music = [];
+	var charts = [];
+
 
 	override function create()
 	{
-        FlxG.sound.changeVolume(5);
-        FlxG.sound.muted = false;
 
-        FlxG.mouse.visible = false;
+		FlxG.save.bind('funkin', 'ninjamuffin99');
 
-        FlxG.worldBounds.set(0,0);
+		PlayerSettings.init();
 
-        text = new FlxText(FlxG.width / 2, FlxG.height / 2 + 300,0,"Loading...");
-        text.size = 34;
-        text.alignment = FlxTextAlign.CENTER;
-        text.alpha = 0;
+		KadeEngineData.initSave();
 
-        kadeLogo = new FlxSprite(FlxG.width / 2, FlxG.height / 2).loadGraphic(Paths.image('KadeEngineLogo'));
-        kadeLogo.x -= kadeLogo.width / 2;
-        kadeLogo.y -= kadeLogo.height / 2 + 100;
-        text.y -= kadeLogo.height / 2 - 125;
-        text.x -= 170;
-        kadeLogo.setGraphicSize(Std.int(kadeLogo.width * 0.6));
+		FlxG.mouse.visible = false;
 
-        kadeLogo.alpha = 0;
+		FlxG.worldBounds.set(0,0);
 
-        add(kadeLogo);
-        add(text);
+		bitmapData = new Map<String,FlxGraphic>();
 
-        trace('starting caching..');
-        
-        sys.thread.Thread.create(() -> {
-            cache();
-        });
+		text = new FlxText(FlxG.width / 2, FlxG.height / 2 + 300,0,"Loading...");
+		text.size = 34;
+		text.alignment = FlxTextAlign.CENTER;
+		text.alpha = 0;
 
+		kadeLogo = new FlxSprite(FlxG.width / 2, FlxG.height / 2).loadGraphic(Paths.image('KadeEngineLogo'));
+		kadeLogo.x -= kadeLogo.width / 2;
+		kadeLogo.y -= kadeLogo.height / 2 + 100;
+		text.y -= kadeLogo.height / 2 - 125;
+		text.x -= 170;
+		kadeLogo.setGraphicSize(Std.int(kadeLogo.width * 0.6));
+		if(FlxG.save.data.antialiasing != null)
+			kadeLogo.antialiasing = FlxG.save.data.antialiasing;
+		else
+			kadeLogo.antialiasing = true;
+		
+		kadeLogo.alpha = 0;
 
-        super.create();
-    }
+		FlxGraphic.defaultPersist = FlxG.save.data.cacheImages;
 
-    var calledDone = false;
+		#if cpp
+		if (FlxG.save.data.cacheImages)
+		{
+			trace("caching images...");
 
-    override function update(elapsed) 
-    {
+			for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters")))
+			{
+				if (!i.endsWith(".png"))
+					continue;
+				images.push(i);
+			}
+		}
 
-        if (toBeDone != 0 && done != toBeDone)
-        {
-            var alpha = HelperFunctions.truncateFloat(done / toBeDone * 100,2) / 100;
-            kadeLogo.alpha = alpha;
-            text.alpha = alpha;
-            text.text = "Loading... (" + done + "/" + toBeDone + ")";
-        }
+		trace("caching music...");
 
-        super.update(elapsed);
-    }
+		for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/songs")))
+		{
+			music.push(i);
+		}
+		#end
 
+		toBeDone = Lambda.count(images) + Lambda.count(music);
 
-    function cache()
-    {
+		var bar = new FlxBar(10,FlxG.height - 50,FlxBarFillDirection.LEFT_TO_RIGHT,FlxG.width,40,null,"done",0,toBeDone);
+		bar.color = FlxColor.PURPLE;
 
-        var images = [];
-        var music = [];
-        var exeimages = [];
-        var anims = [];
+		add(bar);
 
+		add(kadeLogo);
+		add(text);
 
-        trace("caching images...");
+		trace('starting caching..');
+		
+		#if cpp
+		// update thread
 
-        for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters")))
-        {
-            if (!i.endsWith(".png"))
-                continue;
-            images.push(i);
-        }
+		sys.thread.Thread.create(() -> {
+			while(!loaded)
+			{
+				if (toBeDone != 0 && done != toBeDone)
+					{
+						var alpha = HelperFunctions.truncateFloat(done / toBeDone * 100,2) / 100;
+						kadeLogo.alpha = alpha;
+						text.alpha = alpha;
+						text.text = "Loading... (" + done + "/" + toBeDone + ")";
+					}
+			}
+		
+		});
 
-        trace("caching exeimages...");
+		// cache thread
 
-        for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/exe/images")))
-            {
-                if (!i.endsWith(".png"))
-                    continue;
-                exeimages.push(i);
-            }
+		sys.thread.Thread.create(() -> {
+			cache();
+		});
+		#end
 
+		super.create();
+	}
 
-        trace("caching music...");
+	var calledDone = false;
 
-        for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/songs")))
-        {
-            music.push(i);
-        }
-
-        toBeDone = Lambda.count(images) + Lambda.count(music) + Lambda.count(exeimages);
-
-        trace("LOADING: " + toBeDone + " OBJECTS.");
-
-        for (i in images)
-        {
-            var replaced = i.replace(".png","");
-            FlxG.bitmap.add(Paths.image("characters/" + replaced,"shared"));
-            trace("cached " + replaced);
-            done++;
-        }
-
-        for (i in exeimages)
-            {
-                var replaced = i.replace(".png","");
-                FlxG.bitmap.add(Paths.image(replaced,"exe"));
-                trace("cached " + replaced);
-                done++;
-            }
-
-        for (i in music)
-        {
-            FlxG.sound.cache(Paths.inst(i));
-            FlxG.sound.cache(Paths.voices(i));
-            FlxG.sound.cache('assets/videos/sonic1.ogg');
-            FlxG.sound.cache('assets/videos/tooslowcutscene1.ogg');
-            trace("cached " + i);
-            done++;
-        }
-
-        trace("Finished caching...");
+	override function update(elapsed) 
+	{
+		super.update(elapsed);
+	}
 
 
-        FlxG.switchState(new TitleState()); //IF YOU TRYNA GET THE PRELOADING OR CACHING AT THE START
-        //GO TO MAIN.HX AND CHANGE THE INITIAL STATE VARIABLE TO CACHING.HX
-        //removed preloading because shit was crashing for a friend while caching, other mods dont do it so its not a big deal lawl
-        //if u tryna do the opposite then do it the other way
-    }
+	function cache()
+	{
+		trace("LOADING: " + toBeDone + " OBJECTS.");
+
+		for (i in images)
+		{
+			var replaced = i.replace(".png","");
+			var data:BitmapData = BitmapData.fromFile("assets/shared/images/characters/" + i);
+			trace('id ' + replaced + ' file - assets/shared/images/characters/' + i + ' ${data.width}');
+			var graph = FlxGraphic.fromBitmapData(data);
+			graph.persist = true;
+			graph.destroyOnNoUse = false;
+			bitmapData.set(replaced,graph);
+			done++;
+		}
+
+		for (i in music)
+		{
+			FlxG.sound.cache(Paths.inst(i));
+			FlxG.sound.cache(Paths.voices(i));
+			trace("cached " + i);
+			done++;
+		}
+
+
+		trace("Finished caching...");
+
+		loaded = true;
+
+		trace(Assets.cache.hasBitmapData('GF_assets'));
+
+		FlxG.switchState(new TitleState());
+	}
 
 }
+#end
