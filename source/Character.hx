@@ -29,7 +29,7 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 
 		var tex:FlxAtlasFrames;
-		antialiasing = true;
+		antialiasing = FlxG.save.data.antialiasing;
 
 		switch (curCharacter)
 		{
@@ -655,13 +655,13 @@ class Character extends FlxSprite
 	/**
 	 * FOR GF DANCING SHIT
 	 */
-	public function dance()
+	public function dance(forced:Bool = false, altAnim:Bool = false)
 	{
 		if (!debugMode && !nonanimated)
 		{
 			switch (curCharacter)
 			{
-				case 'gf':
+				case 'gf' | 'gf-exe' | 'gf-pixel':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
@@ -671,35 +671,14 @@ class Character extends FlxSprite
 						else
 							playAnim('danceLeft');
 					}
-
-				case 'gf-exe':
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
-
-				case 'gf-pixel':
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
-
-				case 'spooky':
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
-
+					
 				case 'fleetway-extras', 'fleetway-extras2', 'fleetway-extras3':
 
-				default:
-					playAnim('idle');
+					default:
+						if (altAnim && animation.getByName('idle-alt') != null)
+							playAnim('idle-alt', forced);
+						else
+							playAnim('idle', forced);
 			}
 		}
 	}
@@ -708,32 +687,40 @@ class Character extends FlxSprite
 	{
 		if (!nonanimated)
 		{
-			animation.play(AnimName, Force, Reversed, Frame);
-
-			var daOffset = animOffsets.get(AnimName);
-			if (animOffsets.exists(AnimName))
-			{
-				offset.set(daOffset[0], daOffset[1]);
-			}
-			else
-				offset.set(0, 0);
-
-			if (curCharacter == 'gf')
-			{
-				if (AnimName == 'singLEFT')
+			if (AnimName.endsWith('alt') && animation.getByName(AnimName) == null)
 				{
-					danced = true;
+					#if debug
+					FlxG.log.warn(['Such alt animation doesnt exist: ' + AnimName]);
+					#end
+					AnimName = AnimName.split('-')[0];
 				}
-				else if (AnimName == 'singRIGHT')
+		
+				animation.play(AnimName, Force, Reversed, Frame);
+		
+				var daOffset = animOffsets.get(AnimName);
+				if (animOffsets.exists(AnimName))
 				{
-					danced = false;
+					offset.set(daOffset[0], daOffset[1]);
 				}
-
-				if (AnimName == 'singUP' || AnimName == 'singDOWN')
+				else
+					offset.set(0, 0);
+		
+				if (curCharacter == 'gf')
 				{
-					danced = !danced;
+					if (AnimName == 'singLEFT')
+					{
+						danced = true;
+					}
+					else if (AnimName == 'singRIGHT')
+					{
+						danced = false;
+					}
+		
+					if (AnimName == 'singUP' || AnimName == 'singDOWN')
+					{
+						danced = !danced;
+					}
 				}
-			}
 		}
 	}
 
