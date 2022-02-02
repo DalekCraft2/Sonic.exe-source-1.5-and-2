@@ -256,7 +256,7 @@ class PlayState extends MusicBeatState
 	var cameramove:Bool = FlxG.save.data.cammove;
 	var vgblack:FlxSprite;
 	var tentas:FlxSprite;
-	var fakertransform:FlxSprite;
+	var fakertransform:FlxSprite = new FlxSprite(100 - 10000, 100 - 10000);
 	var popup:Bool = true;
 
 	var fc:Bool = true;
@@ -344,7 +344,7 @@ class PlayState extends MusicBeatState
 				add(daJumpscare);
 				daJumpscare.animation.play('jump');
 
-				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic');
+				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic', 'exe');
 				daNoteStatic.animation.addByPrefix('static', 'staticANIMATION', 24, false);
 				daNoteStatic.animation.play('static');
 
@@ -352,8 +352,8 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'parent')
 			{
-				fakertransform = new FlxSprite(100 - 10000, 100 - 10000);
-				fakertransform.frames = Paths.getSparrowAtlas('Faker_Transformation');
+				add(fakertransform);
+				fakertransform.frames = Paths.getSparrowAtlas('Faker_Transformation', 'exe');
 				fakertransform.animation.addByPrefix('1', 'TransformationRIGHT');
 				fakertransform.animation.addByPrefix('2', 'TransformationLEFT');
 				fakertransform.animation.addByPrefix('3', 'TransformationUP');
@@ -363,10 +363,11 @@ class PlayState extends MusicBeatState
 				fakertransform.animation.play('3', true);
 				fakertransform.animation.play('4', true);
 				fakertransform.alpha = 0;
+				remove(fakertransform);
 			}
 			else if (SONG.song.toLowerCase() == 'you-cant-kusa')
 			{
-				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic');
+				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic', 'exe');
 				daNoteStatic.animation.addByPrefix('static', 'staticANIMATION', 24, false);
 				daNoteStatic.animation.play('static');
 
@@ -384,7 +385,7 @@ class PlayState extends MusicBeatState
 				daP3Static.animation.play('P3Static');
 				remove(daP3Static);
 
-				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic');
+				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic', 'exe');
 				daNoteStatic.animation.addByPrefix('static', 'staticANIMATION', 24, false);
 				daNoteStatic.animation.play('static');
 
@@ -6813,6 +6814,17 @@ class PlayState extends MusicBeatState
 				case 768:
 					FlxTween.tween(camHUD, {alpha: 0}, 1);
 				case 801: // 800
+					fakertransform.frames = Paths.getSparrowAtlas('Faker_Transformation', 'exe');
+					fakertransform.animation.addByPrefix('1', 'TransformationRIGHT');
+					fakertransform.animation.addByPrefix('2', 'TransformationLEFT');
+					fakertransform.animation.addByPrefix('3', 'TransformationUP');
+					fakertransform.animation.addByPrefix('4', 'TransformationDOWN');
+					fakertransform.animation.play('1', true);
+					fakertransform.animation.play('2', true);
+					fakertransform.animation.play('3', true);
+					fakertransform.animation.play('4', true);
+					fakertransform.alpha = 0;
+
 					add(fakertransform);
 					fakertransform.setPosition(dad.getGraphicMidpoint().x - 460, dad.getGraphicMidpoint().y - 700);
 					fakertransform.x += 20;
@@ -6836,6 +6848,7 @@ class PlayState extends MusicBeatState
 					fakertransform.y += 318;
 					fakertransform.animation.play('4');
 				case 884:
+					remove(fakertransform);
 					add(blackFuck);
 					blackFuck.alpha = 1;
 					blackFuck.visible = true;
