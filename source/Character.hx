@@ -245,16 +245,16 @@ class Character extends FlxSprite
 			case 'suisex':
 				tex = Paths.getSparrowAtlas('Suisex', 'shared', true);
 				frames = tex;
-				animation.addByPrefix('idle', 'suiseiIDLE', 24);
-				animation.addByPrefix('singUP', 'suiseiUP', 24);
-				animation.addByPrefix('singRIGHT', 'suiseiRIGHT', 24);
-				animation.addByPrefix('singDOWN', 'suiseiDOWN', 24);
-				animation.addByPrefix('singLEFT', 'suiseiLEFT', 24);
+				animation.addByPrefix('idle', 'suiseiIDLE', 24, false);
+				animation.addByPrefix('singUP', 'suiseiUP', 24, false);
+				animation.addByPrefix('singRIGHT', 'suiseiRIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'suiseiDOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'suiseiLEFT', 24, false);
 				animation.addByPrefix('iamgod', 'suiseiIDLE', 24, false); // TODO animation
 
-				animation.addByPrefix('singDOWN-alt', 'suiseiUP', 24);
+				animation.addByPrefix('singDOWN-alt', 'suiseiUP', 24, false);
 
-				animation.addByPrefix('singLAUGH', 'suiseiUP', 24);
+				animation.addByPrefix('singLAUGH', 'suiseiUP', 24, false);
 
 				loadOffsetFile(curCharacter);
 
@@ -377,7 +377,7 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 
-				antialiasing = true;
+				antialiasing = FlxG.save.data.antialiasing;
 
 				playAnim('idle');
 
@@ -409,7 +409,7 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 
-				antialiasing = true;
+				antialiasing = FlxG.save.data.antialiasing;
 
 				playAnim('idle');
 
@@ -424,7 +424,7 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 
-				antialiasing = true;
+				antialiasing = FlxG.save.data.antialiasing;
 
 				playAnim('idle');
 
@@ -609,15 +609,15 @@ class Character extends FlxSprite
 	}
 
 	public function loadOffsetFile(character:String, library:String = 'shared')
+	{
+		var offset:Array<String> = CoolUtil.coolTextFile(Paths.txt('images/characters/' + character + "Offsets", library));
+
+		for (i in 0...offset.length)
 		{
-			var offset:Array<String> = CoolUtil.coolTextFile(Paths.txt('images/characters/' + character + "Offsets", library));
-	
-			for (i in 0...offset.length)
-			{
-				var data:Array<String> = offset[i].split(' ');
-				addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
-			}
+			var data:Array<String> = offset[i].split(' ');
+			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
 		}
+	}
 
 	override function update(elapsed:Float)
 	{
@@ -671,14 +671,14 @@ class Character extends FlxSprite
 						else
 							playAnim('danceLeft');
 					}
-					
+
 				case 'fleetway-extras', 'fleetway-extras2', 'fleetway-extras3':
 
-					default:
-						if (altAnim && animation.getByName('idle-alt') != null)
-							playAnim('idle-alt', forced);
-						else
-							playAnim('idle', forced);
+				default:
+					if (altAnim && animation.getByName('idle-alt') != null)
+						playAnim('idle-alt', forced);
+					else
+						playAnim('idle', forced);
 			}
 		}
 	}
@@ -688,39 +688,39 @@ class Character extends FlxSprite
 		if (!nonanimated)
 		{
 			if (AnimName.endsWith('alt') && animation.getByName(AnimName) == null)
+			{
+				#if debug
+				FlxG.log.warn(['Such alt animation doesnt exist: ' + AnimName]);
+				#end
+				AnimName = AnimName.split('-')[0];
+			}
+
+			animation.play(AnimName, Force, Reversed, Frame);
+
+			var daOffset = animOffsets.get(AnimName);
+			if (animOffsets.exists(AnimName))
+			{
+				offset.set(daOffset[0], daOffset[1]);
+			}
+			else
+				offset.set(0, 0);
+
+			if (curCharacter == 'gf')
+			{
+				if (AnimName == 'singLEFT')
 				{
-					#if debug
-					FlxG.log.warn(['Such alt animation doesnt exist: ' + AnimName]);
-					#end
-					AnimName = AnimName.split('-')[0];
+					danced = true;
 				}
-		
-				animation.play(AnimName, Force, Reversed, Frame);
-		
-				var daOffset = animOffsets.get(AnimName);
-				if (animOffsets.exists(AnimName))
+				else if (AnimName == 'singRIGHT')
 				{
-					offset.set(daOffset[0], daOffset[1]);
+					danced = false;
 				}
-				else
-					offset.set(0, 0);
-		
-				if (curCharacter == 'gf')
+
+				if (AnimName == 'singUP' || AnimName == 'singDOWN')
 				{
-					if (AnimName == 'singLEFT')
-					{
-						danced = true;
-					}
-					else if (AnimName == 'singRIGHT')
-					{
-						danced = false;
-					}
-		
-					if (AnimName == 'singUP' || AnimName == 'singDOWN')
-					{
-						danced = !danced;
-					}
+					danced = !danced;
 				}
+			}
 		}
 	}
 

@@ -85,7 +85,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			majinBf = new Boyfriend(x, y, 'bf-blue');
 			majinBf.visible = false;
-			majinBf.antialiasing = true;
+			majinBf.antialiasing = FlxG.save.data.antialiasing;
 			add(majinBf);
 		}
 
@@ -96,7 +96,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			sonicDEATH.scale.x = 2;
 			sonicDEATH.scale.y = 2;
 
-			sonicDEATH.antialiasing = true;
+			sonicDEATH.antialiasing = FlxG.save.data.antialiasing;
 			sonicDEATH.playAnim('firstDEATH');
 			add(sonicDEATH);
 		}
@@ -177,7 +177,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			bfdeathshit.animation.play('die');
 			bfdeathshit.animation.paused = true;
 			bfdeathshit.animation.curAnim.curFrame = 0;
-			bfdeathshit.antialiasing = true;
+			bfdeathshit.antialiasing = FlxG.save.data.antialiasing;
 			add(bfdeathshit);
 		}
 

@@ -27,7 +27,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	var pauseMusic:FlxSound;
 	var perSongOffset:FlxText;
-	
+
 	var offsetChanged:Bool = false;
 
 	public function new(x:Float, y:Float)
@@ -78,12 +78,17 @@ class PauseSubState extends MusicBeatSubstate
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
-		perSongOffset = new FlxText(5, FlxG.height - 18, 0, "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.', 12);
+		perSongOffset = new FlxText(5, FlxG.height
+			- 18, 0,
+			"Additive Offset (Left, Right): "
+			+ PlayState.songOffset
+			+ " - Description - "
+			+ 'Adds value to global offset, per song.', 12);
 		perSongOffset.scrollFactor.set();
 		perSongOffset.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		
+
 		#if cpp
-			add(perSongOffset);
+		add(perSongOffset);
 		#end
 
 		for (i in 0...menuItems.length)
@@ -109,102 +114,111 @@ class PauseSubState extends MusicBeatSubstate
 		if (PlayState.instance.useVideo)
 			menuItems.remove('Resume');
 
-		var oldOffset:Float = 0;
-		var accepted = controls.ACCEPT;
-
-		/*
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var leftP = controls.LEFT_P;
-		var rightP = controls.RIGHT_P;
-		
-		
+		var upPcontroller:Bool = false;
+		var downPcontroller:Bool = false;
+		var leftPcontroller:Bool = false;
+		var rightPcontroller:Bool = false;
+		var oldOffset:Float = 0;
+
 		if (gamepad != null && KeyBinds.gamepad)
 		{
-			upP = gamepad.justPressed.DPAD_UP;
-			downP = gamepad.justPressed.DPAD_DOWN;
-			leftP = gamepad.justPressed.DPAD_LEFT;
-			rightP = gamepad.justPressed.DPAD_RIGHT;
+			upPcontroller = gamepad.justPressed.DPAD_UP;
+			downPcontroller = gamepad.justPressed.DPAD_DOWN;
+			leftPcontroller = gamepad.justPressed.DPAD_LEFT;
+			rightPcontroller = gamepad.justPressed.DPAD_RIGHT;
 		}
-		*/
 
 		// pre lowercasing the song name (update)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		switch (songLowercase) {
-			case 'dad-battle': songLowercase = 'dadbattle';
-			case 'philly-nice': songLowercase = 'philly';
+		switch (songLowercase)
+		{
+			case 'dad-battle':
+				songLowercase = 'dadbattle';
+			case 'philly-nice':
+				songLowercase = 'philly';
 		}
 		var songPath = 'assets/data/' + songLowercase + '/';
 
-		// Controls got really screwed :troll:
-		if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP)
+		#if sys
+		if (PlayState.isSM && !PlayState.isStoryMode)
+			songPath = PlayState.pathToSm;
+		#end
+
+		if (controls.UP_P || upPcontroller)
 		{
 			changeSelection(-1);
-   
-		}else if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S)
+		}
+		else if (controls.DOWN_P || downPcontroller)
 		{
 			changeSelection(1);
 		}
-		
+
 		#if cpp
-			else if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A)
+		else if (controls.LEFT_P || leftPcontroller)
+		{
+			oldOffset = PlayState.songOffset;
+			PlayState.songOffset -= 1;
+			sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
+			perSongOffset.text = "Additive Offset (Left, Right): "
+				+ PlayState.songOffset
+				+ " - Description - "
+				+ 'Adds value to global offset, per song.';
+
+			// Prevent loop from happening every single time the offset changes
+			if (!offsetChanged)
 			{
-				oldOffset = PlayState.songOffset;
-				PlayState.songOffset -= 1;
-				sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
-				perSongOffset.text = "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
+				grpMenuShit.clear();
 
-				// Prevent loop from happening every single time the offset changes
-				if(!offsetChanged)
+				menuItems = ['Restart Song', 'Exit to menu'];
+
+				for (i in 0...menuItems.length)
 				{
-					grpMenuShit.clear();
-
-					menuItems = ['Restart Song', 'Exit to menu'];
-
-					for (i in 0...menuItems.length)
-					{
-						var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-						songText.isMenuItem = true;
-						songText.targetY = i;
-						grpMenuShit.add(songText);
-					}
-
-					changeSelection();
-
-					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-					offsetChanged = true;
+					var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+					songText.isMenuItem = true;
+					songText.targetY = i;
+					grpMenuShit.add(songText);
 				}
-			}else if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D)
-			{
-				oldOffset = PlayState.songOffset;
-				PlayState.songOffset += 1;
-				sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
-				perSongOffset.text = "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
-				if(!offsetChanged)
-				{
-					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+				changeSelection();
 
-					for (i in 0...menuItems.length)
-					{
-						var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-						songText.isMenuItem = true;
-						songText.targetY = i;
-						grpMenuShit.add(songText);
-					}
-
-					changeSelection();
-
-					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-					offsetChanged = true;
-				}
+				cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+				offsetChanged = true;
 			}
+		}
+		else if (controls.RIGHT_P || rightPcontroller)
+		{
+			oldOffset = PlayState.songOffset;
+			PlayState.songOffset += 1;
+			sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
+			perSongOffset.text = "Additive Offset (Left, Right): "
+				+ PlayState.songOffset
+				+ " - Description - "
+				+ 'Adds value to global offset, per song.';
+			if (!offsetChanged)
+			{
+				grpMenuShit.clear();
+
+				menuItems = ['Restart Song', 'Exit to menu'];
+
+				for (i in 0...menuItems.length)
+				{
+					var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+					songText.isMenuItem = true;
+					songText.targetY = i;
+					grpMenuShit.add(songText);
+				}
+
+				changeSelection();
+
+				cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+				offsetChanged = true;
+			}
+		}
 		#end
 
-		if (accepted)
+		if (controls.ACCEPT && !FlxG.keys.pressed.ALT)
 		{
 			var daSelected:String = menuItems[curSelected];
 
@@ -213,21 +227,24 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart Song":
+					PlayState.startTime = 0;
 					if (PlayState.instance.useVideo)
 					{
 						GlobalVideo.get().stop();
 						PlayState.instance.remove(PlayState.instance.videoSprite);
 						PlayState.instance.removedVideo = true;
 					}
+					PlayState.instance.clean();
 					FlxG.resetState();
 				case "Exit to menu":
+					PlayState.startTime = 0;
 					if (PlayState.instance.useVideo)
 					{
 						GlobalVideo.get().stop();
 						PlayState.instance.remove(PlayState.instance.videoSprite);
 						PlayState.instance.removedVideo = true;
 					}
-					if(PlayState.loadRep)
+					if (PlayState.loadRep)
 					{
 						FlxG.save.data.botplay = false;
 						FlxG.save.data.scrollSpeed = 1;
@@ -242,9 +259,14 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					#end
 					if (FlxG.save.data.fpsCap > 290)
-						(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
-					
-					FlxG.switchState(new MainMenuState());
+						(cast(Lib.current.getChildAt(0), Main)).setFPSCap(290);
+
+					PlayState.instance.clean();
+
+					if (PlayState.isStoryMode)
+						FlxG.switchState(new StoryMenuState());
+					else
+						FlxG.switchState(new FreeplayState());
 			}
 		}
 
@@ -265,6 +287,8 @@ class PauseSubState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
+
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;

@@ -124,12 +124,12 @@ class VideoHandlerMP4
 		vlcBitmap.stop();
 
 		// Clean player, just in case!
-		//vlcBitmap.dispose();
+		// vlcBitmap.dispose();
 
-		//if (FlxG.game.contains(vlcBitmap))
-		//{
+		// if (FlxG.game.contains(vlcBitmap))
+		// {
 		//	FlxG.game.removeChild(vlcBitmap);
-		//}
+		// }
 
 		trace("Big, Big Chungus, Big Chungus!");
 
@@ -174,5 +174,4 @@ class VideoHandlerMP4
 		else
 			LoadingState.loadAndSwitchState(new MainMenuState());
 	}
-
 }

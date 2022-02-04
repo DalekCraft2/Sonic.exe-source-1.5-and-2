@@ -1,8 +1,11 @@
 package;
 
+import lime.app.Application;
+#if windows
+import Discord.DiscordClient;
+#end
 import openfl.display.BlendMode;
 import openfl.text.TextFormat;
-import openfl.display.Application;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -23,14 +26,13 @@ class Main extends Sprite
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 
-	public static var watermarks = true; // Whether to put Kade Engine liteartly anywhere
+	public static var watermarks = true; // Whether to put Kade Engine literally anywhere
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
 	{
-
-		// quick checks 
+		// quick checks
 
 		Lib.current.addChild(new Main());
 	}
@@ -75,6 +77,10 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
+		#if !cpp
+		framerate = 60;
+		#end
+
 		#if cpp
 		initialState = TitleState; //No more cache, fuck you, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actually no
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
@@ -95,7 +101,7 @@ class Main extends Sprite
 		GlobalVideo.setVid(vHandler);
 		vHandler.source(ourSource);
 		#elseif desktop
-		var str1:String = "WEBM SHIT"; 
+		var str1:String = "WEBM SHIT";
 		var webmHandle = new WebmHandler();
 		webmHandle.source(ourSource);
 		webmHandle.makePlayer();
@@ -104,13 +110,19 @@ class Main extends Sprite
 		GlobalVideo.setWebm(webmHandle);
 		#end
 
+		#if windows
+		DiscordClient.initialize();
 
-		
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
+
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
-
 		#end
 	}
 
@@ -119,23 +131,24 @@ class Main extends Sprite
 	var fpsCounter:FPS;
 
 	public static function dumpCache() // THIS MOD WASTES 1-2 FUCKING G I G A B Y T E S OF MEMORY SO OF COURSE I COPIED KADE'S CODE FOR FUCKS SAKE
+	{
+		@:privateAccess
+		for (key in FlxG.bitmap._cache.keys())
 		{
-			@:privateAccess
-			for (key in FlxG.bitmap._cache.keys())
+			var obj = FlxG.bitmap._cache.get(key);
+			if (obj != null)
 			{
-				var obj = FlxG.bitmap._cache.get(key);
-				if (obj != null)
-				{
-					Assets.cache.removeBitmapData(key);
-					FlxG.bitmap._cache.remove(key);
-					obj.destroy();
-				}
+				Assets.cache.removeBitmapData(key);
+				FlxG.bitmap._cache.remove(key);
+				obj.destroy();
 			}
-			Assets.cache.clear("songs");
-			// */
 		}
+		Assets.cache.clear("songs");
+		// */
+	}
 
-	public function toggleFPS(fpsEnabled:Bool):Void {
+	public function toggleFPS(fpsEnabled:Bool):Void
+	{
 		fpsCounter.visible = fpsEnabled;
 	}
 

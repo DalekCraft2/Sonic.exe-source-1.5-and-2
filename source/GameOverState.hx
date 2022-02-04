@@ -13,8 +13,6 @@ class GameOverState extends FlxTransitionableState
 	var bfX:Float = 0;
 	var bfY:Float = 0;
 
-	var coolcamera:FlxCamera;
-
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -23,54 +21,29 @@ class GameOverState extends FlxTransitionableState
 		bfY = y;
 	}
 
-	
-
 	override function create()
 	{
-
-		coolcamera = new FlxCamera();
-		coolcamera.bgColor.alpha = 0;
-		FlxG.cameras.add(coolcamera);
-
-		//var loser:FlxSprite = new FlxSprite(100, 100);
-		//var loseTex = Paths.getSparrowAtlas('lose');
-		//loser.frames = loseTex;
-		//loser.animation.addByPrefix('lose', 'lose', 24, false);
-		//loser.animation.play('lose');
-		//add(loser);
-
-		var bfdeathshit:FlxSprite;
+		var loser:FlxSprite = new FlxSprite(100, 100);
+		var loseTex = Paths.getSparrowAtlas('lose');
+		loser.frames = loseTex;
+		loser.animation.addByPrefix('lose', 'lose', 24, false);
+		loser.animation.play('lose');
+		loser.antialiasing = FlxG.save.data.antialiasing;
+		add(loser);
 
 		var bf:Boyfriend = new Boyfriend(bfX, bfY);
 		// bf.scrollFactor.set();
 		add(bf);
 		bf.playAnim('firstDeath');
 
-		if (PlayState.SONG.song.toLowerCase() == 'asacoco') bf.alpha = 0;
-
-		var bfdeathshit:FlxSprite = new FlxSprite();
-
-		if (PlayState.SONG.song.toLowerCase() == 'sunshine')
-		{
-			bf.alpha = 0;
-			bfdeathshit.frames = Paths.getSparrowAtlas('3DGO', 'exe');
-			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
-			bfdeathshit.cameras = [coolcamera];
-			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('firstdeath')
-		}
-		add(bfdeathshit);
-
-		
-
 		FlxG.camera.follow(bf, LOCKON, 0.001);
-		
-			var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(Paths.image('restart'));
-			restart.setGraphicSize(Std.int(restart.width * 0.6));
-			restart.updateHitbox();
-			restart.alpha = 0;
-			restart.antialiasing = true;
-			add(restart);
+
+		var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(Paths.image('restart'));
+		restart.setGraphicSize(Std.int(restart.width * 0.6));
+		restart.updateHitbox();
+		restart.alpha = 0;
+		restart.antialiasing = FlxG.save.data.antialiasing;
+		add(restart);
 
 		FlxG.sound.music.fadeOut(2, FlxG.sound.music.volume * 0.6);
 
@@ -87,6 +60,16 @@ class GameOverState extends FlxTransitionableState
 		var pressed:Bool = FlxG.keys.justPressed.ANY;
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+		if (FlxG.save.data.InstantRespawn)
+		{
+			fading = true;
+			FlxG.sound.music.fadeOut(0.5, 0, function(twn:FlxTween)
+			{
+				FlxG.sound.music.stop();
+				LoadingState.loadAndSwitchState(new PlayState());
+			});
+		}
 
 		if (gamepad != null)
 		{

@@ -296,7 +296,6 @@ class VlcBitmap extends Bitmap
 			set_width(FlxG.stage.stageWidth);
 			set_height(FlxG.stage.stageWidth / (16 / 9));
 		}
-		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -483,9 +482,7 @@ class VlcBitmap extends Bitmap
 			onProgress();
 	}
 
-	function statusOnPositionChanged(newPos:Int)
-	{
-	}
+	function statusOnPositionChanged(newPos:Int) {}
 
 	function statusOnSeekableChanged(newPos:Int)
 	{
@@ -493,13 +490,9 @@ class VlcBitmap extends Bitmap
 			onSeek();
 	}
 
-	function statusOnForward()
-	{
-	}
+	function statusOnForward() {}
 
-	function statusOnBackward()
-	{
-	}
+	function statusOnBackward() {}
 
 	function onDisplay()
 	{

@@ -1,10 +1,12 @@
 package vlc;
 
 import cpp.Callable;
+#if cpp
 import cpp.Function;
 import cpp.Pointer;
 import cpp.RawPointer;
 import cpp.UInt8;
+#end
 import haxe.io.ArrayBufferView;
 import lime.utils.UInt8Array;
 
@@ -32,15 +34,11 @@ extern class LibVLC
 	public function openMedia(path:String):Void;
 
 	@:native("play")
-	@:overload(function():Void
-	{
-	})
+	@:overload(function():Void {})
 	public function play(path:String):Void;
 
 	@:native("playInWindow")
-	@:overload(function():Void
-	{
-	})
+	@:overload(function():Void {})
 	public function playInWindow(path:String):Void;
 
 	@:native("stop")
@@ -112,8 +110,10 @@ extern class LibVLC
 	@:native("setRepeat")
 	public function setRepeat(repeat:Int = 1):Void;
 
+	#if cpp
 	@:native("getPixelData")
 	public function getPixelData():Pointer<UInt8>;
+	#end
 
 	@:native("getFPS")
 	public function getFPS():Float;

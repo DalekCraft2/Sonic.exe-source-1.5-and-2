@@ -68,7 +68,7 @@ class StoryMenuState extends MusicBeatState
 		bg.animation.addByPrefix('idlexd', "damfstatic", 24);
 		bg.animation.play('idlexd');
 		bg.alpha = 1;
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antialiasing;
 		bg.setGraphicSize(Std.int(bg.width));
 		bg.updateHitbox();
 		add(bg);
@@ -76,7 +76,7 @@ class StoryMenuState extends MusicBeatState
 		var greyBOX:FlxSprite;
 		greyBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('greybox'));
 		bg.alpha = 1;
-		greyBOX.antialiasing = true;
+		greyBOX.antialiasing = FlxG.save.data.antialiasing;
 		greyBOX.setGraphicSize(Std.int(bg.width));
 		greyBOX.updateHitbox();
 		add(greyBOX);
@@ -86,13 +86,13 @@ class StoryMenuState extends MusicBeatState
 		bfIDLELAWL.scale.y = .4;
 		bfIDLELAWL.screenCenter();
 		bfIDLELAWL.y += 50;
-		bfIDLELAWL.antialiasing = true;
+		bfIDLELAWL.antialiasing = FlxG.save.data.antialiasing;
 		bfIDLELAWL.animation.play('idleLAWLAW', true);
 		add(bfIDLELAWL);
 
 		portrait = new FlxSprite(450, 79).loadGraphic(Paths.image('fpstuff/too-seiso'));
 		portrait.setGraphicSize(Std.int(portrait.width * 0.275));
-		portrait.antialiasing = true;
+		portrait.antialiasing = FlxG.save.data.antialiasing;
 		portrait.updateHitbox();
 		add(portrait);
 
@@ -102,7 +102,7 @@ class StoryMenuState extends MusicBeatState
 		staticscreen.animation.play('screenstaticANIM');
 		staticscreen.y += 79;
 		staticscreen.alpha = 0.3;
-		staticscreen.antialiasing = true;
+		staticscreen.antialiasing = FlxG.save.data.antialiasing;
 		staticscreen.setGraphicSize(Std.int(staticscreen.width * 0.275));
 		staticscreen.updateHitbox();
 		add(staticscreen);
@@ -110,14 +110,14 @@ class StoryMenuState extends MusicBeatState
 		var yellowBOX:FlxSprite;
 		yellowBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('yellowbox'));
 		yellowBOX.alpha = 1;
-		yellowBOX.antialiasing = true;
+		yellowBOX.antialiasing = FlxG.save.data.antialiasing;
 		yellowBOX.setGraphicSize(Std.int(bg.width));
 		yellowBOX.updateHitbox();
 		add(yellowBOX);
 
 		redBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('redbox'));
 		redBOX.alpha = 1;
-		redBOX.antialiasing = true;
+		redBOX.antialiasing = FlxG.save.data.antialiasing;
 		redBOX.setGraphicSize(Std.int(bg.width));
 		redBOX.updateHitbox();
 		add(redBOX);
@@ -303,6 +303,7 @@ class StoryMenuState extends MusicBeatState
 				}
 				else
 				{
+					PlayState.storyPlaylist = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
 					if (songArray[real] == 'too-seiso')
 					{
 						switch (curdiff)
@@ -316,9 +317,11 @@ class StoryMenuState extends MusicBeatState
 					else
 						curDifficulty = '-hard';
 
+					curdiff -= 1;
+					PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
+
 					PlayState.SONG = Song.loadFromJson(songArray[real].toLowerCase() + curDifficulty, songArray[real].toLowerCase());
-					PlayState.isStoryMode = false;
-					LoadingState.loadAndSwitchState(new PlayState());
+					PlayState.isStoryMode = true;
 				}
 				if (FlxG.save.data.storyProgress == 1 && songArray[real] == 'you-cant-kusa')
 				{
@@ -326,13 +329,13 @@ class StoryMenuState extends MusicBeatState
 					PlayState.isStoryMode = true;
 					curDifficulty = '-hard';
 
+					curdiff -= 1;
 					PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
 
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
 					PlayState.storyWeek = 1;
 				}
-
-				if (songArray[real] == 'too-seiso')
+				else if (songArray[real] == 'too-seiso')
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
@@ -344,6 +347,10 @@ class StoryMenuState extends MusicBeatState
 							LoadingState.loadAndSwitchState(new PlayState());
 						}
 					});
+				}
+				else
+				{
+					LoadingState.loadAndSwitchState(new PlayState());
 				}
 			}
 

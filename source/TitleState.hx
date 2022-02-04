@@ -166,14 +166,14 @@ class TitleState extends MusicBeatState
 		bg.alpha = .75;
 		bg.scale.x = 3;
 		bg.scale.y = 3;
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antialiasing;
 		bg.updateHitbox();
 		bg.screenCenter();
 		add(bg);
 
 		logoBlBUMP = new FlxSprite(0, 0);
 		logoBlBUMP.loadGraphic(Paths.image('Logo', 'exe'));
-		logoBlBUMP.antialiasing = true;
+		logoBlBUMP.antialiasing = FlxG.save.data.antialiasing;
 
 		logoBlBUMP.scale.x = .5;
 		logoBlBUMP.scale.y = .5;
@@ -186,7 +186,7 @@ class TitleState extends MusicBeatState
 		titleText.frames = Paths.getSparrowAtlas('titleEnterNEW');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24, false);
-		titleText.antialiasing = true;
+		titleText.antialiasing = FlxG.save.data.antialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		titleText.screenCenter();
@@ -195,7 +195,7 @@ class TitleState extends MusicBeatState
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
-		logo.antialiasing = true;
+		logo.antialiasing = FlxG.save.data.antialiasing;
 		// add(logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
@@ -221,7 +221,7 @@ class TitleState extends MusicBeatState
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
+		ngSpr.antialiasing = FlxG.save.data.antialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 

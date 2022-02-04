@@ -1,7 +1,9 @@
 package;
 
 import flixel.FlxCamera;
+#if cpp
 import cpp.abi.Abi;
+#end
 import flixel.util.FlxTimer;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.tweens.FlxEase;
@@ -31,7 +33,6 @@ class OptionsMenu extends MusicBeatState
 	var cheat:Bool = false;
 	var canselect:Bool = true;
 
-
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Holo exe", [
 			new JumpscareOption("Displays jumpscares in some songs (this affects the gameplay preformance by alot)"),
@@ -42,65 +43,71 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
-			new DownscrollOption("Change the layout of the strumline."),
+			new DownscrollOption("Toggle making the notes scroll down rather than up."),
 			new MiddlescrollOption("Sets the strumline to the middle of the screen and hides the opponent's."),
-			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
-			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
-			#if desktop
-			new FPSCapOption("Cap your FPS"),
+			new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),
+			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
+			#if desktop new FPSCapOption("Change your FPS Cap."),
 			#end
-			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
+			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
+			new InstantRespawn("Toggle if you instantly respawn after dying."),
 			// new OffsetMenu("Get a note offset based off of your inputs!"),
-			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
+			new CustomizeGameplay("Drag and drop gameplay modules to your prefered positions!")
 		]),
 		new OptionCategory("Appearance", [
+			new EditorRes("Not showing the editor grid will greatly increase editor performance"),
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new CamZoomOption("Toggle the camera zoom in-game."),
-			#if desktop
-			new RainbowFPSOption("Make the FPS Counter Rainbow"),
-			new AccuracyOption("Display accuracy information."),
-			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position (as a bar)"),
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
-			#end
+			new StepManiaOption("Sets the colors of the arrows depending on quantization instead of direction."),
+			new AccuracyOption("Display accuracy information on the info bar."),
+			new SongPositionOption("Show the song's current position as a scrolling bar."),
+			new NPSDisplayOption("Shows your current Notes Per Second on the info bar."),
+			new RainbowFPSOption("Make the FPS Counter flicker through rainbow colors."),
+			new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note."),
 		]),
-		
 		new OptionCategory("Misc", [
-			#if desktop
-			new FPSOption("Toggle the FPS Counter"),
-			new ReplayOption("View replays"),
-			#end
-			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
+			new FPSOption("Toggle the FPS Counter"), new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new ShowInput("Display every single input in the score screen."),
-			//new Optimization("No backgrounds, no characters, centered notes, no player 2.")
+			new AntialiasingOption("Toggle antialiasing, improving graphics quality at a slight performance penalty."),
+			new MissSoundsOption("Toggle miss sounds playing when you don't hit a note."), new ScoreScreen("Show the score screen after the end of a song"),
+			new ShowInput("Display every single input on the score screen."),
+			new Optimization("No characters or backgrounds. Just a usual rhythm game layout."),
+			new GraphicLoading("On startup, cache every character. Significantly decrease load times. (HIGH MEMORY)"),
 			new BotPlay("Showcase your charts and mods with autoplay."),
-		
-			new RealBot('The coolest botplay')
-		
+			#if debug
+			new RealBot('The coolest botplay')]),
+			#end
+		new OptionCategory("Saves and Data", [
+			#if desktop new ReplayOption("View saved song replays."),
+			#end
+			new ResetScoreOption("Reset your score on all songs and weeks. This is irreversible!"),
+			new ResetSettings("Reset ALL your settings. This is irreversible!")
 		])
-		
 	];
 
 	public var acceptInput:Bool = true;
 
 	private var currentDescription:String = "";
 	private var grpControls:FlxTypedGroup<Alphabet>;
+
 	public static var versionShit:FlxText;
 
 	var currentSelectedCat:OptionCategory;
 	var blackBorder:FlxSprite;
+
 	override function create()
 	{
+		clean();
 		instance = this;
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBGBlue"));
 
+		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = FlxG.save.data.antialiasing;
 		add(menuBG);
 
 		grpControls = new FlxTypedGroup<Alphabet>();
@@ -117,25 +124,31 @@ class OptionsMenu extends MusicBeatState
 
 		currentDescription = "none";
 
-		versionShit = new FlxText(5, FlxG.height + 40, 0, "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription, 12);
+		versionShit = new FlxText(5, FlxG.height
+			+ 40, 0,
+			"Offset (Left, Right, Shift for slow): "
+			+ HelperFunctions.truncateFloat(FlxG.save.data.offset, 2)
+			+ " - Description - "
+			+ currentDescription, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		
-		blackBorder = new FlxSprite(-30,FlxG.height + 40).makeGraphic((Std.int(versionShit.width + 900)),Std.int(versionShit.height + 600),FlxColor.BLACK);
+
+		blackBorder = new FlxSprite(-30, FlxG.height + 40).makeGraphic((Std.int(versionShit.width + 900)), Std.int(versionShit.height + 600), FlxColor.BLACK);
 		blackBorder.alpha = 0.5;
 
 		add(blackBorder);
 
 		add(versionShit);
 
-		FlxTween.tween(versionShit,{y: FlxG.height - 18},2,{ease: FlxEase.elasticInOut});
-		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
+		FlxTween.tween(versionShit, {y: FlxG.height - 18}, 2, {ease: FlxEase.elasticInOut});
+		FlxTween.tween(blackBorder, {y: FlxG.height - 18}, 2, {ease: FlxEase.elasticInOut});
+
+		changeSelection();
 
 		super.create();
 	}
 
 	var isCat:Bool = false;
-	
 
 	override function update(elapsed:Float)
 	{
@@ -144,10 +157,10 @@ class OptionsMenu extends MusicBeatState
 		if (acceptInput)
 		{
 			if (controls.BACK && !isCat)
-				{
+			{
 				FlxG.switchState(new MainMenuState());
 				trace("back to da menu");
-				}
+			}
 			else if (controls.BACK)
 			{
 				isCat = false;
@@ -160,13 +173,14 @@ class OptionsMenu extends MusicBeatState
 					grpControls.add(controlLabel);
 					// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 				}
-				
+
 				curSelected = 0;
-				
+
 				changeSelection(curSelected);
 			}
 
 			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
 			if (canselect)
 			{
 				if (gamepad != null)
@@ -182,24 +196,24 @@ class OptionsMenu extends MusicBeatState
 						changeSelection(1);
 					}
 				}
-				
+
 				if (FlxG.keys.justPressed.UP)
 					changeSelection(-1);
 				if (FlxG.keys.justPressed.DOWN)
 					changeSelection(1);
 			}
-			
+
 			if (isCat)
 			{
 				if (currentSelectedCat.getOptions()[curSelected].getAccept())
 				{
 					if (FlxG.keys.pressed.SHIFT)
-						{
-							if (FlxG.keys.pressed.RIGHT)
-								currentSelectedCat.getOptions()[curSelected].right();
-							if (FlxG.keys.pressed.LEFT)
-								currentSelectedCat.getOptions()[curSelected].left();
-						}
+					{
+						if (FlxG.keys.pressed.RIGHT)
+							currentSelectedCat.getOptions()[curSelected].right();
+						if (FlxG.keys.pressed.LEFT)
+							currentSelectedCat.getOptions()[curSelected].left();
+					}
 					else
 					{
 						if (FlxG.keys.justPressed.RIGHT)
@@ -221,13 +235,15 @@ class OptionsMenu extends MusicBeatState
 						FlxG.save.data.offset += 0.1;
 					else if (FlxG.keys.pressed.LEFT)
 						FlxG.save.data.offset -= 0.1;
-					
-					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+
+					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2)
+						+ " - Description - " + currentDescription;
 				}
 				if (currentSelectedCat.getOptions()[curSelected].getAccept())
-					versionShit.text =  currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
+					versionShit.text = currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
 				else
-					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+					versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2)
+						+ " - Description - " + currentDescription;
 			}
 			else
 			{
@@ -242,19 +258,20 @@ class OptionsMenu extends MusicBeatState
 					FlxG.save.data.offset += 0.1;
 				else if (FlxG.keys.pressed.LEFT)
 					FlxG.save.data.offset -= 0.1;
-				
-				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+
+				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
+					+ currentDescription;
 			}
-		
 
 			if (controls.RESET)
-					FlxG.save.data.offset = 0;
+				FlxG.save.data.offset = 0;
 
 			if (controls.ACCEPT && canselect)
 			{
 				if (isCat)
 				{
-					if (currentSelectedCat.getOptions()[curSelected].press()) {
+					if (currentSelectedCat.getOptions()[curSelected].press())
+					{
 						grpControls.members[curSelected].reType(currentSelectedCat.getOptions()[curSelected].getDisplay());
 						trace(currentSelectedCat.getOptions()[curSelected].getDisplay());
 						if (currentSelectedCat.getOptions()[curSelected].getDisplay().startsWith('BotPlay'))
@@ -270,11 +287,13 @@ class OptionsMenu extends MusicBeatState
 							add(nocheat);
 							new FlxTimer().start(2, function(ok:FlxTimer)
 							{
-								FlxTween.tween(nocheat, {alpha:1}, 1, {onComplete: function(ok:FlxTween)
-								{
-									cheat = true;
-									FlxG.save.data.fakebotplay = false;
-								}});
+								FlxTween.tween(nocheat, {alpha: 1}, 1, {
+									onComplete: function(ok:FlxTween)
+									{
+										cheat = true;
+										FlxG.save.data.fakebotplay = false;
+									}
+								});
 							});
 						}
 					}
@@ -285,16 +304,16 @@ class OptionsMenu extends MusicBeatState
 					isCat = true;
 					grpControls.clear();
 					for (i in 0...currentSelectedCat.getOptions().length)
-						{
-							var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, currentSelectedCat.getOptions()[i].getDisplay(), true, false);
-							controlLabel.isMenuItem = true;
-							controlLabel.targetY = i;
-							grpControls.add(controlLabel);
-							// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-						}
+					{
+						var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, currentSelectedCat.getOptions()[i].getDisplay(), true, false);
+						controlLabel.isMenuItem = true;
+						controlLabel.targetY = i;
+						grpControls.add(controlLabel);
+						// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+					}
 					curSelected = 0;
 				}
-				
+
 				changeSelection();
 			}
 			else if (!canselect && cheat && controls.ACCEPT)
@@ -313,7 +332,7 @@ class OptionsMenu extends MusicBeatState
 		#if !switch
 		// NGio.logEvent("Fresh");
 		#end
-		
+
 		FlxG.sound.play(Paths.sound("scrollMenu"), 0.4);
 
 		curSelected += change;
@@ -330,12 +349,14 @@ class OptionsMenu extends MusicBeatState
 		if (isCat)
 		{
 			if (currentSelectedCat.getOptions()[curSelected].getAccept())
-				versionShit.text =  currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
+				versionShit.text = currentSelectedCat.getOptions()[curSelected].getValue() + " - Description - " + currentDescription;
 			else
-				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+				versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
+					+ currentDescription;
 		}
 		else
-			versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2) + " - Description - " + currentDescription;
+			versionShit.text = "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset, 2) + " - Description - "
+				+ currentDescription;
 		// selector.y = (70 * curSelected) + 30;
 
 		var bullShit:Int = 0;
