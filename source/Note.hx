@@ -48,8 +48,8 @@ class Note extends FlxSprite
 
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
-	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
+	public static var GREEN_NOTE:Int = 2;
 	public static var RED_NOTE:Int = 3;
 
 	public var rating:String = "shit";
@@ -58,8 +58,11 @@ class Note extends FlxSprite
 	public var localAngle:Float = 0; // The angle to be edited inside Note.hx
 
 	public var dataColor:Array<String> = ['purple', 'blue', 'green', 'red'];
+	public var dataColor5k:Array<String> = ['purple', 'blue', 'gold', 'green', 'red'];
 	public var quantityColor:Array<Int> = [RED_NOTE, 2, BLUE_NOTE, 2, PURP_NOTE, 2, BLUE_NOTE, 2];
+	public var quantityColor5k:Array<Int> = [PURP_NOTE, 2, BLUE_NOTE, 2, GREEN_NOTE, 2, RED_NOTE, 2, 4, 2];
 	public var arrowAngles:Array<Int> = [180, 90, 270, 0];
+	public var arrowAngles5k:Array<Int> = [180, 90, 0, 270, 0];
 
 	public var isParent:Bool = false;
 	public var parent:Note = null;
@@ -116,229 +119,165 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		var daStage:String = PlayState.curStage;
+		var colorArray = isRing ? dataColor5k : dataColor;
+		var quantityColorArray = isRing ? quantityColor5k : quantityColor;
+		var angleArray = isRing ? arrowAngles5k : arrowAngles;
 
 		// defaults if no noteStyle was found in chart
 		var noteTypeCheck:String = 'normal';
 
-		// 1. Self explainatory
-		switch (PlayState.SONG.noteStyle)
+		if (inCharter)
 		{
-			case 'pixel':
-				trace('pixel note');
+			frames = Paths.getSparrowAtlas('NOTE_assets');
+			var fuckingSussy = Paths.getSparrowAtlas('staticNotes', 'exe');
+			for (amogus in fuckingSussy.frames)
+			{
+				this.frames.pushFrame(amogus);
+			}
 
-				loadGraphic(Paths.image('arrows-pixels', 'exe'), true, 17, 17);
+			var animSuffix = ' alone';
 
-				if (noteType == 2)
+			switch (noteType)
+			{
+				case 3:
+					frames = Paths.getSparrowAtlas('PhantomNote', 'exe');
+					animSuffix = ' withered';
+				case 2:
+					frames = Paths.getSparrowAtlas('staticNotes', 'exe');
+					animSuffix = ' static';
+				default:
+					frames = Paths.getSparrowAtlas('NOTE_assets');
+					animSuffix = ' alone';
+			}
+
+			for (i in 0...colorArray.length)
+			{
+				animation.addByPrefix(colorArray[i] + 'Scroll', colorArray[i] + animSuffix); // Normal
+				animation.addByPrefix(colorArray[i] + 'hold', colorArray[i] + ' hold'); // Hold
+				animation.addByPrefix(colorArray[i] + 'holdend', colorArray[i] + ' tail'); // Tails
+			}
+
+			setGraphicSize(Std.int(width * 0.7));
+			updateHitbox();
+
+			antialiasing = FlxG.save.data.antialiasing;
+		}
+		else
+		{
+			if (PlayState.SONG.noteStyle == null)
+			{
+				switch (PlayState.storyWeek)
 				{
-					animation.add('greenScroll', [22]);
-					animation.add('redScroll', [23]);
-					animation.add('blueScroll', [21]);
-					animation.add('purpleScroll', [20]);
+					case 6:
+						noteTypeCheck = 'pixel';
 				}
-				else
-				{
-					animation.add('greenScroll', [6]);
-					animation.add('redScroll', [7]);
-					animation.add('blueScroll', [5]);
-					animation.add('purpleScroll', [4]);
-				}
+			}
+			else
+			{
+				noteTypeCheck = PlayState.SONG.noteStyle;
+			}
 
-				if (isSustainNote)
-				{
-					loadGraphic(Paths.image('arrowEnds', 'exe'), true, 7, 6);
+			switch (noteTypeCheck)
+			{
+				case 'pixel':
+					loadGraphic(Paths.image('arrows-pixels', 'exe'), true, 17, 17);
+					if (isSustainNote)
+						loadGraphic(Paths.image('arrowEnds', 'exe'), true, 7, 6);
 
-					animation.add('purpleholdend', [4]);
-					animation.add('greenholdend', [6]);
-					animation.add('redholdend', [7]);
-					animation.add('blueholdend', [5]);
-
-					animation.add('purplehold', [0]);
-					animation.add('greenhold', [2]);
-					animation.add('redhold', [3]);
-					animation.add('bluehold', [1]);
-				}
-
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-				updateHitbox();
-
-			case 'majinNOTES':
-				trace('majin note');
-
-				frames = Paths.getSparrowAtlas('Majin_Notes', 'exe');
-				var fuckingSussy = Paths.getSparrowAtlas('Majin_Notes', 'exe');
-				for (amogus in fuckingSussy.frames)
-				{
-					this.frames.pushFrame(amogus);
-				}
-
-				switch (noteType)
-				{
-					case 2:
+					for (i in 0...colorArray.length)
+					{
+						if (noteType == 2)
 						{
-							
-							frames = Paths.getSparrowAtlas('Majin_Notes', 'exe');
-							animation.addByPrefix('greenScroll', 'green0');
-							animation.addByPrefix('redScroll', 'red0');
-							animation.addByPrefix('blueScroll', 'blue0');
-							animation.addByPrefix('purpleScroll', 'purple0');
-
-							animation.addByPrefix('purpleholdend', 'purple hold end');
-							animation.addByPrefix('greenholdend', 'green hold end');
-							animation.addByPrefix('redholdend', 'red hold end');
-							animation.addByPrefix('blueholdend', 'blue hold end');
-
-							animation.addByPrefix('purplehold', 'purple hold piece');
-							animation.addByPrefix('greenhold', 'green hold piece');
-							animation.addByPrefix('redhold', 'red hold piece');
-							animation.addByPrefix('bluehold', 'blue hold piece');
-
-							setGraphicSize(Std.int(width * 0.7));
-
-							updateHitbox();
-							antialiasing = FlxG.save.data.antialiasing;
+							animation.add(colorArray[i] + 'Scroll', [i + 20]); // Normal notes
 						}
-					default:
+						else
 						{
-							frames = Paths.getSparrowAtlas('Majin_Notes', 'exe');
-							animation.addByPrefix('greenScroll', 'green0');
-							animation.addByPrefix('redScroll', 'red0');
-							animation.addByPrefix('blueScroll', 'blue0');
-							animation.addByPrefix('purpleScroll', 'purple0');
-
-							animation.addByPrefix('purpleholdend', 'purple hold end');
-							animation.addByPrefix('greenholdend', 'green hold end');
-							animation.addByPrefix('redholdend', 'red hold end');
-							animation.addByPrefix('blueholdend', 'blue hold end');
-
-							animation.addByPrefix('purplehold', 'purple hold piece');
-							animation.addByPrefix('greenhold', 'green hold piece');
-							animation.addByPrefix('redhold', 'red hold piece');
-							animation.addByPrefix('bluehold', 'blue hold piece');
-
-							setGraphicSize(Std.int(width * 0.7));
-							updateHitbox();
-							antialiasing = FlxG.save.data.antialiasing;
+							animation.add(colorArray[i] + 'Scroll', [i + 4]); // Normal notes
 						}
-				}
+						animation.add(colorArray[i] + 'hold', [i]); // Hold
+						animation.add(colorArray[i] + 'holdend', [i + 4]); // Tails
+					}
 
-			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
-				var fuckingSussy = Paths.getSparrowAtlas('staticNotes');
-				for (amogus in fuckingSussy.frames)
-				{
-					this.frames.pushFrame(amogus);
-				}
+					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+					updateHitbox();
+				case 'majinNOTES':
+					frames = Paths.getSparrowAtlas('Majin_Notes', 'exe');
+					var fuckingSussy = Paths.getSparrowAtlas('Majin_Notes', 'exe');
+					for (amogus in fuckingSussy.frames)
+					{
+						this.frames.pushFrame(amogus);
+					}
 
-				switch (noteType)
-				{
-					case 3:
-						{
-							frames = Paths.getSparrowAtlas('PhantomNote');
-							animation.addByPrefix('greenScroll', 'green withered');
-							animation.addByPrefix('redScroll', 'red withered');
-							animation.addByPrefix('blueScroll', 'blue withered');
-							animation.addByPrefix('purpleScroll', 'purple withered');
+					for (i in 0...colorArray.length)
+					{
+						animation.addByPrefix(colorArray[i] + 'Scroll', colorArray[i] + ' alone'); // Normal
+						animation.addByPrefix(colorArray[i] + 'hold', colorArray[i] + ' hold'); // Hold
+						animation.addByPrefix(colorArray[i] + 'holdend', colorArray[i] + ' tail'); // Tails
+					}
 
-							setGraphicSize(Std.int(width * 0.7));
+					setGraphicSize(Std.int(width * 0.7));
+					updateHitbox();
 
-							updateHitbox();
-							antialiasing = FlxG.save.data.antialiasing;
-						}
+					antialiasing = FlxG.save.data.antialiasing;
+				default:
+					frames = Paths.getSparrowAtlas('NOTE_assets');
+					var fuckingSussy = Paths.getSparrowAtlas('staticNotes', 'exe');
+					for (amogus in fuckingSussy.frames)
+					{
+						this.frames.pushFrame(amogus);
+					}
 
-					case 2:
-						{
-							frames = Paths.getSparrowAtlas('staticNotes');
-							animation.addByPrefix('greenScroll', 'green static');
-							animation.addByPrefix('redScroll', 'red static');
-							animation.addByPrefix('blueScroll', 'blue static');
-							animation.addByPrefix('purpleScroll', 'purple static');
+					var animSuffix = ' alone';
 
-							animation.addByPrefix('purpleholdend', 'purple hold end');
-							animation.addByPrefix('greenholdend', 'green hold end');
-							animation.addByPrefix('redholdend', 'red hold end');
-							animation.addByPrefix('blueholdend', 'blue hold end');
-
-							animation.addByPrefix('purplehold', 'purple hold piece');
-							animation.addByPrefix('greenhold', 'green hold piece');
-							animation.addByPrefix('redhold', 'red hold piece');
-							animation.addByPrefix('bluehold', 'blue hold piece');
-
-							setGraphicSize(Std.int(width * 0.7));
-
-							updateHitbox();
-							antialiasing = FlxG.save.data.antialiasing;
-						}
-					default:
-						{
+					switch (noteType)
+					{
+						case 3:
+							frames = Paths.getSparrowAtlas('PhantomNote', 'exe');
+							animSuffix = ' withered';
+						case 2:
+							frames = Paths.getSparrowAtlas('staticNotes', 'exe');
+							animSuffix = ' static';
+						default:
 							frames = Paths.getSparrowAtlas('NOTE_assets');
-							animation.addByPrefix('greenScroll', 'green0');
-							animation.addByPrefix('redScroll', 'red0');
-							animation.addByPrefix('blueScroll', 'blue0');
-							animation.addByPrefix('purpleScroll', 'purple0');
-							if (isRing)
-								animation.addByPrefix('goldScroll', 'gold0');
+							animSuffix = ' alone';
+					}
 
-							animation.addByPrefix('purpleholdend', 'purple hold end');
-							animation.addByPrefix('greenholdend', 'green hold end');
-							animation.addByPrefix('redholdend', 'red hold end');
-							animation.addByPrefix('blueholdend', 'blue hold end');
-							if (isRing)
-								animation.addByPrefix('goldholdend', 'red hold end');
+					for (i in 0...colorArray.length)
+					{
+						animation.addByPrefix(colorArray[i] + 'Scroll', colorArray[i] + animSuffix); // Normal
+						animation.addByPrefix(colorArray[i] + 'hold', colorArray[i] + ' hold'); // Hold
+						animation.addByPrefix(colorArray[i] + 'holdend', colorArray[i] + ' tail'); // Tails
+					}
 
-							animation.addByPrefix('purplehold', 'purple hold piece');
-							animation.addByPrefix('greenhold', 'green hold piece');
-							animation.addByPrefix('redhold', 'red hold piece');
-							animation.addByPrefix('bluehold', 'blue hold piece');
-							if (isRing)
-								animation.addByPrefix('goldhold', 'red hold piece');
+					setGraphicSize(Std.int(width * 0.7));
+					updateHitbox();
 
-							setGraphicSize(Std.int(width * 0.7));
-							updateHitbox();
-							antialiasing = FlxG.save.data.antialiasing;
-						}
-				}
+					antialiasing = FlxG.save.data.antialiasing;
+			}
 		}
 
-		switch (noteData)
+		x += swagWidth * noteData;
+		animation.play(colorArray[noteData] + 'Scroll');
+		originColor = noteData; // The note's origin color will be checked by its sustain notes
+
+		if (FlxG.save.data.stepMania && !isSustainNote)
 		{
-			case 0:
-				x += swagWidth * 0;
-				animation.play('purpleScroll');
-			case 1:
-				x += swagWidth * 1;
-				animation.play('blueScroll');
-			case 2:
-				if (isRing)
-				{
-					x += swagWidth * 2;
-					animation.play('goldScroll');
-				}
-				else
-				{
-					x += swagWidth * 2;
-					animation.play('greenScroll');
-				}
-			case 3:
-				if (isRing)
-				{
-					x += swagWidth * 3;
-					animation.play('greenScroll');
-				}
-				else
-				{
-					x += swagWidth * 3;
-					animation.play('redScroll');
-				}
-			case 4:
-				if (isRing)
-				{
-					x += swagWidth * 4;
-					animation.play('redScroll');
-				}
-		}
+			var strumCheck:Float = rStrumTime;
 
-		// trace(prevNote);
+			// I give up on fluctuating bpms. something has to be subtracted from strumCheck to make them look right but idk what.
+			// I'd use the note's section's start time but neither the note's section nor its start time are accessible by themselves
+			// strumCheck -= ???
+
+			var ind:Int = Std.int(Math.round(strumCheck / (Conductor.stepCrochet / 2)));
+
+			var col:Int = 0;
+			col = quantityColorArray[ind % quantityColorArray.length]; // Set the color depending on the beats
+
+			animation.play(colorArray[col] + 'Scroll');
+			localAngle -= angleArray[col];
+			localAngle += angleArray[noteData];
+			originColor = col;
+		}
 
 		// we make sure its downscroll and its a SUSTAIN NOTE (aka a trail, not a note)
 		// and flip it so it doesn't look weird.
@@ -348,6 +287,9 @@ class Note extends FlxSprite
 		if (FlxG.save.data.downscroll && sustainNote)
 			flipY = true;
 
+		var stepHeight = (0.45 * Conductor.stepCrochet * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? PlayState.SONG.speed : PlayStateChangeables.scrollSpeed,
+			2));
+
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
@@ -355,83 +297,30 @@ class Note extends FlxSprite
 
 			x += width / 2;
 
-			if (!isRing)
-			{
-				switch (noteData)
-				{
-					case 3:
-						animation.play('redholdend');
-					case 2:
-						animation.play('greenholdend');
-					case 1:
-						animation.play('blueholdend');
-					case 0:
-						animation.play('purpleholdend');
-				}
-			}
-			else
-			{
-				switch (noteData)
-				{
-					case 3:
-						animation.play('greenholdend');
-					case 4:
-						animation.play('redholdend');
-					case 2:
-						animation.play('goldholdend');
-					case 1:
-						animation.play('blueholdend');
-					case 0:
-						animation.play('purpleholdend');
-				}
-			}
+			originColor = prevNote.originColor;
 
+			animation.play(colorArray[originColor] + 'holdend'); // This works both for normal colors and quantization colors
 			updateHitbox();
 
 			x -= width / 2;
 
-			if (PlayState.curStage.startsWith('school'))
+			// if (noteTypeCheck == 'pixel')
+			//	x += 30;
+			if (inCharter)
 				x += 30;
 
 			if (prevNote.isSustainNote)
 			{
-				if (!isRing)
-				{
-					switch (prevNote.noteData)
-					{
-						case 0:
-							prevNote.animation.play('purplehold');
-						case 1:
-							prevNote.animation.play('bluehold');
-						case 3:
-							prevNote.animation.play('redhold');
-						case 2:
-							prevNote.animation.play('greenhold');
-					}
-				}
-				else
-				{
-					switch (prevNote.noteData)
-					{
-						case 0:
-							prevNote.animation.play('purplehold');
-						case 1:
-							prevNote.animation.play('bluehold');
-						case 3:
-							prevNote.animation.play('greenhold');
-						case 2:
-							prevNote.animation.play('goldhold');
-						case 4:
-							prevNote.animation.play('redhold');
-					}
-				}
-
-				if (FlxG.save.data.scrollSpeed != 1)
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * FlxG.save.data.scrollSpeed;
-				else
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
+				prevNote.animation.play(colorArray[prevNote.originColor] + 'hold');
 				prevNote.updateHitbox();
+
+				prevNote.scale.y *= (stepHeight + 1) / prevNote.height; // + 1 so that there's no odd gaps as the notes scroll
+				prevNote.updateHitbox();
+				prevNote.noteYOff = Math.round(-prevNote.offset.y);
+
 				// prevNote.setGraphicSize();
+
+				noteYOff = Math.round(-offset.y);
 			}
 		}
 	}
