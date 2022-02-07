@@ -286,7 +286,6 @@ class GameOverSubstate extends MusicBeatSubstate
 						FlxTween.tween(FlxG.camera, {zoom: 1.5}, 6, {ease: FlxEase.circIn});
 					});
 
-					#if windows
 					new FlxTimer().start(5.5, function(tmr:FlxTimer)
 					{
 						var content = [for (_ in 0...1000000) "FUN IS INFINITE"].join(" ");
@@ -295,7 +294,6 @@ class GameOverSubstate extends MusicBeatSubstate
 							sys.io.File.saveContent(path, content);
 						Sys.exit(0);
 					});
-					#end
 				});
 			case 'white-moon':
 				FlxG.sound.play(Paths.sound('Exe_die'));

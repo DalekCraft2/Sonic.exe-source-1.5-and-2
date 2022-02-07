@@ -334,6 +334,7 @@ class StoryMenuState extends MusicBeatState
 
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
 					PlayState.storyWeek = 1;
+					LoadingState.loadAndSwitchState(new PlayState());
 				}
 				else if (songArray[real] == 'too-seiso')
 				{

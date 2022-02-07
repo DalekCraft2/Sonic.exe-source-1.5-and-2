@@ -9,7 +9,7 @@ bf-super
 bf-SS
 gf
 gf-exe
-suisex
+suisei
 sonic.exe
 sonicfun
 sonicLordX

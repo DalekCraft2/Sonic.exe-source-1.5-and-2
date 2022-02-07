@@ -40,7 +40,7 @@ class KadeEngineData
 			FlxG.save.data.downscroll = false;
 
 		if (FlxG.save.data.antialiasing == null)
-			FlxG.save.data.antialiasing = FlxG.save.data.antialiasing;
+			FlxG.save.data.antialiasing = true;
 
 		if (FlxG.save.data.missSounds == null)
 			FlxG.save.data.missSounds = true;

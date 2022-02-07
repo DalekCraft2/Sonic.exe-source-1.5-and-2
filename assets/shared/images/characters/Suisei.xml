@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Suisei.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="suiseiDOWN0000" x="1" y="1" width="420" height="613" frameX="0" frameY="-41" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0001" x="422" y="1" width="415" height="621" frameX="0" frameY="-33" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0002" x="838" y="1" width="374" height="654" frameX="-29" frameY="0" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0003" x="1213" y="1" width="376" height="651" frameX="-29" frameY="-3" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0004" x="1590" y="1" width="348" height="647" frameX="-34" frameY="-7" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0005" x="1939" y="1" width="345" height="643" frameX="-34" frameY="-11" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0006" x="2285" y="1" width="331" height="641" frameX="-37" frameY="-13" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0007" x="2617" y="1" width="331" height="642" frameX="-37" frameY="-12" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0008" x="2949" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0009" x="2949" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0010" x="3277" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0011" x="3277" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0012" x="3277" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiDOWN0013" x="3277" y="1" width="327" height="639" frameX="-41" frameY="-15" frameWidth="420" frameHeight="654"/>
+	<SubTexture name="suiseiIDLE0000" x="3605" y="1" width="414" height="635"/>
+	<SubTexture name="suiseiIDLE0001" x="1" y="656" width="414" height="634" frameX="0" frameY="-1" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0002" x="416" y="656" width="389" height="633" frameX="-13" frameY="-2" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0003" x="416" y="656" width="389" height="633" frameX="-13" frameY="-2" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0004" x="806" y="656" width="371" height="635" frameX="-22" frameY="0" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0005" x="806" y="656" width="371" height="635" frameX="-22" frameY="0" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0006" x="1178" y="656" width="357" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0007" x="1178" y="656" width="357" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0008" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0009" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0010" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0011" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0012" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiIDLE0013" x="1536" y="656" width="354" height="632" frameX="-31" frameY="-3" frameWidth="414" frameHeight="635"/>
+	<SubTexture name="suiseiLEFT0000" x="1891" y="656" width="609" height="697"/>
+	<SubTexture name="suiseiLEFT0001" x="2501" y="656" width="608" height="689" frameX="-1" frameY="-8" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0002" x="3110" y="656" width="605" height="684" frameX="-4" frameY="-13" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0003" x="1" y="1354" width="605" height="684" frameX="-4" frameY="-13" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0004" x="607" y="1354" width="585" height="690" frameX="-24" frameY="-7" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0005" x="1193" y="1354" width="587" height="683" frameX="-22" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0006" x="1781" y="1354" width="577" height="684" frameX="-32" frameY="-13" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0007" x="2359" y="1354" width="577" height="684" frameX="-32" frameY="-13" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0008" x="2937" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0009" x="3507" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0010" x="3507" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0011" x="3507" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0012" x="3507" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiLEFT0013" x="3507" y="1354" width="569" height="683" frameX="-40" frameY="-14" frameWidth="609" frameHeight="697"/>
+	<SubTexture name="suiseiRIGHT0000" x="1" y="2045" width="362" height="613" frameX="-35" frameY="-11" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0001" x="364" y="2045" width="362" height="624" frameX="-35" frameY="0" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0002" x="727" y="2045" width="319" height="616" frameX="-10" frameY="-8" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0003" x="1047" y="2045" width="325" height="619" frameX="-10" frameY="-5" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0004" x="1373" y="2045" width="313" height="610" frameX="0" frameY="-14" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0005" x="1687" y="2045" width="313" height="606" frameX="0" frameY="-18" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0006" x="2001" y="2045" width="294" height="604" frameX="-8" frameY="-20" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0007" x="2296" y="2045" width="294" height="598" frameX="-8" frameY="-26" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0008" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0009" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0010" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0011" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0012" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiRIGHT0013" x="2591" y="2045" width="294" height="600" frameX="-8" frameY="-24" frameWidth="397" frameHeight="624"/>
+	<SubTexture name="suiseiUP0000" x="2886" y="2045" width="317" height="683" frameX="-14" frameY="-3" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0001" x="3204" y="2045" width="331" height="686" frameX="0" frameY="0" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0002" x="3536" y="2045" width="334" height="675" frameX="-4" frameY="-11" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0003" x="1" y="2732" width="322" height="665" frameX="-16" frameY="-21" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0004" x="324" y="2732" width="315" height="662" frameX="-26" frameY="-25" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0005" x="640" y="2732" width="303" height="656" frameX="-38" frameY="-31" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0006" x="944" y="2732" width="316" height="652" frameX="-30" frameY="-35" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0007" x="1261" y="2732" width="309" height="649" frameX="-37" frameY="-38" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0008" x="1571" y="2732" width="307" height="646" frameX="-39" frameY="-41" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0009" x="1879" y="2732" width="305" height="644" frameX="-41" frameY="-43" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0010" x="1879" y="2732" width="305" height="644" frameX="-41" frameY="-43" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0011" x="1879" y="2732" width="305" height="644" frameX="-41" frameY="-43" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0012" x="1879" y="2732" width="305" height="644" frameX="-41" frameY="-43" frameWidth="346" frameHeight="687"/>
+	<SubTexture name="suiseiUP0013" x="1879" y="2732" width="305" height="644" frameX="-41" frameY="-43" frameWidth="346" frameHeight="687"/>
+</TextureAtlas>

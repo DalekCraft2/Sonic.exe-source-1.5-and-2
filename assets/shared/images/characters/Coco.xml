@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Coco.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="sunkyDOWN0000" x="0" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0001" x="909" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0002" x="1818" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0003" x="2727" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0004" x="3636" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0005" x="4545" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0006" x="5454" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0007" x="5454" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0008" x="5454" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0009" x="5454" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0010" x="5454" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyDOWN0011" x="6363" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0000" x="7272" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0001" x="7272" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0002" x="7272" y="0" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0003" x="0" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0004" x="0" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0005" x="0" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0006" x="909" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0007" x="909" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0008" x="909" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0009" x="1818" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0010" x="1818" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyIDLE0011" x="1818" y="774" width="909" height="774"/>
+	<SubTexture name="sunkyLEFT0000" x="2727" y="774" width="698" height="569" frameX="0" frameY="-2" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0001" x="3425" y="774" width="655" height="567" frameX="-45" frameY="-1" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0002" x="4080" y="774" width="648" height="568" frameX="-52" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0003" x="4728" y="774" width="645" height="568" frameX="-56" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0004" x="5373" y="774" width="643" height="567" frameX="-58" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0005" x="6016" y="774" width="642" height="567" frameX="-59" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0006" x="6658" y="774" width="642" height="567" frameX="-59" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0007" x="7300" y="774" width="641" height="567" frameX="-60" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0008" x="7300" y="774" width="641" height="567" frameX="-60" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0009" x="7300" y="774" width="641" height="567" frameX="-60" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0010" x="7300" y="774" width="641" height="567" frameX="-60" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyLEFT0011" x="7300" y="774" width="641" height="567" frameX="-60" frameY="0" frameWidth="701" frameHeight="571"/>
+	<SubTexture name="sunkyRIGHT0000" x="0" y="1548" width="544" height="449" frameX="-1" frameY="-7" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0001" x="544" y="1548" width="522" height="455" frameX="0" frameY="-1" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0002" x="1066" y="1548" width="518" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0003" x="1584" y="1548" width="516" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0004" x="2100" y="1548" width="515" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0005" x="2615" y="1548" width="515" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0006" x="3130" y="1548" width="515" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0007" x="3645" y="1548" width="514" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0008" x="4159" y="1548" width="514" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0009" x="4673" y="1548" width="514" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0010" x="4673" y="1548" width="514" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyRIGHT0011" x="4673" y="1548" width="514" height="456" frameX="0" frameY="0" frameWidth="545" frameHeight="456"/>
+	<SubTexture name="sunkyUP0000" x="5187" y="1548" width="909" height="774"/>
+	<SubTexture name="sunkyUP0001" x="6096" y="1548" width="909" height="774"/>
+	<SubTexture name="sunkyUP0002" x="7005" y="1548" width="909" height="774"/>
+	<SubTexture name="sunkyUP0003" x="0" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0004" x="909" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0005" x="1818" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0006" x="2727" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0007" x="2727" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0008" x="2727" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0009" x="2727" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0010" x="2727" y="2322" width="909" height="774"/>
+	<SubTexture name="sunkyUP0011" x="2727" y="2322" width="909" height="774"/>
+</TextureAtlas>

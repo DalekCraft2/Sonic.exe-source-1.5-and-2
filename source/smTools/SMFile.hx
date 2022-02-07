@@ -134,6 +134,7 @@ class SMFile
 			noteStyle: 'normal',
 			stage: 'stage',
 			speed: 1.0,
+			isRing: false,
 			validScore: false
 		};
 

@@ -337,7 +337,7 @@ class AlphaCharacter extends FlxSprite
 		frames = tex;
 		if (FlxG.save.data.antialiasing)
 		{
-			antialiasing = FlxG.save.data.antialiasing;
+			antialiasing = true;
 		}
 	}
 

@@ -242,8 +242,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
-			case 'suisex':
-				tex = Paths.getSparrowAtlas('Suisex', 'shared', true);
+			case 'suisei':
+				tex = Paths.getSparrowAtlas('Suisei', 'shared', true);
 				frames = tex;
 				animation.addByPrefix('idle', 'suiseiIDLE', 24, false);
 				animation.addByPrefix('singUP', 'suiseiUP', 24, false);

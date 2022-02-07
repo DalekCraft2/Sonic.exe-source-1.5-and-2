@@ -1,0 +1,8 @@
+idle 0 0
+iamgod 0 0
+singUP -5 51
+singRIGHT -35 -15
+singLEFT 271 99
+singDOWN 18 -4
+singDOWN-alt -5 51
+singLAUGH -5 51

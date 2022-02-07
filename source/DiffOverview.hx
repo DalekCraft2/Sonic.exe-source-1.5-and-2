@@ -436,7 +436,14 @@ class DiffOverview extends FlxSubState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, true);
+				var isAlt = songNotes[3];
+				var daType = songNotes[4];
+
+				// 2. I added a new parameter: daSkin which basically make the notes specific skins
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, true, isAlt, daType);
+				swagNote.sustainLength = songNotes[2];
+
+				swagNote.scrollFactor.set(0, 0);
 
 				if (!gottaHitNote)
 					continue;
