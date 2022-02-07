@@ -332,6 +332,9 @@ class PlayState extends MusicBeatState
 	private var dataSuffix:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 	private var dataColor:Array<String> = ['purple', 'blue', 'green', 'red'];
 
+	private var dataSuffixRing:Array<String> = ['LEFT', 'DOWN', 'SPACE', 'UP', 'RIGHT'];
+	private var dataColorRing:Array<String> = ['purple', 'blue', 'gold', 'green', 'red'];
+
 	public static var startTime = 0.0;
 
 	// API stuff
@@ -1422,7 +1425,7 @@ class PlayState extends MusicBeatState
 			case 'suisei':
 				dad.x -= 130;
 				dad.y += -50;
-			case 'sunky':
+			case 'coco':
 				dad.setGraphicSize(Std.int(dad.width * 0.2));
 				dad.x -= 1840;
 				dad.y += 80;
@@ -1811,7 +1814,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'TDoll':
 				healthBar.createFilledBar(FlxColor.fromRGB(255, 165, 0), FlxColor.fromRGB(49, 176, 209));
-			case 'suisei', 'sonic.exe', 'mio', 'sunky':
+			case 'suisei', 'sonic.exe', 'mio', 'coco':
 				healthBar.createFilledBar(FlxColor.fromRGB(0, 19, 102), FlxColor.fromRGB(49, 176, 209));
 			case 'sonicfun', 'exe', 'sanic':
 				healthBar.createFilledBar(FlxColor.fromRGB(60, 0, 138), FlxColor.fromRGB(49, 176, 209)); // FlxColor.fromRGB(60, 0, 138)
@@ -2061,7 +2064,7 @@ class PlayState extends MusicBeatState
 			else if (curSong.toLowerCase() == 'asacoco')
 			{
 				add(blackFuck);
-				startCircle.loadGraphic(Paths.image('StartScreens/Sunky', 'exe'));
+				startCircle.loadGraphic(Paths.image('StartScreens/Coco', 'exe'));
 				startCircle.scale.x = 0;
 				startCircle.x += 50;
 				add(startCircle);
@@ -2988,7 +2991,7 @@ class PlayState extends MusicBeatState
 		}
 		if (keys[data])
 		{
-			// trace("ur already holding " + key);
+			trace("ur already holding " + key);
 			return;
 		}
 
@@ -3454,7 +3457,7 @@ class PlayState extends MusicBeatState
 					babyArrow.animation.add('green', [6]);
 					babyArrow.animation.add('red', [7]);
 					babyArrow.animation.add('blue', [5]);
-					babyArrow.animation.add('purplel', [4]);
+					babyArrow.animation.add('purple', [4]);
 
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * daPixelZoom));
 					babyArrow.updateHitbox();
@@ -4356,7 +4359,7 @@ class PlayState extends MusicBeatState
 						case 'sonicLordX':
 							camFollow.y = dad.getMidpoint().y - 25;
 							camFollow.x = dad.getMidpoint().x + 120;
-						case 'sunky':
+						case 'coco':
 							camFollow.y = dad.getMidpoint().y - 30;
 							camFollow.x = dad.getMidpoint().x + 120;
 						case 'TDoll' | 'TDollAlt':
@@ -4730,13 +4733,17 @@ class PlayState extends MusicBeatState
 						trace("YOO WTF THIS IS AN ALT NOTE????");
 					}
 
+					var suffixArray = isRing ? dataSuffixRing : dataSuffix;
+					var colorArray = isRing ? dataColorRing : dataColor;
+
 					// Accessing the animation name directly to play it
 					if (!daNote.isParent && daNote.parent != null)
 					{
 						if (daNote.spotInLine != daNote.parent.children.length - 1)
 						{
 							var singData:Int = Std.int(Math.abs(daNote.noteData));
-							dad.playAnim('sing' + dataSuffix[singData] + altAnim, true);
+							if (!isRing || (isRing && singData != 2))
+								dad.playAnim('sing' + suffixArray[singData] + altAnim, true);
 
 							if (FlxG.save.data.cpuStrums)
 							{
@@ -4771,7 +4778,8 @@ class PlayState extends MusicBeatState
 					else
 					{
 						var singData:Int = Std.int(Math.abs(daNote.noteData));
-						dad.playAnim('sing' + dataSuffix[singData] + altAnim, true);
+						if (!isRing || (isRing && singData != 2))
+							dad.playAnim('sing' + suffixArray[singData] + altAnim, true);
 
 						if (FlxG.save.data.cpuStrums)
 						{
@@ -4906,18 +4914,67 @@ class PlayState extends MusicBeatState
 							}
 						}
 
-						if (loadRep && daNote.isSustainNote)
-						{
-							// im tired and lazy this sucks I know i'm dumb
-							if (findByTime(daNote.strumTime) != null)
-								totalNotesHit += 1;
+						/*if (loadRep && daNote.isSustainNote)
+							{
+								// im tired and lazy this sucks I know i'm dumb
+								if (findByTime(daNote.strumTime) != null)
+									totalNotesHit += 1;
+								else
+								{
+									vocals.volume = 0;
+									if (theFunne && !daNote.isSustainNote)
+									{
+										noteMiss(daNote.noteData, daNote);
+									}
+									if (daNote.isParent)
+									{
+										health -= 0.15; // give a health punishment for failing a LN
+										trace("hold fell over at the start");
+										for (i in daNote.children)
+										{
+											i.alpha = 0.3;
+											i.sustainActive = false;
+										}
+									}
+									else
+									{
+										if (!daNote.wasGoodHit
+											&& daNote.isSustainNote
+											&& daNote.sustainActive
+											&& daNote.spotInLine != daNote.parent.children.length)
+										{
+											health -= 0.2; // give a health punishment for failing a LN
+											trace("hold fell over at " + daNote.spotInLine);
+											for (i in daNote.parent.children)
+											{
+												i.alpha = 0.3;
+												i.sustainActive = false;
+											}
+											if (daNote.parent.wasGoodHit)
+												misses++;
+											updateAccuracy();
+										}
+										else
+										{
+											health -= 0.15;
+										}
+									}
+								}
+							}
 							else
 							{
 								vocals.volume = 0;
 								if (theFunne && !daNote.isSustainNote)
 								{
-									noteMiss(daNote.noteData, daNote);
+									if (PlayStateChangeables.botPlay && daNote.noteType != 3)
+									{
+										daNote.rating = "bad";
+										goodNoteHit(daNote);
+									}
+									else
+										noteMiss(daNote.noteData, daNote);
 								}
+
 								if (daNote.isParent)
 								{
 									health -= 0.15; // give a health punishment for failing a LN
@@ -4926,6 +4983,7 @@ class PlayState extends MusicBeatState
 									{
 										i.alpha = 0.3;
 										i.sustainActive = false;
+										trace(i.alpha);
 									}
 								}
 								else
@@ -4935,12 +4993,13 @@ class PlayState extends MusicBeatState
 										&& daNote.sustainActive
 										&& daNote.spotInLine != daNote.parent.children.length)
 									{
-										health -= 0.2; // give a health punishment for failing a LN
+										health -= 0.25; // give a health punishment for failing a LN
 										trace("hold fell over at " + daNote.spotInLine);
 										for (i in daNote.parent.children)
 										{
 											i.alpha = 0.3;
 											i.sustainActive = false;
+											trace(i.alpha);
 										}
 										if (daNote.parent.wasGoodHit)
 											misses++;
@@ -4951,58 +5010,7 @@ class PlayState extends MusicBeatState
 										health -= 0.15;
 									}
 								}
-							}
-						}
-						else
-						{
-							vocals.volume = 0;
-							if (theFunne && !daNote.isSustainNote)
-							{
-								if (PlayStateChangeables.botPlay)
-								{
-									daNote.rating = "bad";
-									goodNoteHit(daNote);
-								}
-								else
-									noteMiss(daNote.noteData, daNote);
-							}
-
-							if (daNote.isParent)
-							{
-								health -= 0.15; // give a health punishment for failing a LN
-								trace("hold fell over at the start");
-								for (i in daNote.children)
-								{
-									i.alpha = 0.3;
-									i.sustainActive = false;
-									trace(i.alpha);
-								}
-							}
-							else
-							{
-								if (!daNote.wasGoodHit
-									&& daNote.isSustainNote
-									&& daNote.sustainActive
-									&& daNote.spotInLine != daNote.parent.children.length)
-								{
-									health -= 0.25; // give a health punishment for failing a LN
-									trace("hold fell over at " + daNote.spotInLine);
-									for (i in daNote.parent.children)
-									{
-										i.alpha = 0.3;
-										i.sustainActive = false;
-										trace(i.alpha);
-									}
-									if (daNote.parent.wasGoodHit)
-										misses++;
-									updateAccuracy();
-								}
-								else
-								{
-									health -= 0.15;
-								}
-							}
-						}
+						}*/
 					}
 
 					daNote.visible = false;
@@ -5640,6 +5648,7 @@ class PlayState extends MusicBeatState
 		var holdArray:Array<Bool> = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
 		var pressArray:Array<Bool> = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
 		var releaseArray:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
+		var keynameArray:Array<String> = ['left', 'down', 'up', 'right'];
 		if (isRing)
 		{
 			holdArray = [controls.LEFT, controls.DOWN, controls.SPACEB, controls.UP, controls.RIGHT];
@@ -5657,30 +5666,26 @@ class PlayState extends MusicBeatState
 				controls.UP_R,
 				controls.RIGHT_R
 			];
+			keynameArray = ['left', 'down', 'space', 'up', 'right'];
 		}
 
-		#if windows
+		#if cpp
 		if (luaModchart != null)
 		{
-			if (controls.LEFT_P)
+			for (i in 0...pressArray.length)
 			{
-				luaModchart.executeState('keyPressed', ["left"]);
+				if (pressArray[i] == true)
+				{
+					luaModchart.executeState('keyPressed', [keynameArray[i]]);
+				}
 			};
-			if (controls.DOWN_P)
+
+			for (i in 0...releaseArray.length)
 			{
-				luaModchart.executeState('keyPressed', ["down"]);
-			};
-			if (controls.SPACE_P)
-			{
-				luaModchart.executeState('keyPressed', ["space"]);
-			};
-			if (controls.UP_P)
-			{
-				luaModchart.executeState('keyPressed', ["up"]);
-			};
-			if (controls.RIGHT_P)
-			{
-				luaModchart.executeState('keyPressed', ["right"]);
+				if (releaseArray[i] == true)
+				{
+					luaModchart.executeState('keyReleased', [keynameArray[i]]);
+				}
 			};
 		};
 		#end
@@ -5714,8 +5719,11 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData])
+				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData] && daNote.sustainActive)
+				{
+					trace(daNote.sustainActive);
 					goodNoteHit(daNote);
+				}
 			});
 		}
 
@@ -5770,12 +5778,17 @@ class PlayState extends MusicBeatState
 					FlxG.log.add("killing dumb ass note at " + note.strumTime);
 					note.kill();
 					notes.remove(note, true);
-
 					note.destroy();
 				}
 
 				possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-				var hit = [false, false, false, false, false];
+
+				var hit = [false, false, false, false];
+				if (isRing)
+				{
+					hit = [false, false, false, false, false];
+				}
+
 				if (perfectMode)
 					goodNoteHit(possibleNotes[0]);
 				else if (possibleNotes.length > 0)
@@ -5794,6 +5807,7 @@ class PlayState extends MusicBeatState
 						{
 							if (mashViolations != 0)
 								mashViolations--;
+							hit[coolNote.noteData] = true;
 							scoreTxt.color = FlxColor.WHITE;
 							var noteDiff:Float = -(coolNote.strumTime - Conductor.songPosition);
 							anas[coolNote.noteData].hit = true;
@@ -5809,6 +5823,20 @@ class PlayState extends MusicBeatState
 						if (pressArray[shit])
 							noteMiss(shit, null);
 				}
+
+				if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || PlayStateChangeables.botPlay))
+				{
+					if (boyfriend.animation.curAnim.name.startsWith('sing')
+						&& !boyfriend.animation.curAnim.name.endsWith('miss')
+						&& (boyfriend.animation.curAnim.curFrame >= 10 || boyfriend.animation.curAnim.finished))
+						boyfriend.playAnim('idle');
+				}
+				else if (!FlxG.save.data.ghost)
+				{
+					for (shit in 0...pressArray.length)
+						if (pressArray[shit])
+							noteMiss(shit, null);
+				}
 			}
 
 			if (!loadRep)
@@ -5816,13 +5844,15 @@ class PlayState extends MusicBeatState
 					if (i != null)
 						replayAna.anaArray.push(i); // put em all there
 		}
-		notes.forEachAlive(function(daNote:Note)
-		{
-			if (PlayStateChangeables.useDownscroll && daNote.y > strumLine.y || !PlayStateChangeables.useDownscroll && daNote.y < strumLine.y)
+		if (PlayStateChangeables.botPlay)
+			notes.forEachAlive(function(daNote:Note)
 			{
-				// Force good note hit regardless if it's too late to hit it or not as a fail safe
-				if (PlayStateChangeables.botPlay && daNote.canBeHit && daNote.mustPress || PlayStateChangeables.botPlay && daNote.tooLate && daNote.mustPress)
+				var diff = -(daNote.strumTime - Conductor.songPosition);
+
+				daNote.rating = Ratings.CalculateRating(diff, Math.floor((PlayStateChangeables.safeFrames / 60) * 1000));
+				if (daNote.mustPress && daNote.rating == "sick" || (diff > 0 && daNote.mustPress))
 				{
+					// Force good note hit regardless if it's too late to hit it or not as a fail safe
 					if (loadRep)
 					{
 						// trace('ReplayNote ' + tmpRepNote.strumtime + ' | ' + tmpRepNote.direction);
@@ -5839,28 +5869,44 @@ class PlayState extends MusicBeatState
 						if (daNote.noteType != 3)
 							goodNoteHit(daNote);
 						boyfriend.holdTimer = daNote.sustainLength;
+						if (FlxG.save.data.cpuStrums)
+						{
+							playerStrums.forEach(function(spr:FlxSprite)
+							{
+								if (Math.abs(daNote.noteData) == spr.ID)
+								{
+									spr.animation.play('confirm', true);
+								}
+								if (spr.animation.curAnim.name == 'confirm' && SONG.noteStyle != 'pixel')
+								{
+									spr.centerOffsets();
+									spr.offset.x -= 13;
+									spr.offset.y -= 13;
+								}
+								else
+									spr.centerOffsets();
+							});
+						}
 					}
 				}
-			}
-		});
+			});
 
 		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || PlayStateChangeables.botPlay))
 		{
-			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-			{
+			if (boyfriend.animation.curAnim.name.startsWith('sing')
+				&& !boyfriend.animation.curAnim.name.endsWith('miss')
+				&& (boyfriend.animation.curAnim.curFrame >= 10 || boyfriend.animation.curAnim.finished))
 				boyfriend.playAnim('idle');
-				bfcamX = 0; // real.
-				bfcamY = 0;
-			}
 		}
 
+		// if (!PlayStateChangeables.botPlay)
+		// {
 		playerStrums.forEach(function(spr:FlxSprite)
 		{
-			if (pressArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
-				spr.animation.play('pressed');
-
-			if (!holdArray[spr.ID])
-				spr.animation.play('static');
+			if (keys[spr.ID] && spr.animation.curAnim.name != 'confirm' && spr.animation.curAnim.name != 'pressed')
+				spr.animation.play('pressed', false);
+			if (!keys[spr.ID])
+				spr.animation.play('static', false);
 
 			if (spr.animation.curAnim.name == 'confirm' && SONG.noteStyle != 'pixel')
 			{
@@ -5871,6 +5917,7 @@ class PlayState extends MusicBeatState
 			else
 				spr.centerOffsets();
 		});
+		// }
 	}
 
 	public function findByTime(time:Float):Array<Dynamic>

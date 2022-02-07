@@ -287,8 +287,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * 1.2));
 
 				updateHitbox();
-			case 'sunky':
-				tex = Paths.getSparrowAtlas('Sunky', 'shared', true);
+			case 'coco':
+				tex = Paths.getSparrowAtlas('Coco', 'shared', true);
 				frames = tex;
 				animation.addByPrefix('idle', 'sunkyIDLE instance 1', 24);
 				animation.addByPrefix('singUP', 'sunkyUP instance 1', 24);
