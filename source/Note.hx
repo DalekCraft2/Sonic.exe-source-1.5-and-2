@@ -333,13 +333,13 @@ class Note extends FlxSprite
 		super.update(elapsed);
 		angle = modAngle + localAngle;
 
-		// if (!modifiedByLua)
-		// {
-		// 	if (!sustainActive)
-		// 	{
-		// 		alpha = 0.3;
-		// 	}
-		// }
+		if (!modifiedByLua)
+		{
+			if (!sustainActive)
+			{
+				alpha = 0.3;
+			}
+		}
 
 		if (mustPress)
 		{

@@ -35,7 +35,6 @@ function update(elapsed)
     if curStep >= 1392 and curStep < 1428 then
         tweenCameraZoom(1.2, 0.5)
     end
-
 end
 
 function beatHit(beat)
