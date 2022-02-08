@@ -290,11 +290,11 @@ class Character extends FlxSprite
 			case 'coco':
 				tex = Paths.getSparrowAtlas('Coco', 'shared', true);
 				frames = tex;
-				animation.addByPrefix('idle', 'sunkyIDLE instance 1', 24);
-				animation.addByPrefix('singUP', 'sunkyUP instance 1', 24);
-				animation.addByPrefix('singRIGHT', 'sunkyRIGHT instance 1', 24);
-				animation.addByPrefix('singDOWN', 'sunkyDOWN instance 1', 24);
-				animation.addByPrefix('singLEFT', 'sunkyLEFT instance 1', 24);
+				animation.addByPrefix('idle', 'sunkyIDLE', 24);
+				animation.addByPrefix('singUP', 'sunkyUP', 24);
+				animation.addByPrefix('singRIGHT', 'sunkyRIGHT', 24);
+				animation.addByPrefix('singDOWN', 'sunkyDOWN', 24);
+				animation.addByPrefix('singLEFT', 'sunkyLEFT', 24);
 
 				loadOffsetFile(curCharacter);
 

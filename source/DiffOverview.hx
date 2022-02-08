@@ -436,8 +436,9 @@ class DiffOverview extends FlxSubState
 				else
 					oldNote = null;
 
-				var isAlt = songNotes[3];
-				var daType = songNotes[4];
+				// var isAlt = songNotes[3];
+				var isAlt = section.altAnim;
+				var daType = songNotes[3];
 
 				// 2. I added a new parameter: daSkin which basically make the notes specific skins
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, true, isAlt, daType);

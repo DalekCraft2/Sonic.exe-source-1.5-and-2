@@ -59,7 +59,7 @@ class Note extends FlxSprite
 
 	public var dataColor:Array<String> = ['purple', 'blue', 'green', 'red'];
 	public var dataColor5k:Array<String> = ['purple', 'blue', 'gold', 'green', 'red'];
-	public var quantityColor:Array<Int> = [RED_NOTE, 2, BLUE_NOTE, 2, PURP_NOTE, 2, BLUE_NOTE, 2];
+	public var quantityColor:Array<Int> = [PURP_NOTE, 2, BLUE_NOTE, 2, GREEN_NOTE, 2, RED_NOTE, 2]; // Maybe I should figure out why the previous array only had two alternating colors...
 	public var quantityColor5k:Array<Int> = [PURP_NOTE, 2, BLUE_NOTE, 2, GREEN_NOTE, 2, RED_NOTE, 2, 4, 2];
 	public var arrowAngles:Array<Int> = [180, 90, 270, 0];
 	public var arrowAngles5k:Array<Int> = [180, 90, 0, 270, 0];

@@ -2654,8 +2654,9 @@ class ChartingState extends MusicBeatState
 				var daNoteInfo = i[1];
 				var daStrumTime = i[0];
 				var daSus = i[2];
-				var isAlt = i[3];
-				var daType = i[4];
+				// var isAlt = i[3];
+				var isAlt = section.altAnim;
+				var daType = i[3];
 
 				var note:Note = new Note(daStrumTime, daNoteInfo % keyArray[fucku], null, false, true, isAlt, daType);
 				note.rawNoteData = daNoteInfo;
@@ -3047,7 +3048,7 @@ class ChartingState extends MusicBeatState
 		}
 		else
 		{
-			var note:Note = new Note(n.strumTime, n.noteData % 4, null, false, true, n.isAlt);
+			var note:Note = new Note(n.strumTime, n.noteData % 4, null, false, true, n.isAlt, n.noteType);
 			note.rawNoteData = n.noteData;
 			note.sustainLength = noteSus;
 			note.setGraphicSize(Math.floor(GRID_SIZE), Math.floor(GRID_SIZE));

@@ -1,5 +1,6 @@
 package;
 
+import polymod.Polymod.FrameworkParams;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -55,12 +56,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		FlxG.mouse.visible = false;
-
-		FlxG.worldBounds.set(0, 0);
-
 		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
+		// polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
 
 		#if sys
@@ -107,6 +104,10 @@ class TitleState extends MusicBeatState
 		// this was testing things
 
 		Highscore.load();
+
+		FlxG.mouse.visible = false;
+
+		FlxG.worldBounds.set(0, 0);
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());

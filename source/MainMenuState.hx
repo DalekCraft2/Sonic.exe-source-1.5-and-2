@@ -48,7 +48,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var nightly:String = "";
 
-	public static var kadeEngineVer:String = "1.5.4" + nightly;
+	public static var kadeEngineVer:String = "1.6.2" + nightly;
 	public static var gameVer:String = "0.2.7.1";
 
 	var bgdesat:FlxSprite;
@@ -61,16 +61,17 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		clean();
+		#if windows
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Menus", null);
+		#end
+
 		trace(FlxG.save.data.soundTestUnlocked);
 		if (FlxG.save.data.soundTestUnlocked)
 			optionShit.push('sound test');
 		else
 			optionShit.push('sound test locked');
-
-		#if windows
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
-		#end
 
 		PlayStateChangeables.nocheese = true;
 
@@ -78,8 +79,6 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
 		}
-
-		FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
 
 		persistentUpdate = persistentDraw = true;
 
