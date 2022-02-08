@@ -32,7 +32,7 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow2:FlxSprite;
 	var rightArrow2:FlxSprite;
 
-	var curdiff:Int = 2;
+	var curdiff:Int = 1;
 
 	var real:Int = 0;
 
@@ -53,6 +53,8 @@ class StoryMenuState extends MusicBeatState
 	{
 		switch (FlxG.save.data.storyProgress)
 		{
+			// case 0:
+			// 	songArray = ['too-seiso'];
 			case 1:
 				songArray = ['too-seiso', 'you-cant-kusa'];
 			case 2:
@@ -172,22 +174,22 @@ class StoryMenuState extends MusicBeatState
 	{
 		curdiff += diff;
 
-		if (curdiff == 0)
-			curdiff = 3;
-		if (curdiff == 4)
-			curdiff = 1;
+		if (curdiff < 0)
+			curdiff = 2;
+		if (curdiff > 2)
+			curdiff = 0;
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		switch (curdiff)
 		{
-			case 1:
+			case 0:
 				sprDifficulty.animation.play('easy');
 				sprDifficulty.offset.x = 20;
-			case 2:
+			case 1:
 				sprDifficulty.animation.play('normal');
 				sprDifficulty.offset.x = 70;
-			case 3:
+			case 2:
 				sprDifficulty.animation.play('hard');
 				sprDifficulty.offset.x = 20;
 		}
@@ -282,61 +284,35 @@ class StoryMenuState extends MusicBeatState
 
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				if (FlxG.save.data.storyProgress == 0)
+				PlayState.storyPlaylist = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
+				PlayState.isStoryMode = true;
+				switch (curdiff)
 				{
-					PlayState.storyPlaylist = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
-					PlayState.isStoryMode = true;
-					switch (curdiff)
-					{
-						case 1:
-							curDifficulty = '-easy';
-						case 3:
-							curDifficulty = '-hard';
-					}
+					case 0:
+						curDifficulty = '-easy';
+					case 2:
+						curDifficulty = '-hard';
+				}
 
-					curdiff -= 1;
-					PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
+				PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
+				PlayState.storyWeek = 1;
 
-					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
-					PlayState.storyWeek = 1;
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
+
+				if (FlxG.save.data.storyProgress == 0 && songArray[real] == 'too-seiso')
+				{
 					PlayState.campaignScore = 0;
 				}
-				else
-				{
-					PlayState.storyPlaylist = ['too-seiso', 'you-cant-kusa', 'triple-talent'];
-					if (songArray[real] == 'too-seiso')
-					{
-						switch (curdiff)
-						{
-							case 1:
-								curDifficulty = '-easy';
-							case 3:
-								curDifficulty = '-hard';
-						}
-					}
-					else
-						curDifficulty = '-hard';
-
-					curdiff -= 1;
-					PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
-
-					PlayState.SONG = Song.loadFromJson(songArray[real].toLowerCase() + curDifficulty, songArray[real].toLowerCase());
-					PlayState.isStoryMode = true;
-				}
-				if (FlxG.save.data.storyProgress == 1 && songArray[real] == 'you-cant-kusa')
+				else if (songArray[real] == 'you-cant-kusa')
 				{
 					PlayState.storyPlaylist = ['you-cant-kusa', 'triple-talent'];
-					PlayState.isStoryMode = true;
-					curDifficulty = '-hard';
-
-					curdiff -= 1;
-					PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
-
-					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
-					PlayState.storyWeek = 1;
-					LoadingState.loadAndSwitchState(new PlayState());
 				}
-				else if (songArray[real] == 'too-seiso')
+				else if (songArray[real] == 'triple-talent')
+				{
+					PlayState.storyPlaylist = ['triple-talent'];
+				}
+
+				if (songArray[real] == 'too-seiso')
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
@@ -353,6 +329,8 @@ class StoryMenuState extends MusicBeatState
 				{
 					LoadingState.loadAndSwitchState(new PlayState());
 				}
+				if (!FlxG.save.data.songArray.contains(PlayState.storyPlaylist[0].toLowerCase()) && !FlxG.save.data.botplay)
+					FlxG.save.data.songArray.push(PlayState.storyPlaylist[0].toLowerCase());
 			}
 
 			if (FlxG.save.data.flashing)

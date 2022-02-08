@@ -35,7 +35,9 @@ class MP4Handler
 			}
 		}
 
+		#if (cpp && !mobile)
 		bitmap = new VlcBitmap();
+		#end
 
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16)
 		{

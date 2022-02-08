@@ -203,7 +203,7 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.save.data.storyProgress = 1;
 			FlxG.save.data.soundTestUnlocked = true;
-			FlxG.save.data.songArray = ["circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"];
+			FlxG.save.data.songArray = ["too-seiso", "you-cant-kusa", "triple-talent", "circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"];
 			FlxG.switchState(new MainMenuState());
 		}
 		#end

@@ -1,6 +1,6 @@
+#if sys
 package smTools;
 
-#if sys
 import sys.io.File;
 import haxe.Exception;
 import lime.app.Application;

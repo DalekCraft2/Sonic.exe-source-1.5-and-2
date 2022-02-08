@@ -61,7 +61,9 @@ import openfl.utils.AssetLibrary;
 import openfl.utils.AssetManifest;
 import openfl.utils.AssetType;
 import openfl.media.Sound;
+#if sys
 import smTools.SMFile;
+#end
 
 using StringTools;
 
@@ -1501,8 +1503,8 @@ class PlayState extends MusicBeatState
 				camPos.set(dad.getGraphicMidpoint().x + 200, dad.getGraphicMidpoint().y);
 			case 'sunkStage':
 				boyfriend.x -= 100;
-				dad.x = -180;
-				dad.y = 200;
+				dad.x = -100;
+				dad.y = 250;
 				dad.scale.x = 1;
 				dad.scale.y = 1;
 			case 'TDStage':
@@ -1938,86 +1940,77 @@ class PlayState extends MusicBeatState
 
 		trace('starting');
 
-		if (isStoryMode)
+		switch (StringTools.replace(curSong, " ", "-").toLowerCase())
 		{
-			switch (StringTools.replace(curSong, " ", "-").toLowerCase())
-			{
-				case 'too-seiso':
-					startSong();
-					startCountdown();
-					add(blackFuck);
-					startCircle.loadGraphic(Paths.image('StartScreens/CircleTooSlow', 'exe'));
-					startCircle.x += 777;
-					add(startCircle);
-					startText.loadGraphic(Paths.image('StartScreens/TextTooSlow', 'exe'));
-					startText.x -= 1200;
-					add(startText);
+			case 'too-seiso':
+				startSong();
+				startCountdown();
+				add(blackFuck);
+				startCircle.loadGraphic(Paths.image('StartScreens/CircleTooSlow', 'exe'));
+				startCircle.x += 777;
+				add(startCircle);
+				startText.loadGraphic(Paths.image('StartScreens/TextTooSlow', 'exe'));
+				startText.x -= 1200;
+				add(startText);
 
-					new FlxTimer().start(0.6, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {x: 0}, 0.5);
-						FlxTween.tween(startText, {x: 0}, 0.5);
-					});
+				new FlxTimer().start(0.6, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {x: 0}, 0.5);
+					FlxTween.tween(startText, {x: 0}, 0.5);
+				});
 
-					new FlxTimer().start(1.9, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {alpha: 0}, 1);
-						FlxTween.tween(startText, {alpha: 0}, 1);
-						FlxTween.tween(blackFuck, {alpha: 0}, 1);
-					});
-				case 'you-cant-kusa':
-					startSong();
-					startCountdown();
-					add(blackFuck);
-					startCircle.loadGraphic(Paths.image('StartScreens/CircleYouCantRun', 'exe'));
-					startCircle.x += 777;
-					add(startCircle);
-					startText.loadGraphic(Paths.image('StartScreens/TextYouCantRun', 'exe'));
-					startText.x -= 1200;
-					add(startText);
+				new FlxTimer().start(1.9, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {alpha: 0}, 1);
+					FlxTween.tween(startText, {alpha: 0}, 1);
+					FlxTween.tween(blackFuck, {alpha: 0}, 1);
+				});
+			case 'you-cant-kusa':
+				startSong();
+				startCountdown();
+				add(blackFuck);
+				startCircle.loadGraphic(Paths.image('StartScreens/CircleYouCantRun', 'exe'));
+				startCircle.x += 777;
+				add(startCircle);
+				startText.loadGraphic(Paths.image('StartScreens/TextYouCantRun', 'exe'));
+				startText.x -= 1200;
+				add(startText);
 
-					new FlxTimer().start(0.6, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {x: 0}, 0.5);
-						FlxTween.tween(startText, {x: 0}, 0.5);
-					});
+				new FlxTimer().start(0.6, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {x: 0}, 0.5);
+					FlxTween.tween(startText, {x: 0}, 0.5);
+				});
 
-					new FlxTimer().start(1.9, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {alpha: 0}, 1);
-						FlxTween.tween(startText, {alpha: 0}, 1);
-						FlxTween.tween(blackFuck, {alpha: 0}, 1);
-					});
-				case 'triple-talent':
-					startCountdown();
-					add(blackFuck);
-					startCircle.loadGraphic(Paths.image('StartScreens/CircleTripleTrouble', 'exe'));
-					startCircle.x += 777;
-					add(startCircle);
-					startText.loadGraphic(Paths.image('StartScreens/TextTripleTrouble', 'exe'));
-					startText.x -= 1200;
-					add(startText);
+				new FlxTimer().start(1.9, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {alpha: 0}, 1);
+					FlxTween.tween(startText, {alpha: 0}, 1);
+					FlxTween.tween(blackFuck, {alpha: 0}, 1);
+				});
+			case 'triple-talent':
+				startCountdown();
+				add(blackFuck);
+				startCircle.loadGraphic(Paths.image('StartScreens/CircleTripleTrouble', 'exe'));
+				startCircle.x += 777;
+				add(startCircle);
+				startText.loadGraphic(Paths.image('StartScreens/TextTripleTrouble', 'exe'));
+				startText.x -= 1200;
+				add(startText);
 
-					new FlxTimer().start(0.6, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {x: 0}, 0.5);
-						FlxTween.tween(startText, {x: 0}, 0.5);
-					});
+				new FlxTimer().start(0.6, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {x: 0}, 0.5);
+					FlxTween.tween(startText, {x: 0}, 0.5);
+				});
 
-					new FlxTimer().start(1.9, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(startCircle, {alpha: 0}, 1);
-						FlxTween.tween(startText, {alpha: 0}, 1);
-						FlxTween.tween(blackFuck, {alpha: 0}, 1);
-					});
-				default:
-					startCountdown();
-			}
-		}
-		else
-		{
-			if (curSong.toLowerCase() == 'circus')
-			{
+				new FlxTimer().start(1.9, function(tmr:FlxTimer)
+				{
+					FlxTween.tween(startCircle, {alpha: 0}, 1);
+					FlxTween.tween(startText, {alpha: 0}, 1);
+					FlxTween.tween(blackFuck, {alpha: 0}, 1);
+				});
+			case 'circus':
 				add(blackFuck);
 				startCircle.loadGraphic(Paths.image('StartScreens/CircleMajin', 'exe'));
 				startCircle.x += 777;
@@ -2037,9 +2030,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
-			}
-			else if (curSong.toLowerCase() == 'ankimo')
-			{
+			case 'ankimo':
 				startSong();
 				startCountdown();
 				add(blackFuck);
@@ -2061,9 +2052,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
-			}
-			else if (curSong.toLowerCase() == 'asacoco')
-			{
+			case 'asacoco':
 				add(blackFuck);
 				startCircle.loadGraphic(Paths.image('StartScreens/Coco', 'exe'));
 				startCircle.scale.x = 0;
@@ -2080,9 +2069,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 					FlxTween.tween(startCircle, {alpha: 0}, 1);
 				});
-			}
-			else if (curSong.toLowerCase() == 'sunshine')
-			{
+			case 'sunshine':
 				canPause = false;
 				bgspec.visible = false;
 				kadeEngineWatermark.visible = false;
@@ -2164,9 +2151,7 @@ class PlayState extends MusicBeatState
 							tmr.reset(Conductor.crochet / 700);
 					});
 				}
-			}
-			else if (curSong == 'parent')
-			{
+			case 'parent':
 				startCountdown();
 				add(blackFuck);
 				startCircle.loadGraphic(Paths.image('StartScreens/CircleFaker', 'exe'));
@@ -2187,9 +2172,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
-			}
-			else if (curSong == 'koyochaos')
-			{
+			case 'koyochaos':
 				FlxG.camera.zoom = defaultCamZoom;
 				camHUD.visible = false;
 				dad.visible = false;
@@ -2228,13 +2211,8 @@ class PlayState extends MusicBeatState
 					else
 						lol.reset();
 				});
-			}
-			switch (curSong)
-			{
-				case 'sunshine', 'koyochaos':
-				default:
-					startCountdown();
-			}
+			default:
+				startCountdown();
 		}
 
 		if (!loadRep)

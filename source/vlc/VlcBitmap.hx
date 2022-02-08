@@ -286,16 +286,8 @@ class VlcBitmap extends Bitmap
 
 	function onResize(e:Event):Void
 	{
-		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16)
-		{
-			set_width(FlxG.stage.stageHeight * (16 / 9));
-			set_height(FlxG.stage.stageHeight);
-		}
-		else
-		{
-			set_width(FlxG.stage.stageWidth);
-			set_height(FlxG.stage.stageWidth / (16 / 9));
-		}
+		set_height(FlxG.stage.stageHeight);
+		set_width(FlxG.stage.stageHeight * (16 / 9));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -365,7 +357,7 @@ class VlcBitmap extends Bitmap
 	{
 		var cTime = Lib.getTimer();
 
-		if ((cTime - oldTime) > 28) // min 28 ms between renders, but this is not a good way to do it...
+		if ((cTime - oldTime) > 8.3) // min 8.3 ms between renders, but this is not a good way to do it...
 		{
 			oldTime = cTime;
 
@@ -482,7 +474,9 @@ class VlcBitmap extends Bitmap
 			onProgress();
 	}
 
-	function statusOnPositionChanged(newPos:Int) {}
+	function statusOnPositionChanged(newPos:Int)
+	{
+	}
 
 	function statusOnSeekableChanged(newPos:Int)
 	{
@@ -490,9 +484,13 @@ class VlcBitmap extends Bitmap
 			onSeek();
 	}
 
-	function statusOnForward() {}
+	function statusOnForward()
+	{
+	}
 
-	function statusOnBackward() {}
+	function statusOnBackward()
+	{
+	}
 
 	function onDisplay()
 	{
