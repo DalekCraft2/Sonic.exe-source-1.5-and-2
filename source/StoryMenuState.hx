@@ -53,8 +53,8 @@ class StoryMenuState extends MusicBeatState
 	{
 		switch (FlxG.save.data.storyProgress)
 		{
-			// case 0:
-			// 	songArray = ['too-seiso'];
+			case 0:
+				songArray = ['too-seiso'];
 			case 1:
 				songArray = ['too-seiso', 'you-cant-kusa'];
 			case 2:
@@ -297,8 +297,6 @@ class StoryMenuState extends MusicBeatState
 				PlayState.storyDifficulty = FlxG.save.data.storyDiff = curdiff;
 				PlayState.storyWeek = 1;
 
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
-
 				if (FlxG.save.data.storyProgress == 0 && songArray[real] == 'too-seiso')
 				{
 					PlayState.campaignScore = 0;
@@ -311,6 +309,8 @@ class StoryMenuState extends MusicBeatState
 				{
 					PlayState.storyPlaylist = ['triple-talent'];
 				}
+
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + curDifficulty, PlayState.storyPlaylist[0].toLowerCase());
 
 				if (songArray[real] == 'too-seiso')
 				{
@@ -335,7 +335,9 @@ class StoryMenuState extends MusicBeatState
 
 			if (FlxG.save.data.flashing)
 			{
-				FlxFlicker.flicker(redBOX, 1, 0.06, false, false, function(flick:FlxFlicker) {});
+				FlxFlicker.flicker(redBOX, 1, 0.06, false, false, function(flick:FlxFlicker)
+				{
+				});
 			}
 		}
 

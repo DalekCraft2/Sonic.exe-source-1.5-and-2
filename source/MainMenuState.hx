@@ -201,7 +201,7 @@ class MainMenuState extends MusicBeatState
 		#if debug
 		if (FlxG.keys.justPressed.R)
 		{
-			FlxG.save.data.storyProgress = 1;
+			FlxG.save.data.storyProgress = 2;
 			FlxG.save.data.soundTestUnlocked = true;
 			FlxG.save.data.songArray = ["too-seiso", "you-cant-kusa", "triple-talent", "circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"];
 			FlxG.switchState(new MainMenuState());
