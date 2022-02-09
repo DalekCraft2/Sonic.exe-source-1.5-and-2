@@ -206,7 +206,7 @@ class MainMenuState extends MusicBeatState
 			FlxG.save.data.storyProgress = 2;
 			FlxG.save.data.soundTestUnlocked = true;
 			FlxG.save.data.songArray = [
-				"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Parent', 'White Moon', "Koyochaos"
+				"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Caretaker', 'White Moon', "Koyochaos"
 			];
 			FlxG.switchState(new MainMenuState());
 		}

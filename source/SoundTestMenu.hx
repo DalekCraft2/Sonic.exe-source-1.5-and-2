@@ -193,8 +193,8 @@ class SoundTestMenu extends MusicBeatState
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
-			PlayState.storyPlaylist = ['parent', 'white-moon'];
-			PlayState.SONG = Song.loadFromJson('parent-hard', 'parent');
+			PlayState.storyPlaylist = ['caretaker', 'white-moon'];
+			PlayState.SONG = Song.loadFromJson('caretaker-hard', 'caretaker');
 			PlayState.isStoryMode = false;
 			PlayState.isList = true;
 			PlayState.storyDifficulty = 2;
@@ -206,8 +206,8 @@ class SoundTestMenu extends MusicBeatState
 			{
 				LoadingState.loadAndSwitchState(new PlayState());
 			});
-			if (!FlxG.save.data.songArray.contains('parent') && !FlxG.save.data.botplay)
-				FlxG.save.data.songArray.push('parent');
+			if (!FlxG.save.data.songArray.contains('caretaker') && !FlxG.save.data.botplay)
+				FlxG.save.data.songArray.push('caretaker');
 		}
 		else if (first == 66 && second == 6)
 		{

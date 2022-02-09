@@ -379,7 +379,7 @@ class PlayState extends MusicBeatState
 
 				remove(daNoteStatic);
 			}
-			else if (songLowercase == 'parent')
+			else if (songLowercase == 'caretaker')
 			{
 				add(fakertransform);
 				fakertransform.frames = Paths.getSparrowAtlas('Faker_Transformation', 'exe');
@@ -1699,7 +1699,7 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (songLowercase == 'parent')
+		else if (songLowercase == 'caretaker')
 		{
 			fakertransform.setPosition(dad.getGraphicMidpoint().x - 400, dad.getGraphicMidpoint().y - 400);
 			FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
@@ -2152,7 +2152,7 @@ class PlayState extends MusicBeatState
 							tmr.reset(Conductor.crochet / 700);
 					});
 				}
-			case 'parent':
+			case 'caretaker':
 				startCountdown();
 				add(blackFuck);
 				startCircle.loadGraphic(Paths.image('StartScreens/CircleFaker', 'exe'));
@@ -5143,7 +5143,7 @@ class PlayState extends MusicBeatState
 					else
 						LoadingState.loadAndSwitchState(new PlayState());
 
-					if (curSong == 'parent')
+					if (curSong == 'caretaker')
 						if (!FlxG.save.data.songArray.contains('white-moon') && !FlxG.save.data.botplay)
 							FlxG.save.data.songArray.push('white-moon');
 				}
@@ -6683,7 +6683,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curSong == 'parent')
+		if (curSong == 'caretaker')
 		{
 			switch (curStep)
 			{

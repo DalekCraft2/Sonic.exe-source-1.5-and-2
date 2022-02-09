@@ -33,7 +33,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 	var curSelected:Int = 0;
 
 	var songArray:Array<String> = [
-		"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Parent', 'White Moon', "Koyochaos"
+		"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Caretaker', 'White Moon', "Koyochaos"
 	];
 
 	var boxgrp:FlxTypedSpriteGroup<FlxSprite>;
@@ -69,9 +69,10 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		{
 			for (i in 0...songArray.length)
 			{
-				var songId = songArray[fuck].replace(' ', '-').toLowerCase();
+				var songName = songArray[fuck];
+				var songId = songName.replace(' ', '-').toLowerCase();
 
-				if (FlxG.save.data.songArray.contains(songId))
+				if (FlxG.save.data.songArray.contains(songName))
 				{
 					FlxG.log.add(songArray[i] + ' found');
 
@@ -96,7 +97,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 				}
 				else
 				{
-					songArray.remove(songId);
+					songArray.remove(songName);
 				}
 			}
 		}

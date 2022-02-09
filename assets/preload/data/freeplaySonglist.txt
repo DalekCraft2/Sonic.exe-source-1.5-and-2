@@ -1,7 +1,7 @@
 too-seiso:suisei:1
 you-cant-kusa:suisei:1
 triple-talent:suisei:1
-parent:mio:2
+caretaker:mio:2
 white-moon:mio:2
 koyochaos:mio:2
 ankimo:mio:3
