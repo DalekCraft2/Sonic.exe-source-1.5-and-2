@@ -33,7 +33,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 	var curSelected:Int = 0;
 
 	var songArray:Array<String> = [
-		"too-seiso", "you-cant-kusa", "triple-talent", "circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"
+		"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Parent', 'White Moon', "Koyochaos"
 	];
 
 	var boxgrp:FlxTypedSpriteGroup<FlxSprite>;
@@ -54,6 +54,11 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		DiscordClient.changePresence("In the Freeplay Menu", null);
 		#end
 
+		if (!FlxG.sound.music.playing)
+		{
+			FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
+		}
+
 		bg = new FlxSprite().loadGraphic(Paths.image('backgroundlool'));
 		bg.screenCenter();
 		bg.setGraphicSize(1280, 720);
@@ -64,15 +69,17 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		{
 			for (i in 0...songArray.length)
 			{
-				if (FlxG.save.data.songArray.contains(songArray[fuck]))
+				var songId = songArray[fuck].replace(' ', '-').toLowerCase();
+
+				if (FlxG.save.data.songArray.contains(songId))
 				{
 					FlxG.log.add(songArray[i] + ' found');
 
 					var box:FlxSprite = new FlxSprite(fuck * 780, 0).loadGraphic(Paths.image('FreeBox'));
 					boxgrp.add(box);
 
-					var char:FlxSprite = new FlxSprite(fuck * 780, 0).loadGraphic(Paths.image('fpstuff/' + songArray[fuck].toLowerCase()));
-					if (songArray[fuck] == 'too-seiso' || songArray[fuck] == 'you-cant-kusa' || songArray[fuck] == 'triple-talent')
+					var char:FlxSprite = new FlxSprite(fuck * 780, 0).loadGraphic(Paths.image('fpstuff/' + songId));
+					if (songId == 'too-seiso' || songId == 'you-cant-kusa' || songId == 'triple-talent')
 						char.setGraphicSize(620, 465);
 					boxgrp.add(char);
 
@@ -89,7 +96,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 				}
 				else
 				{
-					songArray.remove(songArray[fuck]);
+					songArray.remove(songId);
 				}
 			}
 		}
@@ -99,14 +106,16 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		whiteshit = new FlxSprite().makeGraphic(1280, 720, FlxColor.WHITE);
 		whiteshit.alpha = 0;
 
-		songtext = new FlxText(0, FlxG.height - 100, songArray[curSelected], 25);
+		var songName = songArray[curSelected];
+
+		songtext = new FlxText(0, FlxG.height - 80, songName, 25);
 		songtext.setFormat("Sonic CD Menu Font Regular", 25, FlxColor.fromRGB(255, 255, 255));
-		songtext.x = (FlxG.width / 2) - (25 / 2 * songArray[curSelected].length);
+		songtext.x = (FlxG.width / 2) - (25 / 2 * songName.length);
 
-		FlxG.log.add('sexo: ' + (songtext.width / songArray[curSelected].length));
+		FlxG.log.add('sexo: ' + (songtext.width / songName.length));
 
-		prevsongtext = new FlxText(0, FlxG.height - 100, songArray[curSelected], 25);
-		prevsongtext.x = (FlxG.width / 2) - (25 / 2 * songArray[curSelected].length);
+		prevsongtext = new FlxText(0, FlxG.height - 80, songName, 25);
+		prevsongtext.x = (FlxG.width / 2) - (25 / 2 * songName.length);
 		prevsongtext.setFormat("Sonic CD Menu Font Regular", 25, FlxColor.fromRGB(255, 255, 255));
 
 		add(bg);
@@ -167,7 +176,9 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		{
 			cdman = false;
 
-			PlayState.SONG = Song.loadFromJson(songArray[curSelected].toLowerCase() + '-hard', songArray[curSelected].toLowerCase());
+			var songId = songArray[curSelected].replace(' ', '-').toLowerCase();
+
+			PlayState.SONG = Song.loadFromJson(songId + '-hard', songId);
 
 			PlayState.isFreeplay = true;
 			PlayState.isStoryMode = false;
@@ -211,11 +222,12 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 			}
 		});
 		songtext.alpha = 0;
-		songtext.text = songArray[curSelected];
-		if (songArray[curSelected].contains('-'))
-			songtext.text = songtext.text.replace('-', ' ');
-		FlxTween.tween(songtext, {alpha: 1, x: (FlxG.width / 2) - (25 / 2 * songArray[curSelected].length)}, 0.2, {ease: FlxEase.expoOut});
-		FlxTween.tween(prevsongtext, {alpha: 0, x: (FlxG.width / 2) - (25 / 2 * songArray[curSelected].length)}, 0.2, {ease: FlxEase.expoOut});
+
+		var songName = songArray[curSelected];
+
+		songtext.text = songName;
+		FlxTween.tween(songtext, {alpha: 1, x: (FlxG.width / 2) - (25 / 2 * songName.length)}, 0.2, {ease: FlxEase.expoOut});
+		FlxTween.tween(prevsongtext, {alpha: 0, x: (FlxG.width / 2) - (25 / 2 * songName.length)}, 0.2, {ease: FlxEase.expoOut});
 
 		// NGio.logEvent(songArray[curSelected]);
 	}

@@ -43,12 +43,14 @@ class GameOverState extends FlxTransitionableState
 		add(bf);
 		bf.playAnim('firstDeath');
 
-		if (PlayState.SONG.song.toLowerCase() == 'asacoco')
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		if (songLowercase == 'asacoco')
 			bf.alpha = 0;
 
 		var bfdeathshit:FlxSprite = new FlxSprite();
 
-		if (PlayState.SONG.song.toLowerCase() == 'sunshine')
+		if (songLowercase == 'sunshine')
 		{
 			bf.alpha = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('3DGO', 'exe');

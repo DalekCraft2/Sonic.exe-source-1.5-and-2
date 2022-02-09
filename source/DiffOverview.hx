@@ -392,8 +392,10 @@ class DiffOverview extends FlxSubState
 		var songData = FreeplayState.songData.get(FreeplayState.songs[FreeplayState.curSelected].songName)[FreeplayState.curDifficulty];
 		Conductor.changeBPM(songData.bpm);
 
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
 		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(SONG.song));
+			vocals = new FlxSound().loadEmbedded(Paths.voices(songLowercase));
 		else
 			vocals = new FlxSound();
 
@@ -494,7 +496,7 @@ class DiffOverview extends FlxSubState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		FlxG.sound.playMusic(Paths.inst(SONG.song), 1, false);
+		FlxG.sound.playMusic(Paths.inst(songLowercase), 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 	}

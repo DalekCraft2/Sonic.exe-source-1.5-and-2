@@ -80,6 +80,8 @@ class MainMenuState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
 		}
 
+		FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
+
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('backgroundlool'));
@@ -203,7 +205,9 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.save.data.storyProgress = 2;
 			FlxG.save.data.soundTestUnlocked = true;
-			FlxG.save.data.songArray = ["too-seiso", "you-cant-kusa", "triple-talent", "circus", 'ankimo', "asacoco", "sunshine", 'parent', 'white-moon', "koyochaos"];
+			FlxG.save.data.songArray = [
+				"Too Seiso", "You Cant Kusa", "Triple Talent", "Circus", 'Ankimo', "Asacoco", "Sunshine", 'Parent', 'White Moon', "Koyochaos"
+			];
 			FlxG.switchState(new MainMenuState());
 		}
 		#end

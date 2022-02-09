@@ -70,7 +70,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		bfdeathshit = new FlxSprite(x - 105, y - 20);
 
-		if (PlayState.SONG.song == 'asacoco')
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		if (songLowercase == 'asacoco')
 		{
 			bfdeathshit.frames = Paths.getSparrowAtlas('Bf_dancin');
 			bfdeathshit.animation.addByPrefix('dance', 'Dance', 24, true);
@@ -81,7 +83,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		bf = new Boyfriend(x, y, daBf);
 
-		if (PlayState.SONG.song == 'circus')
+		if (songLowercase == 'circus')
 		{
 			majinBf = new Boyfriend(x, y, 'bf-blue');
 			majinBf.visible = false;
@@ -89,7 +91,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			add(majinBf);
 		}
 
-		if (PlayState.SONG.song == 'too-seiso' || PlayState.SONG.song == 'you-cant-kusa' || PlayState.SONG.song == 'triple-talent')
+		if (songLowercase == 'too-seiso' || songLowercase == 'you-cant-kusa' || songLowercase == 'triple-talent')
 		{
 			sonicDEATH = new SonicDeathAnimation(Std.int(bf.x) - 80, Std.int(bf.y) - 350);
 
@@ -101,7 +103,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			add(sonicDEATH);
 		}
 
-		if (PlayState.SONG.song.toLowerCase() == 'circus')
+		if (songLowercase == 'circus')
 		{
 			countdown = new FlxText(614, 118 - 30, 100, '10', 40);
 			countdown.setFormat('Sonic CD Menu Font Regular', 40, FlxColor.WHITE);
@@ -112,7 +114,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			countdown.cameras = [coolcamera];
 		}
 
-		if (PlayState.SONG.song.toLowerCase() == 'koyochaos')
+		if (songLowercase == 'koyochaos')
 		{
 			bf.alpha = 0;
 			bfdeathshit = new FlxSprite(x - 400, y - 200);
@@ -123,7 +125,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			add(bfdeathshit);
 		}
 
-		if (PlayState.SONG.song == 'circus')
+		if (songLowercase == 'circus')
 		{
 			bottomMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('bottomMajins'));
 			bottomMajins.scale.x = 1.1;
@@ -134,12 +136,12 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 
 		add(bf);
-		if (PlayState.SONG.song.toLowerCase() == 'asacoco')
+		if (songLowercase == 'asacoco')
 		{
 			bf.alpha = 0;
 			add(bfdeathshit);
 		}
-		else if (PlayState.SONG.song.toLowerCase() == 'sunshine')
+		else if (songLowercase == 'sunshine')
 		{
 			bf.alpha = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('3DGOpng');
@@ -150,7 +152,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			bfdeathshit.animation.play('firstdeath');
 			add(bfdeathshit);
 		}
-		else if (PlayState.SONG.song.toLowerCase() == 'too-fest')
+		else if (songLowercase == 'too-fest')
 		{
 			bfdeathshit = new FlxSprite().loadGraphic(Paths.image('bfisfuckingdead', 'exe'));
 			bfdeathshit.visible = false;
@@ -165,7 +167,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				bfdeathshit.visible = true;
 			}
 		}
-		else if (PlayState.SONG.song.toLowerCase() == 'white-moon')
+		else if (songLowercase == 'white-moon')
 		{
 			bf.alpha = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('exedeath');
@@ -181,7 +183,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			add(bfdeathshit);
 		}
 
-		if (PlayState.SONG.song == 'circus')
+		if (songLowercase == 'circus')
 		{
 			topMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('topMajins'));
 			topMajins.scale.x = 1.1;
@@ -193,7 +195,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		switch (PlayState.SONG.song)
+		switch (songLowercase)
 		{
 			case 'too-fest', 'white-moon':
 
@@ -214,10 +216,12 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function startCountdown():Void
 	{
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
 		if (islol)
 		{
 			holdup = false;
-			switch (PlayState.SONG.song)
+			switch (songLowercase)
 			{
 				case 'circus':
 					add(bluevg);
@@ -229,7 +233,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				timer--;
-				if (PlayState.SONG.song.toLowerCase() == 'circus')
+				if (songLowercase == 'circus')
 				{
 					countdown.text = Std.string(timer);
 					if (timer == 9)
@@ -252,7 +256,9 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		toolateurfucked = true;
 
-		switch (PlayState.SONG.song)
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		switch (songLowercase)
 		{
 			case 'circus':
 				FlxG.sound.music.stop();
@@ -358,7 +364,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
-			switch (PlayState.SONG.song.toLowerCase())
+
+			var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+			switch (songLowercase)
 			{
 				case 'asacoco':
 					FlxTween.tween(bfdeathshit, {alpha: 1}, 1);
@@ -377,7 +386,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				case 'ankimo':
 					playVoiceLine(StringTools.replace(Paths.sound('XLines', 'exe'), '.ogg', ''), 5);
 			}
-			if (holdup && (PlayState.SONG.song.toLowerCase() == 'circus' || PlayState.SONG.song.toLowerCase() == 'white-moon'))
+			if (holdup && (songLowercase == 'circus' || songLowercase == 'white-moon'))
 				startCountdown();
 		}
 
@@ -414,12 +423,14 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function endBullshit():Void
 	{
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
 		if (!isEnding)
 		{
 			isEnding = true;
 			voiceline.volume = 0;
 			bf.playAnim('deathConfirm', true);
-			if (PlayState.SONG.song == 'too-seiso' || PlayState.SONG.song == 'you-cant-kusa')
+			if (songLowercase == 'too-seiso' || songLowercase == 'you-cant-kusa')
 				sonicDEATH.playAnim('retry', true);
 			new FlxTimer().start(0.1, function(tmr:FlxTimer)
 			{
@@ -432,7 +443,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.camera.flash(FlxColor.RED, 4);
 			});
 			FlxG.sound.music.stop();
-			switch (PlayState.SONG.song.toLowerCase())
+			switch (songLowercase)
 			{
 				case 'white-moon':
 					FlxG.sound.play(Paths.sound('Exe_die'));

@@ -353,18 +353,20 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
-		FlxG.sound.cache(Paths.inst(PlayState.SONG.song));
-		FlxG.sound.cache(Paths.voices(PlayState.SONG.song));
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		FlxG.sound.cache(Paths.inst(songLowercase));
+		FlxG.sound.cache(Paths.voices(songLowercase));
 
 		if (isRing)
 			ballsinyojaws = 1;
 
-		if (curSong != SONG.song)
+		if (curSong != songLowercase)
 		{
 			Main.dumpCache(); // Honestly it's just preloading so idrc.
 
 			// PRELOADING STUFFS
-			if (SONG.song.toLowerCase() == 'too-seiso' && FlxG.save.data.jumpscares)
+			if (songLowercase == 'too-seiso' && FlxG.save.data.jumpscares)
 			{
 				daJumpscare.frames = Paths.getSparrowAtlas('sonicJUMPSCARE', 'exe');
 				daJumpscare.animation.addByPrefix('jump', 'sonicSPOOK', 24, false);
@@ -377,7 +379,7 @@ class PlayState extends MusicBeatState
 
 				remove(daNoteStatic);
 			}
-			else if (SONG.song.toLowerCase() == 'parent')
+			else if (songLowercase == 'parent')
 			{
 				add(fakertransform);
 				fakertransform.frames = Paths.getSparrowAtlas('Faker_Transformation', 'exe');
@@ -392,7 +394,7 @@ class PlayState extends MusicBeatState
 				fakertransform.alpha = 0;
 				remove(fakertransform);
 			}
-			else if (SONG.song.toLowerCase() == 'you-cant-kusa')
+			else if (songLowercase == 'you-cant-kusa')
 			{
 				daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic', 'exe');
 				daNoteStatic.animation.addByPrefix('static', 'staticANIMATION', 24, false);
@@ -404,7 +406,7 @@ class PlayState extends MusicBeatState
 				add(dad);
 				remove(dad);
 			}
-			else if (SONG.song.toLowerCase() == 'triple-talent')
+			else if (songLowercase == 'triple-talent')
 			{
 				daP3Static.frames = Paths.getSparrowAtlas('Phase3Static', 'exe');
 				daP3Static.animation.addByPrefix('P3Static', 'Phase3Static', 24, false);
@@ -453,7 +455,7 @@ class PlayState extends MusicBeatState
 				add(boyfriend);
 				remove(boyfriend);
 			}
-			else if (SONG.song.toLowerCase() == 'sunshine')
+			else if (songLowercase == 'sunshine')
 			{
 				var bfdeathshit:FlxSprite = new FlxSprite(); // Yo what if i just preload the game over :)
 				bfdeathshit.frames = Paths.getSparrowAtlas('3DGOpng');
@@ -470,7 +472,7 @@ class PlayState extends MusicBeatState
 				add(dad);
 				remove(dad);
 			}
-			else if (SONG.song.toLowerCase() == 'koyochaos')
+			else if (songLowercase == 'koyochaos')
 			{
 				FlxG.bitmap.add(Paths.image('characters/fleetway1', 'shared'));
 				FlxG.bitmap.add(Paths.image('characters/fleetway2', 'shared'));
@@ -515,7 +517,7 @@ class PlayState extends MusicBeatState
 
 				preloaded = true;
 			}
-			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0, false);
+			FlxG.sound.playMusic(Paths.inst(songLowercase), 0, false);
 			// LOL
 		}
 		else
@@ -523,13 +525,7 @@ class PlayState extends MusicBeatState
 
 		if (PlayStateChangeables.nocheese)
 		{
-			switch (SONG.song)
-			{
-				case 'too-seiso':
-					cooltext = 'Too Seiso';
-				case 'you-cant-kusa':
-					cooltext = "You Can't Kusa";
-			}
+			cooltext = SONG.song;
 		}
 		else
 		{
@@ -1604,7 +1600,9 @@ class PlayState extends MusicBeatState
 		else
 			trace('song looks gucci');
 
-		generateSong(SONG.song);
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		generateSong(songLowercase);
 
 		for (i in unspawnNotes)
 		{
@@ -1685,32 +1683,32 @@ class PlayState extends MusicBeatState
 
 		add(camFollow);
 
-		if (curSong.toLowerCase() == 'too-seiso')
+		if (songLowercase == 'too-seiso')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.05 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'circus')
+		else if (songLowercase == 'circus')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'ankimo')
+		else if (songLowercase == 'ankimo')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.08 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'asacoco')
+		else if (songLowercase == 'asacoco')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'parent')
+		else if (songLowercase == 'parent')
 		{
 			fakertransform.setPosition(dad.getGraphicMidpoint().x - 400, dad.getGraphicMidpoint().y - 400);
 			FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'koyochaos')
+		else if (songLowercase == 'koyochaos')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.06 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'sunshine')
+		else if (songLowercase == 'sunshine')
 		{
 			if (FlxG.save.data.vfx)
 			{
@@ -1742,15 +1740,15 @@ class PlayState extends MusicBeatState
 
 			FlxG.camera.follow(camFollow, LOCKON, 0.06 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'you-cant-kusa')
+		else if (songLowercase  == 'you-cant-kusa')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.06 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'triple-talent')
+		else if (songLowercase == 'triple-talent')
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.12 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'white-moon')
+		else if (songLowercase == 'white-moon')
 		{
 			vgblack = new FlxSprite().loadGraphic(Paths.image('black_vignette', 'exe'));
 			tentas = new FlxSprite().loadGraphic(Paths.image('tentacles_black', 'exe'));
@@ -1763,7 +1761,7 @@ class PlayState extends MusicBeatState
 			health = 2;
 			FlxG.camera.follow(camFollow, LOCKON, 0.09 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 		}
-		else if (curSong.toLowerCase() == 'too-fest')
+		else if (songLowercase == 'too-fest')
 		{
 			camFollow.y = dad.getMidpoint().y + 700;
 			camFollow.x = dad.getMidpoint().x + 700;
@@ -2030,6 +2028,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
+				startCountdown();
 			case 'ankimo':
 				startSong();
 				startCountdown();
@@ -2052,6 +2051,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
+				startCountdown();
 			case 'asacoco':
 				add(blackFuck);
 				startCircle.loadGraphic(Paths.image('StartScreens/Coco', 'exe'));
@@ -2069,6 +2069,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 					FlxTween.tween(startCircle, {alpha: 0}, 1);
 				});
+				startCountdown();
 			case 'sunshine':
 				canPause = false;
 				bgspec.visible = false;
@@ -2172,6 +2173,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(startText, {alpha: 0}, 1);
 					FlxTween.tween(blackFuck, {alpha: 0}, 1);
 				});
+				startCountdown();
 			case 'koyochaos':
 				FlxG.camera.zoom = defaultCamZoom;
 				camHUD.visible = false;
@@ -3050,9 +3052,11 @@ class PlayState extends MusicBeatState
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
 		if (!paused)
 		{
-			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			FlxG.sound.playMusic(Paths.inst(songLowercase), 1, false);
 		}
 
 		FlxG.sound.music.onComplete = function() // skill issue + ratio + blocked + didn't ask.
@@ -3148,16 +3152,16 @@ class PlayState extends MusicBeatState
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
-		curSong = songData.song;
+		curSong = StringTools.replace(songData.song, " ", "-").toLowerCase();
 
 		#if sys
 		if (SONG.needsVoices && !isSM)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			vocals = new FlxSound().loadEmbedded(Paths.voices(curSong));
 		else
 			vocals = new FlxSound();
 		#else
 		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			vocals = new FlxSound().loadEmbedded(Paths.voices(curSong));
 		else
 			vocals = new FlxSound();
 		#end
@@ -3178,9 +3182,9 @@ class PlayState extends MusicBeatState
 				FlxG.sound.playMusic(sound);
 			}
 			else
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+				FlxG.sound.playMusic(Paths.inst(curSong), 1, false);
 			#else
-			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			FlxG.sound.playMusic(Paths.inst(curSong), 1, false);
 			#end
 		}
 
@@ -4613,7 +4617,9 @@ class PlayState extends MusicBeatState
 						});
 					}
 
-					if (SONG.song != 'Tutorial')
+					var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+					if (songLowercase != 'tutorial')
 						camZooming = true;
 
 					var altAnim:String = "";
@@ -5171,25 +5177,49 @@ class PlayState extends MusicBeatState
 							FlxG.switchState(new FreeplayState());
 						}
 					case 'too-seiso':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('tooslowcutscene2'));
-						video.finishCallback = function()
+						if (isStoryMode)
 						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
+							var video:MP4Handler = new MP4Handler();
+							video.playMP4(Paths.video('tooslowcutscene2'));
+							video.finishCallback = function()
+							{
+								LoadingState.loadAndSwitchState(new MainMenuState());
+							}
+						}
+						else
+						{
+							isFreeplay = false;
+							FlxG.switchState(new FreeplayState());
 						}
 					case 'you-cant-kusa':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('youcantruncutscene2'));
-						video.finishCallback = function()
+						if (isStoryMode)
 						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
+							var video:MP4Handler = new MP4Handler();
+							video.playMP4(Paths.video('youcantruncutscene2'));
+							video.finishCallback = function()
+							{
+								LoadingState.loadAndSwitchState(new MainMenuState());
+							}
+						}
+						else
+						{
+							isFreeplay = false;
+							FlxG.switchState(new FreeplayState());
 						}
 					case 'triple-talent':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('soundtestcodes'));
-						video.finishCallback = function()
+						if (isStoryMode)
 						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
+							var video:MP4Handler = new MP4Handler();
+							video.playMP4(Paths.video('soundtestcodes'));
+							video.finishCallback = function()
+							{
+								LoadingState.loadAndSwitchState(new MainMenuState());
+							}
+						}
+						else
+						{
+							isFreeplay = false;
+							FlxG.switchState(new FreeplayState());
 						}
 				}
 			}
@@ -6281,7 +6311,9 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		if (dad.curCharacter == 'suisei' && SONG.song.toLowerCase() == 'too-seiso')
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		if (dad.curCharacter == 'suisei' && songLowercase == 'too-seiso')
 		{
 			switch (curStep)
 			{
@@ -6306,7 +6338,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (dad.curCharacter == 'sonicfun' && SONG.song.toLowerCase() == 'circus')
+		if (dad.curCharacter == 'sonicfun' && songLowercase == 'circus')
 		{
 			switch (curStep)
 			{
@@ -6322,7 +6354,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (dad.curCharacter == 'suisei' && SONG.song.toLowerCase() == 'too-seiso' && curStep == 791)
+		if (dad.curCharacter == 'suisei' && songLowercase == 'too-seiso' && curStep == 791)
 		{
 			shakeCam = false;
 			shakeCam2 = false;
@@ -7081,7 +7113,9 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		if (curSong == 'Tutorial' && dad.curCharacter == 'gf' && SONG.notes[Math.floor(curStep / 16)] != null)
+		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
+
+		if (songLowercase == 'tutorial' && dad.curCharacter == 'gf' && SONG.notes[Math.floor(curStep / 16)] != null)
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
 				dad.dance();
@@ -7138,7 +7172,7 @@ class PlayState extends MusicBeatState
 				idleToBeat);
 		}
 
-		if (curBeat % 16 == 15 && SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
+		if (curBeat % 16 == 15 && songLowercase == 'tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
 		{
 			boyfriend.playAnim('hey', true);
 			dad.playAnim('cheer', true);
