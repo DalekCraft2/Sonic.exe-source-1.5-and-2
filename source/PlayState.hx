@@ -658,9 +658,9 @@ class PlayState extends MusicBeatState
 
 		switch (storyDifficulty)
 		{
-			case 1:
+			case 0:
 				curDifficulty = '-easy';
-			case 3:
+			case 2:
 				curDifficulty = '-hard';
 		}
 
