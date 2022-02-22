@@ -142,7 +142,9 @@ class Channel
 		throw "override me";
 	}
 
-	public function setNbLoops(nb:Int) {}
+	public function setNbLoops(nb:Int)
+	{
+	}
 }
 
 class ChannelEventInstance extends Channel
@@ -288,7 +290,9 @@ class ChannelEventInstance extends Channel
 		#end
 	}
 
-	public override function setNbLoops(nb:Int) {}
+	public override function setNbLoops(nb:Int)
+	{
+	}
 
 	public override function getVolume():Float
 	{

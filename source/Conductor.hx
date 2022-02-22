@@ -1,6 +1,6 @@
 package;
 
-import Song.SwagSong;
+import Song.SongData;
 import flixel.FlxG;
 
 /**
@@ -23,13 +23,17 @@ class Conductor
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
+	public static var rawPosition:Float;
+
 	public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = Math.floor((safeFrames / 60) * 1000); // is calculated in create(), is safeFrames in milliseconds
 	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public function new() {}
+	public function new()
+	{
+	}
 
 	public static function recalculateTimings()
 	{
@@ -38,7 +42,7 @@ class Conductor
 		Conductor.timeScale = Conductor.safeZoneOffset / 166;
 	}
 
-	public static function mapBPMChanges(song:SwagSong)
+	public static function mapBPMChanges(song:SongData)
 	{
 		bpmChangeMap = [];
 
@@ -65,7 +69,7 @@ class Conductor
 		trace("new BPM map BUDDY " + bpmChangeMap);
 	}
 
-	public static function recalculateTimingStruct(SONG:Song)
+	public static function recalculateTimingStruct(SONG:SongData)
 	{
 		for (i in SONG.eventObjects)
 		{

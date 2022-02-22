@@ -25,5 +25,7 @@ class SectionRender extends FlxSprite
 			FlxGridOverlay.overlay(this, GRID_SIZE, Std.int(h), GRID_SIZE * 8, GRID_SIZE * Height);
 	}
 
-	override function update(elapsed) {}
+	override function update(elapsed)
+	{
+	}
 }

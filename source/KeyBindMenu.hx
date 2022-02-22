@@ -18,9 +18,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
-import lime.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
@@ -32,29 +30,29 @@ class KeyBindMenu extends FlxSubState
 	var keyTextDisplay:FlxText;
 	var keyWarning:FlxText;
 	var warningTween:FlxTween;
-	var keyText:Array<String> = ["LEFT", "DOWN", "UP", "RIGHT", "MIDDLE", "DODGE"];
-	var defaultKeys:Array<String> = ["A", "S", "W", "D", "R", "SPACE", "SPACE"];
-	var defaultGpKeys:Array<String> = ["DPAD_LEFT", "DPAD_DOWN", "DPAD_UP", "DPAD_RIGHT", "A", "A"];
+	var keyText:Array<String> = [
+		"LEFT", "DOWN", "UP", "RIGHT", "PAUSE", "RESET", "MUTE", "VOLUME UP", "VOLUME DOWN", "FULLSCREEN"
+	];
+	var defaultKeys:Array<String> = ["A", "S", "W", "D", "ENTER", "R", "NUMPADZERO", "NUMPADMINUS", "NUMPADPLUS", "F"];
+	var defaultGpKeys:Array<String> = ["DPAD_LEFT", "DPAD_DOWN", "DPAD_UP", "DPAD_RIGHT", "START", "SELECT"];
 	var curSelected:Int = 0;
 
 	var keys:Array<String> = [
-		FlxG.save.data.leftBind,
-		FlxG.save.data.downBind,
-		FlxG.save.data.upBind,
-		FlxG.save.data.rightBind,
-		FlxG.save.data.middleBind,
-		FlxG.save.data.dodgeBind
+		FlxG.save.data.leftBind, FlxG.save.data.downBind, FlxG.save.data.upBind, FlxG.save.data.rightBind, FlxG.save.data.pauseBind, FlxG.save.data.resetBind,
+		FlxG.save.data.muteBind, FlxG.save.data.volUpBind, FlxG.save.data.volDownBind, FlxG.save.data.fullscreenBind
 	];
+
 	var gpKeys:Array<String> = [
 		FlxG.save.data.gpleftBind,
 		FlxG.save.data.gpdownBind,
 		FlxG.save.data.gpupBind,
 		FlxG.save.data.gprightBind,
-		FlxG.save.data.gpmiddleBind,
-		FlxG.save.data.gpdodgeBind
+		FlxG.save.data.gppauseBind,
+		FlxG.save.data.gpresetBind
 	];
+
 	var tempKey:String = "";
-	var blacklist:Array<String> = ["ESCAPE", "ENTER", "BACKSPACE", "TAB"];
+	var blacklist:Array<String> = ["ESCAPE", "BACKSPACE", "SPACE", "TAB"];
 
 	var blackBox:FlxSprite;
 	var infoText:FlxText;
@@ -77,26 +75,24 @@ class KeyBindMenu extends FlxSubState
 				gpKeys[i] = defaultGpKeys[i];
 		}
 
-		// FlxG.sound.playMusic('assets/music/configurator' + TitleState.soundExt);
-
 		persistentUpdate = true;
 
 		keyTextDisplay = new FlxText(-10, 0, 1280, "", 72);
 		keyTextDisplay.scrollFactor.set(0, 0);
 		keyTextDisplay.setFormat("VCR OSD Mono", 42, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		keyTextDisplay.borderSize = 2;
-		keyTextDisplay.borderQuality = 3;
+		keyTextDisplay.borderSize = 3;
+		keyTextDisplay.borderQuality = 1;
 
 		blackBox = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(blackBox);
 
-		infoText = new FlxText(-10, 580, 1280,
+		infoText = new FlxText(-10, 630, 1280,
 			'Current Mode: ${KeyBinds.gamepad ? 'GAMEPAD' : 'KEYBOARD'}. Press TAB to switch\n(${KeyBinds.gamepad ? 'RIGHT Trigger' : 'Escape'} to save, ${KeyBinds.gamepad ? 'LEFT Trigger' : 'Backspace'} to leave without saving. ${KeyBinds.gamepad ? 'START To change a keybind' : ''})',
 			72);
 		infoText.scrollFactor.set(0, 0);
 		infoText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		infoText.borderSize = 2;
-		infoText.borderQuality = 3;
+		infoText.borderSize = 3;
+		infoText.borderQuality = 1;
 		infoText.alpha = 0;
 		infoText.screenCenter(FlxAxes.X);
 		add(infoText);
@@ -108,8 +104,6 @@ class KeyBindMenu extends FlxSubState
 		FlxTween.tween(keyTextDisplay, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
 		FlxTween.tween(infoText, {alpha: 1}, 1.4, {ease: FlxEase.expoInOut});
 		FlxTween.tween(blackBox, {alpha: 0.7}, 1, {ease: FlxEase.expoInOut});
-
-		OptionsMenu.instance.acceptInput = false;
 
 		textUpdate();
 
@@ -192,10 +186,16 @@ class KeyBindMenu extends FlxSubState
 				}
 
 			case "input":
-				tempKey = keys[curSelected];
-				keys[curSelected] = "?";
 				if (KeyBinds.gamepad)
+				{
+					tempKey = gpKeys[curSelected];
 					gpKeys[curSelected] = "?";
+				}
+				else
+				{
+					tempKey = keys[curSelected];
+					keys[curSelected] = "?";
+				}
 				textUpdate();
 				state = "waiting";
 
@@ -268,20 +268,29 @@ class KeyBindMenu extends FlxSubState
 			for (i in 0...6)
 			{
 				var textStart = (i == curSelected) ? "> " : "  ";
-				trace(gpKeys[i]);
 				keyTextDisplay.text += textStart + keyText[i] + ": " + gpKeys[i] + "\n";
 			}
 		}
 		else
 		{
-			for (i in 0...6)
+			for (i in 0...4)
 			{
 				var textStart = (i == curSelected) ? "> " : "  ";
-				if (i != 4 && i != 5)
-					keyTextDisplay.text += textStart + keyText[i] + ": " + ((keys[i] != keyText[i]) ? (keys[i] + " / ") : "") + keyText[i] + " ARROW\n";
-				else
-					keyTextDisplay.text += textStart + keyText[i] + ": " + ((keys[i] != keyText[i]) ? (keys[i] + ' / ') : '') + 'SPACE\n';
+				keyTextDisplay.text += textStart + keyText[i] + ": " + ((keys[i] != keyText[i]) ? (keys[i] + " / ") : "") + keyText[i] + " ARROW\n";
 			}
+			var textStartPause = (4 == curSelected) ? "> " : "  ";
+			keyTextDisplay.text += textStartPause + keyText[4] + ": " + (keys[4]) + "\n";
+
+			var textStartReset = (5 == curSelected) ? "> " : "  ";
+			keyTextDisplay.text += textStartReset + keyText[5] + ": " + (keys[5]) + "\n";
+
+			for (i in 6...9)
+			{
+				var textStart = (i == curSelected) ? "> " : "  ";
+				keyTextDisplay.text += textStart + keyText[i] + ": " + keys[i] + "\n";
+			}
+			var textStartReset = (9 == curSelected) ? "> " : "  ";
+			keyTextDisplay.text += textStartReset + keyText[9] + ": " + (keys[9]) + "\n";
 		}
 
 		keyTextDisplay.screenCenter();
@@ -293,15 +302,24 @@ class KeyBindMenu extends FlxSubState
 		FlxG.save.data.downBind = keys[1];
 		FlxG.save.data.leftBind = keys[0];
 		FlxG.save.data.rightBind = keys[3];
-		FlxG.save.data.middleBind = keys[4];
-		FlxG.save.data.dodgeBind = keys[5];
+		FlxG.save.data.pauseBind = keys[4];
+		FlxG.save.data.resetBind = keys[5];
 
 		FlxG.save.data.gpupBind = gpKeys[2];
 		FlxG.save.data.gpdownBind = gpKeys[1];
 		FlxG.save.data.gpleftBind = gpKeys[0];
 		FlxG.save.data.gprightBind = gpKeys[3];
-		FlxG.save.data.gpmiddleBind = gpKeys[4];
-		FlxG.save.data.gpdodgeBind = gpKeys[5];
+		FlxG.save.data.gppauseBind = gpKeys[4];
+		FlxG.save.data.gpresetBind = gpKeys[5];
+
+		FlxG.save.data.muteBind = keys[6];
+		FlxG.save.data.volUpBind = keys[7];
+		FlxG.save.data.volDownBind = keys[8];
+		FlxG.save.data.fullscreenBind = keys[9];
+
+		FlxG.sound.muteKeys = [FlxKey.fromString(keys[6])];
+		FlxG.sound.volumeDownKeys = [FlxKey.fromString(keys[8])];
+		FlxG.sound.volumeUpKeys = [FlxKey.fromString(keys[7])];
 
 		FlxG.save.flush();
 
@@ -310,7 +328,7 @@ class KeyBindMenu extends FlxSubState
 
 	function reset()
 	{
-		for (i in 0...7)
+		for (i in 0...5)
 		{
 			keys[i] = defaultKeys[i];
 		}
@@ -322,8 +340,6 @@ class KeyBindMenu extends FlxSubState
 		state = "exiting";
 
 		save();
-
-		OptionsMenu.instance.acceptInput = true;
 
 		FlxTween.tween(keyTextDisplay, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
 		FlxTween.tween(blackBox, {alpha: 0}, 1.1, {
@@ -340,14 +356,17 @@ class KeyBindMenu extends FlxSubState
 	{
 		var shouldReturn:Bool = true;
 
-		var notAllowed:Array<String> = ["START", "RIGHT_TRIGGER", "LEFT_TRIGGER"];
+		var notAllowed:Array<String> = ["START"];
+		var swapKey:Int = -1;
 
 		for (x in 0...gpKeys.length)
 		{
 			var oK = gpKeys[x];
 			if (oK == r)
-				if (x != 5)
-					gpKeys[x] = null;
+			{
+				swapKey = x;
+				gpKeys[x] = null;
+			}
 			if (notAllowed.contains(oK))
 			{
 				gpKeys[x] = null;
@@ -356,8 +375,19 @@ class KeyBindMenu extends FlxSubState
 			}
 		}
 
+		if (notAllowed.contains(r))
+		{
+			gpKeys[curSelected] = tempKey;
+			lastKey = r;
+			return;
+		}
+
 		if (shouldReturn)
 		{
+			if (swapKey != -1)
+			{
+				gpKeys[swapKey] = tempKey;
+			}
 			gpKeys[curSelected] = r;
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
@@ -375,6 +405,7 @@ class KeyBindMenu extends FlxSubState
 		var shouldReturn:Bool = true;
 
 		var notAllowed:Array<String> = [];
+		var swapKey:Int = -1;
 
 		for (x in blacklist)
 		{
@@ -387,8 +418,10 @@ class KeyBindMenu extends FlxSubState
 		{
 			var oK = keys[x];
 			if (oK == r)
-				if (x != 5)
-					keys[x] = null;
+			{
+				swapKey = x;
+				keys[x] = null;
+			}
 			if (notAllowed.contains(oK))
 			{
 				keys[x] = null;
@@ -397,9 +430,9 @@ class KeyBindMenu extends FlxSubState
 			}
 		}
 
-		if (r.contains("NUMPAD"))
+		if (notAllowed.contains(r))
 		{
-			keys[curSelected] = null;
+			keys[curSelected] = tempKey;
 			lastKey = r;
 			return;
 		}
@@ -408,6 +441,11 @@ class KeyBindMenu extends FlxSubState
 
 		if (shouldReturn)
 		{
+			// Swap keys instead of setting the other one as null
+			if (swapKey != -1)
+			{
+				keys[swapKey] = tempKey;
+			}
 			keys[curSelected] = r;
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
@@ -422,9 +460,9 @@ class KeyBindMenu extends FlxSubState
 	{
 		curSelected += _amount;
 
-		if (curSelected > 5)
+		if (curSelected > 9)
 			curSelected = 0;
 		if (curSelected < 0)
-			curSelected = 5;
+			curSelected = 9;
 	}
 }

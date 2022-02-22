@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -25,8 +26,6 @@ class HealthIcon extends FlxSprite
 
 		isPlayer = isOldIcon = false;
 
-		antialiasing = FlxG.save.data.antialiasing;
-
 		changeIcon(char);
 		scrollFactor.set();
 	}
@@ -38,14 +37,19 @@ class HealthIcon extends FlxSprite
 
 	public function changeIcon(char:String)
 	{
-		if (char != 'bf-pixel' && char != 'bf-old')
+		if (char != 'bf-pixel' && char != 'bf-old' && char != 'bf-SS')
 			char = char.split("-")[0];
 
-		loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);
+		if (!OpenFlAssets.exists(Paths.image('icons/icon-' + char)))
+			char = 'face';
+
+		loadGraphic(Paths.loadImage('icons/icon-' + char), true, 150, 150);
+
 		if (char.endsWith('-pixel') || char.startsWith('senpai') || char.startsWith('spirit'))
 			antialiasing = false
 		else
 			antialiasing = FlxG.save.data.antialiasing;
+
 		animation.add(char, [0, 1], 0, false, isPlayer);
 		animation.play(char);
 	}

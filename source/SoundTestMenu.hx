@@ -13,7 +13,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-#if windows
+#if FEATURE_DISCORD
 import Discord.DiscordClient;
 #end
 
@@ -48,7 +48,7 @@ class SoundTestMenu extends MusicBeatState
 
 		new FlxTimer().start(0.1, function(tmr:FlxTimer)
 		{
-			FlxG.sound.playMusic(Paths.music('breakfast'));
+			FlxG.sound.playMusic(Paths.music('breakfast', 'shared'));
 		});
 
 		whiteshit = new FlxSprite().makeGraphic(1280, 720, FlxColor.WHITE);
@@ -154,7 +154,7 @@ class SoundTestMenu extends MusicBeatState
 		{
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
-			PlayState.SONG = Song.loadFromJson('circus-hard', 'circus');
+			PlayState.SONG = Song.loadFromJson('circus', '-hard');
 			PlayState.isFreeplay = false;
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
@@ -174,7 +174,7 @@ class SoundTestMenu extends MusicBeatState
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
-			PlayState.SONG = Song.loadFromJson('ankimo-hard', 'ankimo');
+			PlayState.SONG = Song.loadFromJson('ankimo', '-hard');
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = 1;
@@ -194,7 +194,7 @@ class SoundTestMenu extends MusicBeatState
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
 			PlayState.storyPlaylist = ['caretaker', 'white-moon'];
-			PlayState.SONG = Song.loadFromJson('caretaker-hard', 'caretaker');
+			PlayState.SONG = Song.loadFromJson('caretaker', '-hard');
 			PlayState.isStoryMode = false;
 			PlayState.isList = true;
 			PlayState.storyDifficulty = 2;
@@ -214,7 +214,7 @@ class SoundTestMenu extends MusicBeatState
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
-			PlayState.SONG = Song.loadFromJson('sunshine', 'sunshine');
+			PlayState.SONG = Song.loadFromJson('sunshine', '');
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = 1;
@@ -233,7 +233,7 @@ class SoundTestMenu extends MusicBeatState
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
-			PlayState.SONG = Song.loadFromJson('koyochaos-hard', 'koyochaos');
+			PlayState.SONG = Song.loadFromJson('koyochaos', '-hard');
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = 1;
@@ -252,7 +252,7 @@ class SoundTestMenu extends MusicBeatState
 			woahmanstopspammin = false;
 			PlayStateChangeables.nocheese = false;
 			PlayState.isFreeplay = false;
-			PlayState.SONG = Song.loadFromJson('too-fest-hard', 'too-fest');
+			PlayState.SONG = Song.loadFromJson('too-fest', '-hard');
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = 1;

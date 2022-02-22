@@ -38,6 +38,8 @@ class HitGraph extends Sprite
 
 	public var bitmap:Bitmap;
 
+	public var ts:Float;
+
 	var _axis:Shape;
 	var _width:Int;
 	var _height:Int;
@@ -60,7 +62,7 @@ class HitGraph extends Sprite
 		_axis = new Shape();
 		_axis.x = _labelWidth + 10;
 
-		var ts = Math.floor((PlayState.rep.replay.sf / 60) * 1000) / 166;
+		ts = Math.floor((PlayState.rep.replay.sf / 60) * 1000) / 166;
 
 		var early = createTextField(10, 10, FlxColor.WHITE, 12);
 		var late = createTextField(10, _height - 20, FlxColor.WHITE, 12);
@@ -231,7 +233,7 @@ class HitGraph extends Sprite
 				default:
 					gfx.beginFill(0xFFFFFF);
 			}
-			var pointY = (-value * _height - 1) + _height;
+			var pointY = ((-value * _height - 1) + _height);
 
 			/*if (i == 0)
 				gfx.moveTo(graphX, _axis.y + pointY); */
@@ -247,7 +249,7 @@ class HitGraph extends Sprite
 
 	public function fitX(x:Float)
 	{
-		return (x / FlxG.sound.music.length) * width;
+		return ((x / (FlxG.sound.music.length / PlayState.songMultiplier)) * width) * PlayState.songMultiplier;
 	}
 
 	public function addToHistory(diff:Float, judge:String, time:Float)

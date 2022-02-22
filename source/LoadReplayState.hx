@@ -2,9 +2,8 @@ package;
 
 import haxe.Exception;
 import lime.app.Application;
-#if sys
+#if FEATURE_STEPMANIA
 import smTools.SMFile;
-import sys.FileSystem;
 #end
 import Controls.KeyboardScheme;
 import Controls.Control;
@@ -17,8 +16,8 @@ import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
-#if sys
+#if FEATURE_FILESYSTEM
+import sys.FileSystem;
 import sys.io.File;
 #end
 
@@ -27,7 +26,7 @@ class LoadReplayState extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 
-	var songs:Array<FreeplayState.SongMetadata> = [];
+	var songs:Array<FreeplayState.FreeplaySongMetadata> = [];
 
 	var controlsStrings:Array<String> = [];
 	var actualNames:Array<String> = [];
@@ -38,8 +37,9 @@ class LoadReplayState extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		#if sys
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.loadImage('menuDesat'));
+		// TODO: Refactor this to use OpenFlAssets.
+		#if FEATURE_FILESYSTEM
 		controlsStrings = sys.FileSystem.readDirectory(Sys.getCwd() + "/assets/replays/");
 		#end
 		trace(controlsStrings);
@@ -115,7 +115,7 @@ class LoadReplayState extends MusicBeatState
 		var week:Int = 0;
 		for (i in 0...songs.length)
 		{
-			var pog:FreeplayState.SongMetadata = songs[i];
+			var pog:FreeplayState.FreeplaySongMetadata = songs[i];
 			if (pog.songName == songName)
 				week = pog.week;
 		}
@@ -124,7 +124,7 @@ class LoadReplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String)
 	{
-		songs.push(new FreeplayState.SongMetadata(songName, weekNum, songCharacter));
+		songs.push(new FreeplayState.FreeplaySongMetadata(songName, weekNum, songCharacter));
 	}
 
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
@@ -164,10 +164,26 @@ class LoadReplayState extends MusicBeatState
 			{
 				// adjusting the song name to be compatible
 				var songFormat = StringTools.replace(PlayState.rep.replay.songName, " ", "-");
+				switch (songFormat)
+				{
+					case 'Dad-Battle':
+						songFormat = 'dadbattle';
+					case 'Philly-Nice':
+						songFormat = 'philly';
+					case 'M.I.L.F':
+						songFormat = 'milf';
+					// Replay v1.0 support
+					case 'dad-battle':
+						songFormat = 'dadbattle';
+					case 'philly-nice':
+						songFormat = 'philly';
+					case 'm.i.l.f':
+						songFormat = 'milf';
+				}
 
-				var poop = "";
+				var songPath = "";
 
-				#if sys
+				#if FEATURE_STEPMANIA
 				if (PlayState.rep.replay.sm)
 					if (!FileSystem.exists(StringTools.replace(PlayState.rep.replay.chartPath, "converted.json", "")))
 					{
@@ -177,15 +193,15 @@ class LoadReplayState extends MusicBeatState
 				#end
 
 				PlayState.isSM = PlayState.rep.replay.sm;
-				#if sys
+				#if FEATURE_STEPMANIA
 				if (PlayState.isSM)
 					PlayState.pathToSm = StringTools.replace(PlayState.rep.replay.chartPath, "converted.json", "");
 				#end
 
-				#if sys
+				#if FEATURE_STEPMANIA
 				if (PlayState.isSM)
 				{
-					poop = File.getContent(PlayState.rep.replay.chartPath);
+					songPath = File.getContent(PlayState.rep.replay.chartPath);
 					try
 					{
 						PlayState.sm = SMFile.loadFile(PlayState.pathToSm + "/" + StringTools.replace(PlayState.rep.replay.songName, " ", "_") + ".sm");
@@ -201,18 +217,19 @@ class LoadReplayState extends MusicBeatState
 						return;
 					}
 				}
-				else
-					poop = Highscore.formatSong(songFormat, PlayState.rep.replay.songDiff);
-				#else
-				poop = Highscore.formatSong(songFormat, PlayState.rep.replay.songDiff);
 				#end
 
 				try
 				{
 					if (PlayState.isSM)
-						PlayState.SONG = Song.loadFromJsonRAW(poop);
+					{
+						PlayState.SONG = Song.loadFromJsonRAW(songPath);
+					}
 					else
-						PlayState.SONG = Song.loadFromJson(poop, PlayState.rep.replay.songName);
+					{
+						var diff:String = ["-easy", "", "-hard"][PlayState.rep.replay.songDiff];
+						PlayState.SONG = Song.loadFromJson(PlayState.rep.replay.songName, diff);
+					}
 				}
 				catch (e:Exception)
 				{
@@ -236,10 +253,6 @@ class LoadReplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		// NGio.logEvent('Fresh');
-		#end
-
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;

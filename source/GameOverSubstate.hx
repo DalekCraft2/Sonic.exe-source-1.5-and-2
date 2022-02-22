@@ -16,8 +16,9 @@ import flixel.util.FlxTimer;
 class GameOverSubstate extends MusicBeatSubstate
 {
 	var bf:Boyfriend;
-	var bfdeathshit:FlxSprite;
 	var camFollow:FlxObject;
+
+	var bfdeathshit:FlxSprite;
 	var sonicDEATH:SonicDeathAnimation;
 	var majinBf:Boyfriend;
 	var countdown:FlxText;
@@ -37,9 +38,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	public function new(x:Float, y:Float)
 	{
-		var daStage = PlayState.curStage;
+		var daStage = PlayState.Stage.curStage;
 		var daBf:String = '';
-		switch (PlayState.SONG.player1)
+		switch (PlayState.boyfriend.curCharacter)
 		{
 			case 'bf-pixel':
 				stageSuffix = '-pixel';
@@ -51,9 +52,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		super();
 
 		Conductor.songPosition = 0;
+		Conductor.rawPosition = Conductor.songPosition;
 
 		bluevg = new FlxSprite();
-		bluevg.loadGraphic(Paths.image('blueVg'));
+		bluevg.loadGraphic(Paths.loadImage('blueVg', 'exe'));
 		bluevg.alpha = 0;
 		add(bluevg);
 
@@ -70,144 +72,126 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		bfdeathshit = new FlxSprite(x - 105, y - 20);
 
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-
-		if (songLowercase == 'asacoco')
+		switch (PlayState.SONG.songId)
 		{
-			bfdeathshit.frames = Paths.getSparrowAtlas('Bf_dancin');
-			bfdeathshit.animation.addByPrefix('dance', 'Dance', 24, true);
-			bfdeathshit.animation.play('dance', true);
+			case 'asacoco':
+				bfdeathshit.frames = Paths.getSparrowAtlas('Bf_dancin', 'exe');
+				bfdeathshit.animation.addByPrefix('dance', 'Dance', 24, true);
+				bfdeathshit.animation.play('dance', true);
 
-			bfdeathshit.alpha = 0;
+				bfdeathshit.alpha = 0;
 		}
 
 		bf = new Boyfriend(x, y, daBf);
 
-		if (songLowercase == 'circus')
+		switch (PlayState.SONG.songId)
 		{
-			majinBf = new Boyfriend(x, y, 'bf-blue');
-			majinBf.visible = false;
-			majinBf.antialiasing = FlxG.save.data.antialiasing;
-			add(majinBf);
-		}
+			case 'too-seiso', 'you-cant-kusa', 'triple-talent':
+				sonicDEATH = new SonicDeathAnimation(Std.int(bf.x) - 80, Std.int(bf.y) - 350);
 
-		if (songLowercase == 'too-seiso' || songLowercase == 'you-cant-kusa' || songLowercase == 'triple-talent')
-		{
-			sonicDEATH = new SonicDeathAnimation(Std.int(bf.x) - 80, Std.int(bf.y) - 350);
+				sonicDEATH.scale.x = 2;
+				sonicDEATH.scale.y = 2;
 
-			sonicDEATH.scale.x = 2;
-			sonicDEATH.scale.y = 2;
+				sonicDEATH.antialiasing = FlxG.save.data.antialiasing;
+				sonicDEATH.playAnim('firstDEATH');
+				add(sonicDEATH);
+			case 'circus':
+				majinBf = new Boyfriend(x, y, 'bf-blue');
+				majinBf.visible = false;
+				majinBf.antialiasing = FlxG.save.data.antialiasing;
+				add(majinBf);
 
-			sonicDEATH.antialiasing = FlxG.save.data.antialiasing;
-			sonicDEATH.playAnim('firstDEATH');
-			add(sonicDEATH);
-		}
+				countdown = new FlxText(614, 118 - 30, 100, '10', 40);
+				countdown.setFormat('Sonic CD Menu Font Regular', 40, FlxColor.WHITE);
+				countdown.setBorderStyle(SHADOW, FlxColor.BLACK, 4, 1);
+				add(countdown);
+				countdown.alpha = 0;
+				countdown.visible = true;
+				countdown.cameras = [coolcamera];
 
-		if (songLowercase == 'circus')
-		{
-			countdown = new FlxText(614, 118 - 30, 100, '10', 40);
-			countdown.setFormat('Sonic CD Menu Font Regular', 40, FlxColor.WHITE);
-			countdown.setBorderStyle(SHADOW, FlxColor.BLACK, 4, 1);
-			add(countdown);
-			countdown.alpha = 0;
-			countdown.visible = true;
-			countdown.cameras = [coolcamera];
-		}
+				bottomMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.loadImage('bottomMajins', 'exe'));
+				bottomMajins.scale.x = 1.1;
+				bottomMajins.scale.y = 1.1;
 
-		if (songLowercase == 'koyochaos')
-		{
-			bf.alpha = 0;
-			bfdeathshit = new FlxSprite(x - 400, y - 200);
-			bfdeathshit.frames = Paths.getSparrowAtlas('fleetway_death_BF');
-			bfdeathshit.animation.addByPrefix('bru', 'fleetway death BF dies', 14, false);
-			FlxG.sound.play(Paths.sound('laser_moment', 'exe'), .5);
-			bfdeathshit.animation.addByPrefix('h', 'fleetway death BF Dead Loop', 4, true);
-			add(bfdeathshit);
-		}
-
-		if (songLowercase == 'circus')
-		{
-			bottomMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('bottomMajins'));
-			bottomMajins.scale.x = 1.1;
-			bottomMajins.scale.y = 1.1;
-
-			bottomMajins.alpha = 0;
-			add(bottomMajins);
+				bottomMajins.alpha = 0;
+				add(bottomMajins);
+			case 'koyochaos':
+				bf.alpha = 0;
+				bfdeathshit = new FlxSprite(x - 400, y - 200);
+				bfdeathshit.frames = Paths.getSparrowAtlas('fleetway_death_BF', 'exe');
+				bfdeathshit.animation.addByPrefix('bru', 'fleetway death BF dies', 14, false);
+				FlxG.sound.play(Paths.sound('laser_moment', 'exe'), .5);
+				bfdeathshit.animation.addByPrefix('h', 'fleetway death BF Dead Loop', 4, true);
+				add(bfdeathshit);
 		}
 
 		add(bf);
-		if (songLowercase == 'asacoco')
-		{
-			bf.alpha = 0;
-			add(bfdeathshit);
-		}
-		else if (songLowercase == 'sunshine')
-		{
-			bf.alpha = 0;
-			bfdeathshit.frames = Paths.getSparrowAtlas('3DGOpng');
-			bfdeathshit.setGraphicSize(720, 720);
-			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
-			bfdeathshit.cameras = [coolcamera];
-			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('firstdeath');
-			add(bfdeathshit);
-		}
-		else if (songLowercase == 'too-fest')
-		{
-			bfdeathshit = new FlxSprite().loadGraphic(Paths.image('bfisfuckingdead', 'exe'));
-			bfdeathshit.visible = false;
-			bfdeathshit.cameras = [coolcamera];
-			add(bfdeathshit);
-			bf.alpha = 0;
-			var video:MP4Handler = new MP4Handler();
-			video.playMP4(Paths.video('BfFuckingDies'));
-			video.finishCallback = function()
-			{
-				FlxG.camera.fade(FlxColor.BLACK, 0, true);
-				bfdeathshit.visible = true;
-			}
-		}
-		else if (songLowercase == 'white-moon')
-		{
-			bf.alpha = 0;
-			bfdeathshit.frames = Paths.getSparrowAtlas('exedeath');
-			bfdeathshit.setGraphicSize(Std.int(bfdeathshit.width * 1.9));
-			bfdeathshit.setPosition(-673, -378);
-			bfdeathshit.animation.addByPrefix('die', 'DieLmao', 24, false);
-			bfdeathshit.cameras = [coolcamera];
-			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('die');
-			bfdeathshit.animation.paused = true;
-			bfdeathshit.animation.curAnim.curFrame = 0;
-			bfdeathshit.antialiasing = FlxG.save.data.antialiasing;
-			add(bfdeathshit);
-		}
 
-		if (songLowercase == 'circus')
+		switch (PlayState.SONG.songId)
 		{
-			topMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('topMajins'));
-			topMajins.scale.x = 1.1;
-			topMajins.scale.y = 1.1;
-			topMajins.alpha = 0;
-			add(topMajins);
+			case 'asacoco':
+				bf.alpha = 0;
+				add(bfdeathshit);
+			case 'sunshine':
+				bf.alpha = 0;
+				bfdeathshit.frames = Paths.getSparrowAtlas('3DGOpng');
+				bfdeathshit.setGraphicSize(720, 720);
+				bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
+				bfdeathshit.cameras = [coolcamera];
+				bfdeathshit.screenCenter();
+				bfdeathshit.animation.play('firstdeath');
+				add(bfdeathshit);
+			case 'too-fest':
+				bfdeathshit = new FlxSprite().loadGraphic(Paths.loadImage('bfisfuckingdead', 'exe'));
+				bfdeathshit.visible = false;
+				bfdeathshit.cameras = [coolcamera];
+				add(bfdeathshit);
+				bf.alpha = 0;
+				var video:MP4Handler = new MP4Handler();
+				video.playMP4(Paths.video('BfFuckingDies'));
+				video.finishCallback = function()
+				{
+					FlxG.camera.fade(FlxColor.BLACK, 0, true);
+					bfdeathshit.visible = true;
+				}
+			case 'white-moon':
+				bf.alpha = 0;
+				bfdeathshit.frames = Paths.getSparrowAtlas('exedeath', 'exe');
+				bfdeathshit.setGraphicSize(Std.int(bfdeathshit.width * 1.9));
+				bfdeathshit.setPosition(-673, -378);
+				bfdeathshit.animation.addByPrefix('die', 'DieLmao', 24, false);
+				bfdeathshit.cameras = [coolcamera];
+				bfdeathshit.screenCenter();
+				bfdeathshit.animation.play('die');
+				bfdeathshit.animation.paused = true;
+				bfdeathshit.animation.curAnim.curFrame = 0;
+				bfdeathshit.antialiasing = FlxG.save.data.antialiasing;
+				add(bfdeathshit);
+			case 'circus':
+				topMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.loadImage('topMajins', 'exe'));
+				topMajins.scale.x = 1.1;
+				topMajins.scale.y = 1.1;
+				topMajins.alpha = 0;
+				add(topMajins);
 		}
 
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		switch (songLowercase)
+		switch (PlayState.SONG.songId)
 		{
 			case 'too-fest', 'white-moon':
-
 			case 'koyochaos':
 				bfdeathshit.animation.play('bru');
-
 			default:
 				FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix), .2);
 				FlxG.sound.play(Paths.sound('woooshFIRSTDEATH', 'shared'));
 		}
+		// FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
 		Conductor.changeBPM(100);
 
+		// FlxG.camera.followLerp = 1;
+		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
 
@@ -216,24 +200,22 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function startCountdown():Void
 	{
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-
 		if (islol)
 		{
 			holdup = false;
-			switch (songLowercase)
+			switch (PlayState.SONG.songId)
 			{
 				case 'circus':
 					add(bluevg);
 					FlxTween.tween(countdown, {alpha: 1}, 1);
 					FlxTween.tween(topMajins, {alpha: 1}, 5);
 					FlxTween.tween(bottomMajins, {alpha: 1}, 10);
-					FlxG.sound.play(Paths.sound('buildUP'), 1);
+					FlxG.sound.play(Paths.sound('buildUP', 'exe'), 1);
 			}
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				timer--;
-				if (songLowercase == 'circus')
+				if (PlayState.SONG.songId == 'circus')
 				{
 					countdown.text = Std.string(timer);
 					if (timer == 9)
@@ -256,9 +238,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		toolateurfucked = true;
 
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-
-		switch (songLowercase)
+		switch (PlayState.SONG.songId)
 		{
 			case 'circus':
 				FlxG.sound.music.stop();
@@ -268,7 +248,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				bf.visible = false;
 				majinBf.visible = true;
 				majinBf.playAnim('premajin');
-				FlxG.sound.play(Paths.sound('firstLOOK'), 1);
+				FlxG.sound.play(Paths.sound('firstLOOK', 'exe'), 1);
 
 				FlxTween.tween(bluevg, {alpha: 1}, 0.2, {
 					onComplete: function(twn:FlxTween)
@@ -285,7 +265,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					majinBf.playAnim('majin');
 					FlxG.camera.shake(0.01, 0.2);
 					FlxG.camera.flash(FlxColor.fromRGB(75, 60, 240), .5);
-					FlxG.sound.play(Paths.sound('secondLOOK'), 1);
+					FlxG.sound.play(Paths.sound('secondLOOK', 'exe'), 1);
 
 					new FlxTimer().start(.4, function(tmr:FlxTimer)
 					{
@@ -302,7 +282,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					});
 				});
 			case 'white-moon':
-				FlxG.sound.play(Paths.sound('Exe_die'));
+				FlxG.sound.play(Paths.sound('Exe_die', 'exe'));
 				var statica:FlxSprite = new FlxSprite();
 				statica.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
 				statica.animation.addByPrefix('fard', 'screenSTATIC', 24, true);
@@ -312,7 +292,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				add(statica);
 
 				remove(bluevg);
-				bluevg.loadGraphic(Paths.image('RedVG', 'exe'));
+				bluevg.loadGraphic(Paths.loadImage('RedVG', 'exe'));
 				add(bluevg);
 				bfdeathshit.animation.play('die');
 				bfdeathshit.animation.paused = false;
@@ -327,6 +307,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 	}
 
+	var startVibin:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -340,6 +322,11 @@ class GameOverSubstate extends MusicBeatSubstate
 			}
 		}
 
+		if (FlxG.save.data.InstantRespawn)
+		{
+			LoadingState.loadAndSwitchState(new PlayState());
+		}
+
 		if (controls.BACK)
 		{
 			if (!toolateurfucked)
@@ -349,10 +336,20 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.sound.music.stop();
 
 				if (PlayState.isStoryMode)
+				{
+					GameplayCustomizeState.freeplayBf = 'bf';
+					GameplayCustomizeState.freeplayDad = 'dad';
+					GameplayCustomizeState.freeplayGf = 'gf';
+					GameplayCustomizeState.freeplayNoteStyle = 'normal';
+					GameplayCustomizeState.freeplayStage = 'stage';
+					GameplayCustomizeState.freeplaySong = 'bopeebo';
+					GameplayCustomizeState.freeplayWeek = 1;
 					FlxG.switchState(new StoryMenuState());
+				}
 				else
-					FlxG.switchState(new SoundTestMenu());
+					FlxG.switchState(new FreeplayState());
 				PlayState.loadRep = false;
+				PlayState.stageTesting = false;
 			}
 		}
 
@@ -364,10 +361,9 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+			startVibin = true;
 
-			var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-
-			switch (songLowercase)
+			switch (PlayState.SONG.songId)
 			{
 				case 'asacoco':
 					FlxTween.tween(bfdeathshit, {alpha: 1}, 1);
@@ -386,13 +382,14 @@ class GameOverSubstate extends MusicBeatSubstate
 				case 'ankimo':
 					playVoiceLine(StringTools.replace(Paths.sound('XLines', 'exe'), '.ogg', ''), 5);
 			}
-			if (holdup && (songLowercase == 'circus' || songLowercase == 'white-moon'))
+			if (holdup && (PlayState.SONG.songId == 'circus' || PlayState.SONG.songId == 'white-moon'))
 				startCountdown();
 		}
 
 		if (FlxG.sound.music.playing)
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
+			Conductor.rawPosition = Conductor.songPosition;
 		}
 	}
 
@@ -416,6 +413,10 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.beatHit();
 
+		if (startVibin && !isEnding)
+		{
+			bf.playAnim('deathLoop', true);
+		}
 		FlxG.log.add('beat');
 	}
 
@@ -423,15 +424,16 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function endBullshit():Void
 	{
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-
 		if (!isEnding)
 		{
+			PlayState.startTime = 0;
 			isEnding = true;
-			voiceline.volume = 0;
 			bf.playAnim('deathConfirm', true);
-			if (songLowercase == 'too-seiso' || songLowercase == 'you-cant-kusa')
-				sonicDEATH.playAnim('retry', true);
+			switch (PlayState.SONG.songId)
+			{
+				case 'too-seiso', 'you-cant-kusa':
+					sonicDEATH.playAnim('retry', true);
+			}
 			new FlxTimer().start(0.1, function(tmr:FlxTimer)
 			{
 				bf.visible = false;
@@ -443,20 +445,20 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.camera.flash(FlxColor.RED, 4);
 			});
 			FlxG.sound.music.stop();
-			switch (songLowercase)
+			switch (PlayState.SONG.songId)
 			{
 				case 'white-moon':
-					FlxG.sound.play(Paths.sound('Exe_die'));
-
+					FlxG.sound.play(Paths.sound('Exe_die', 'exe'));
 				default:
 					FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix), 1);
 			}
-
+			// FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
 					LoadingState.loadAndSwitchState(new PlayState());
+					PlayState.stageTesting = false;
 				});
 			});
 		}

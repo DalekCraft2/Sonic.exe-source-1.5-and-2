@@ -2,19 +2,21 @@ package;
 
 import flixel.FlxG;
 import openfl.display.Sprite;
-#if desktop
+#if FEATURE_WEBM
 import webm.*;
 #end
 
 class WebmHandler
 {
-	#if desktop
+	#if FEATURE_WEBM
 	public var webm:WebmPlayer;
 	public var vidPath:String = "";
 	public var io:WebmIo;
 	public var initialized:Bool = false;
 
-	public function new() {}
+	public function new()
+	{
+	}
 
 	public function source(?vPath:String):Void
 	{

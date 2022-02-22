@@ -1,8 +1,10 @@
 package;
 
 import haxe.Exception;
-#if sys
+#if FEATURE_STEPMANIA
 import smTools.SMFile;
+#end
+#if FEATURE_FILESYSTEM
 import sys.FileSystem;
 import sys.io.File;
 #end
@@ -24,9 +26,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
-import lime.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
@@ -89,7 +89,7 @@ class ResultsScreen extends FlxSubState
 		var shits = PlayState.isStoryMode ? PlayState.campaignShits : PlayState.shits;
 
 		comboText = new FlxText(20, -75, 0,
-			'Judgements:\nSicks - ${sicks}\nGoods - ${goods}\nBads - ${bads}\n\nCombo Breaks: ${(PlayState.isStoryMode ? PlayState.campaignMisses : PlayState.misses)}\nHighest Combo: ${PlayState.highestCombo + 1}\nScore: ${PlayState.instance.songScore}\nAccuracy: ${HelperFunctions.truncateFloat(PlayState.instance.accuracy, 2)}%\n\n${Ratings.GenerateLetterRank(PlayState.instance.accuracy)}\n\n${!PlayState.loadRep ? "F1 - View replay\nF2 - Replay song" : ""}
+			'Judgements:\nSicks - ${sicks}\nGoods - ${goods}\nBads - ${bads}\n\nCombo Breaks: ${(PlayState.isStoryMode ? PlayState.campaignMisses : PlayState.misses)}\nHighest Combo: ${PlayState.highestCombo + 1}\nScore: ${PlayState.instance.songScore}\nAccuracy: ${HelperFunctions.truncateFloat(PlayState.instance.accuracy, 2)}%\n\n${Ratings.GenerateLetterRank(PlayState.instance.accuracy)}\nRate: ${PlayState.songMultiplier}x\n\n${!PlayState.loadRep ? "\nF1 - Replay song" : ""}
         ');
 		comboText.size = 28;
 		comboText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 4, 1);
@@ -146,7 +146,7 @@ class ResultsScreen extends FlxSubState
 			if (diff != (166 * Math.floor((PlayState.rep.replay.sf / 60) * 1000) / 166))
 				mean += diff;
 			if (obj[1] != -1)
-				graph.addToHistory(diff, judge, obj3);
+				graph.addToHistory(diff / PlayState.songMultiplier, judge, obj3 / PlayState.songMultiplier);
 		}
 
 		if (sicks == Math.POSITIVE_INFINITY || sicks == Math.NaN)
@@ -159,7 +159,7 @@ class ResultsScreen extends FlxSubState
 		mean = HelperFunctions.truncateFloat(mean / PlayState.rep.replay.songNotes.length, 2);
 
 		settingsText = new FlxText(20, FlxG.height + 50, 0,
-			'SF: ${PlayState.rep.replay.sf} | Ratio (SA/GA): ${Math.round(sicks)}:1 ${Math.round(goods)}:1 | Mean: ${mean}ms | Played on ${PlayState.SONG.song} ${CoolUtil.difficultyFromInt(PlayState.storyDifficulty).toUpperCase()}');
+			'Mean: ${mean}ms (SICK:${Ratings.timingWindows[3]}ms,GOOD:${Ratings.timingWindows[2]}ms,BAD:${Ratings.timingWindows[1]}ms,SHIT:${Ratings.timingWindows[0]}ms)');
 		settingsText.size = 16;
 		settingsText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
 		settingsText.color = FlxColor.WHITE;
@@ -188,30 +188,24 @@ class ResultsScreen extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (music != null && music.volume < 0.5)
-			music.volume += 0.01 * elapsed;
+		if (music != null)
+			if (music.volume < 0.5)
+				music.volume += 0.01 * elapsed;
 
 		// keybinds
 
 		if (PlayerSettings.player1.controls.ACCEPT)
 		{
-			music.fadeOut(0.3);
+			if (music != null)
+				music.fadeOut(0.3);
 
 			PlayState.loadRep = false;
+			PlayState.stageTesting = false;
 			PlayState.rep = null;
 
-			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore)
-			{
-				case 'Dad-Battle':
-					songHighscore = 'Dadbattle';
-				case 'Philly-Nice':
-					songHighscore = 'Philly';
-			}
-
 			#if !switch
-			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
-			Highscore.saveCombo(songHighscore, Ratings.GenerateLetterRank(PlayState.instance.accuracy), PlayState.storyDifficulty);
+			Highscore.saveScore(PlayState.SONG.songId, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
+			Highscore.saveCombo(PlayState.SONG.songId, Ratings.GenerateLetterRank(PlayState.instance.accuracy), PlayState.storyDifficulty);
 			#end
 
 			if (PlayState.isStoryMode)
@@ -227,108 +221,19 @@ class ResultsScreen extends FlxSubState
 
 		if (FlxG.keys.justPressed.F1 && !PlayState.loadRep)
 		{
-			trace(PlayState.rep.path);
-			PlayState.rep = Replay.LoadReplay(PlayState.rep.path);
-
-			PlayState.loadRep = true;
-			PlayState.isSM = PlayState.rep.replay.sm;
-
-			var songFormat = StringTools.replace(PlayState.rep.replay.songName, " ", "-");
-
-			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-
-			#if !switch
-			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
-			Highscore.saveCombo(songHighscore, Ratings.GenerateLetterRank(PlayState.instance.accuracy), PlayState.storyDifficulty);
-			#end
-
-			#if sys
-			if (PlayState.rep.replay.sm)
-				if (!FileSystem.exists(StringTools.replace(PlayState.rep.replay.chartPath, "converted.json", "")))
-				{
-					Application.current.window.alert("The SM file in this replay does not exist!", "SM Replays");
-					return;
-				}
-			#end
-
-			var poop = "";
-
-			#if sys
-			if (PlayState.isSM)
-			{
-				poop = File.getContent(PlayState.rep.replay.chartPath);
-				try
-				{
-					PlayState.sm = SMFile.loadFile(PlayState.pathToSm + "/" + StringTools.replace(PlayState.rep.replay.songName, " ", "_") + ".sm");
-				}
-				catch (e:Exception)
-				{
-					Application.current.window.alert("Make sure that the SM file is called "
-						+ PlayState.pathToSm
-						+ "/"
-						+ StringTools.replace(PlayState.rep.replay.songName, " ", "_")
-						+ ".sm!\nAs I couldn't read it.",
-						"SM Replays");
-					return;
-				}
-			}
-			else
-				poop = Highscore.formatSong(songFormat, PlayState.rep.replay.songDiff);
-			#else
-			poop = Highscore.formatSong(PlayState.rep.replay.songName, PlayState.rep.replay.songDiff);
-			#end
-
-			music.fadeOut(0.3);
-
-			if (PlayState.isSM)
-				PlayState.SONG = Song.conversionChecks(Song.loadFromJsonRAW(poop));
-			else
-				PlayState.SONG = Song.conversionChecks(Song.loadFromJson(poop, PlayState.rep.replay.songName));
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = PlayState.rep.replay.songDiff;
-			LoadingState.loadAndSwitchState(new PlayState());
-			PlayState.instance.clean();
-		}
-
-		if (FlxG.keys.justPressed.F2 && !PlayState.loadRep)
-		{
 			PlayState.rep = null;
 
 			PlayState.loadRep = false;
-
-			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore)
-			{
-				case 'Dad-Battle':
-					songHighscore = 'Dadbattle';
-				case 'Philly-Nice':
-					songHighscore = 'Philly';
-			}
+			PlayState.stageTesting = false;
 
 			#if !switch
-			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
-			Highscore.saveCombo(songHighscore, Ratings.GenerateLetterRank(PlayState.instance.accuracy), PlayState.storyDifficulty);
+			Highscore.saveScore(PlayState.SONG.songId, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
+			Highscore.saveCombo(PlayState.SONG.songId, Ratings.GenerateLetterRank(PlayState.instance.accuracy), PlayState.storyDifficulty);
 			#end
-
-			var songFormat = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songFormat)
-			{
-				case 'Dad-Battle':
-					songFormat = 'Dadbattle';
-				case 'Philly-Nice':
-					songFormat = 'Philly';
-				case 'dad-battle':
-					songFormat = 'Dadbattle';
-				case 'philly-nice':
-					songFormat = 'Philly';
-			}
-
-			var poop:String = Highscore.formatSong(songFormat, PlayState.storyDifficulty);
 
 			if (music != null)
 				music.fadeOut(0.3);
 
-			PlayState.SONG = Song.loadFromJson(poop, PlayState.SONG.song);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = PlayState.storyDifficulty;
 			LoadingState.loadAndSwitchState(new PlayState());

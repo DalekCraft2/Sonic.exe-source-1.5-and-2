@@ -1,7 +1,8 @@
 package;
 
+import openfl.display.Bitmap;
 import lime.app.Application;
-#if windows
+#if FEATURE_DISCORD
 import Discord.DiscordClient;
 #end
 import openfl.display.BlendMode;
@@ -15,6 +16,7 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import flixel.graphics.FlxGraphic;
 
 class Main extends Sprite
 {
@@ -25,6 +27,10 @@ class Main extends Sprite
 	var framerate:Int = 120; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
+
+	public static var bitmapFPS:Bitmap;
+
+	public static var instance:Main;
 
 	public static var watermarks = true; // Whether to put Kade Engine literally anywhere
 
@@ -39,6 +45,8 @@ class Main extends Sprite
 
 	public function new()
 	{
+		instance = this;
+
 		super();
 
 		if (stage != null)
@@ -81,57 +89,56 @@ class Main extends Sprite
 		framerate = 60;
 		#end
 
-		#if cpp
-		initialState = TitleState; //No more cache, fuck you, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actually no
-		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
-		#else
-		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
-		#end
-		addChild(game);
+		// Run this first so we can see logs.
+		// Debug.onInitProgram();
 
-		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
-
-		#if web
-		var str1:String = "HTML CRAP";
-		var vHandler = new VideoHandler();
-		vHandler.init1();
-		vHandler.video.name = str1;
-		addChild(vHandler.video);
-		vHandler.init2();
-		GlobalVideo.setVid(vHandler);
-		vHandler.source(ourSource);
-		#elseif desktop
-		var str1:String = "WEBM SHIT";
-		var webmHandle = new WebmHandler();
-		webmHandle.source(ourSource);
-		webmHandle.makePlayer();
-		webmHandle.webm.name = str1;
-		addChild(webmHandle.webm);
-		GlobalVideo.setWebm(webmHandle);
-		#end
-
-		#if windows
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
-		#end
+		// Gotta run this before any assets get loaded.
+		ModCore.initialize();
 
 		#if !mobile
-		fpsCounter = new FPS(10, 3, 0xFFFFFF);
+		fpsCounter = new KadeEngineFPS(10, 3, 0xFFFFFF);
+		bitmapFPS = ImageOutline.renderImage(fpsCounter, 1, 0x000000, true);
+		bitmapFPS.smoothing = true;
+		#end
+
+		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
+		addChild(game);
+
+		#if !mobile
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
 		#end
+
+		// Finish up loading debug tools.
+		// Debug.onGameStart();
 	}
 
 	var game:FlxGame;
 
-	var fpsCounter:FPS;
+	var fpsCounter:KadeEngineFPS;
 
-	public static function dumpCache() // THIS MOD WASTES 1-2 FUCKING G I G A B Y T E S OF MEMORY SO OF COURSE I COPIED KADE'S CODE FOR FUCKS SAKE
+	public static function dumpObject(graphic:FlxGraphic)
 	{
+		@:privateAccess
+		for (key in FlxG.bitmap._cache.keys())
+		{
+			var obj = FlxG.bitmap._cache.get(key);
+			if (obj != null)
+			{
+				if (obj == graphic)
+				{
+					Assets.cache.removeBitmapData(key);
+					FlxG.bitmap._cache.remove(key);
+					obj.destroy();
+					break;
+				}
+			}
+		}
+	}
+
+	public static function dumpCache()
+	{
+		///* SPECIAL THANKS TO HAYA
 		@:privateAccess
 		for (key in FlxG.bitmap._cache.keys())
 		{

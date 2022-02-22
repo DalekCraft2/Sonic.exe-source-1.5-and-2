@@ -16,7 +16,6 @@ class MP4Handler
 	public var stateCallback:FlxState;
 
 	public var bitmap:VlcBitmap;
-
 	public var sprite:FlxSprite;
 
 	public function new()
