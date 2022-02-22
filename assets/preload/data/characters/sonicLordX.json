@@ -1,0 +1,33 @@
+{
+  "name": "Lord X",
+  "asset": "characters/SONIC_X",
+  "barColor": "#ff0000",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "X_Idle",
+      "offsets": [-18, 0]
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "X_Left",
+      "offsets": [17, 20]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "X_Right",
+      "offsets": [-86, 40]
+    },
+    {
+      "name": "singUP",
+      "prefix": "X_Up",
+      "offsets": [34, 121]
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "X_Down",
+      "offsets": [77, -21]
+    }
+  ]
+}

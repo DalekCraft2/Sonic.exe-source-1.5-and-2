@@ -1,0 +1,62 @@
+{
+    "name": "Boyfriend (Sunshine)",
+    "asset": "characters/SSBF_Assets",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "SSBF IDLE instance 1",
+        "offsets": [-5, 0],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "SSBF LEFT instance 1",
+        "offsets": [18, 12],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "SSBF RIGHT instance 1",
+        "offsets": [-12, -1],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "SSBF UP instance 1",
+        "offsets": [-5, -6],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "SSBF DOWN instance 1",
+        "offsets": [-2, -9],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "SSBF LEFTmiss instance 1",
+        "offsets": [14, 0],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "SSBF RIGHTmiss instance 1",
+        "offsets": [3, 11],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "SSBF UPmiss instance 1",
+        "offsets": [-11, 6],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "SSBF DOWNmiss instance 1",
+        "offsets": [13, 17],
+        "flipX": true
+      }
+    ]
+  }

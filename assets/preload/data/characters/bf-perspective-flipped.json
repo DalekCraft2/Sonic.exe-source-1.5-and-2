@@ -1,0 +1,62 @@
+{
+    "name": "Boyfriend (Perspective, flipped)",
+    "asset": "characters/BFPhase3_Perspective_Flipped",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "Idle_Flip",
+        "offsets": [46, -12],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "Sing_Left_Flip",
+        "offsets": [96, -12],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "Sing_Right_Flip",
+        "offsets": [29, 9],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "Sing_Up_Flip",
+        "offsets": [-22, 41],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "Sing_Down_Flip",
+        "offsets": [74, -14],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "Left_Miss_Flip",
+        "offsets": [106, 75],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "Right_Miss_Flip",
+        "offsets": [106, 75],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "Up_Miss_Flip",
+        "offsets": [-22, 133],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "Down_Miss_Flip",
+        "offsets": [105, 1],
+        "flipX": true
+      }
+    ]
+  }

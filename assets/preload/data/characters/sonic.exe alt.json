@@ -1,0 +1,34 @@
+{
+  "name": "Sonic.exe",
+  "asset": "characters/Sonic_EXE_Pixel",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Sonic_EXE_Pixel idle",
+      "offsets": [-18, 70]
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Sonic_EXE_Pixel NOTE LEFT",
+      "offsets": [0, 72]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Sonic_EXE_Pixel NOTE RIGHT",
+      "offsets": [0, 68],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Sonic_EXE_Pixel NOTE UP",
+      "offsets": [-17, 65]
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Sonic_EXE_Pixel NOTE DOWN",
+      "offsets": [-20, 64]
+    }
+  ]
+}

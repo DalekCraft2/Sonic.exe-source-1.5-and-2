@@ -1,0 +1,38 @@
+{
+  "name": "Tails Doll",
+  "asset": "characters/Tails_Doll",
+  "barColor": "#ffa500",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "TailsDoll IDLE instance 1",
+      "offsets": [-21, 189],
+      "loop": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "TailsDoll LEFT instance 1",
+      "offsets": [80, 156],
+      "loop": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "TailsDoll RIGHT instance 1",
+      "offsets": [-164, 187],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "TailsDoll UP instance 1",
+      "offsets": [0, 297],
+      "loop": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "TailsDoll DOWN instance 1",
+      "offsets": [-34, 70],
+      "loop": true
+    }
+  ]
+}

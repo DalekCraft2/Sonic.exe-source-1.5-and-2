@@ -1,0 +1,74 @@
+{
+    "name": "Boyfriend (Blue)",
+    "asset": "characters/endless_bf",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "BF idle dance",
+        "offsets": [-5, 0],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "BF NOTE LEFT0",
+        "offsets": [12, -6],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "BF NOTE RIGHT0",
+        "offsets": [-38, -7],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "BF NOTE UP0",
+        "offsets": [-29, 27],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "BF NOTE DOWN0",
+        "offsets": [-10, -50],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "BF NOTE LEFT MISS",
+        "offsets": [12, 24],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "BF NOTE RIGHT MISS",
+        "offsets": [-30, 21],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "BF NOTE UP MISS",
+        "offsets": [-29, 27],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "BF NOTE DOWN MISS",
+        "offsets": [-11, -19],
+        "flipX": true
+      },
+      {
+        "name": "premajin",
+        "prefix": "Majin Reveal Windup",
+        "offsets": [0, 0],
+        "flipX": true
+      },
+      {
+        "name": "majin",
+        "prefix": "Majin BF Reveal",
+        "offsets": [0, 0],
+        "flipX": true
+      }
+    ]
+  }

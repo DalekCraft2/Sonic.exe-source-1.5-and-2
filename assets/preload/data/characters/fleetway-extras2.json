@@ -1,0 +1,33 @@
+{
+  "name": "Fleetway (Extras 2)",
+  "asset": "characters/fleetway2",
+  "barColor": "#ffff00",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "a",
+      "prefix": "Fleetway Show You",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "b",
+      "prefix": "Fleetway Scream",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "c",
+      "prefix": "Fleetway Growl",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "d",
+      "prefix": "Fleetway Shut Up",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "e",
+      "prefix": "Fleetway Right Alt",
+      "offsets": [0, 0]
+    }
+  ]
+}

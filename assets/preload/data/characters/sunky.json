@@ -1,0 +1,38 @@
+{
+  "name": "Sunky",
+  "asset": "characters/Sunky",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "sunkyIDLE instance 1",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "sunkyLEFT instance 1",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "sunkyRIGHT instance 1",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "sunkyUP instance 1",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "sunkyDOWN instance 1",
+      "offsets": [0, 0],
+      "looped": true
+    }
+  ]
+}

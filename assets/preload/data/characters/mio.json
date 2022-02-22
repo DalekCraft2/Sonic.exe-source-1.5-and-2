@@ -1,0 +1,38 @@
+{
+  "name": "Mio",
+  "asset": "characters/FakerMio",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "FAKER IDLE",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "FAKER LEFT",
+      "offsets": [270, 80],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "FAKER RIGHT",
+      "offsets": [0,  0],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "FAKER UP",
+      "offsets": [260, 186],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "FAKER DOWN",
+      "offsets": [50, 50],
+      "looped": true
+    }
+  ]
+}

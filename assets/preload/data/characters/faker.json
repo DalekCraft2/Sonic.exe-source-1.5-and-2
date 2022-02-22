@@ -1,0 +1,38 @@
+{
+  "name": "EXE (Faker)",
+  "asset": "characters/Faker_EXE_Assets",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "FAKER IDLE",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "FAKER LEFT",
+      "offsets": [177, 29],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "FAKER RIGHT",
+      "offsets": [24, 32],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "FAKER UP",
+      "offsets": [0, 67],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "FAKER DOWN",
+      "offsets": [-50, -36],
+      "looped": true
+    }
+  ]
+}

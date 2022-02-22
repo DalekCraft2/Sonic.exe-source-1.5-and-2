@@ -1,0 +1,53 @@
+{
+	"name": "Coco",
+	"asset": "characters/Coco",
+	"barColor": "#c35f00",
+	"startingAnim": "idle",
+	"animations": [
+		{
+			"name": "idle",
+			"prefix": "sunkyIDLE",
+			"offsets": [
+				185,
+				130
+			],
+			"loop": true
+		},
+		{
+			"name": "singLEFT",
+			"prefix": "sunkyLEFT",
+			"offsets": [
+				72,
+				74
+			],
+			"loop": false
+		},
+		{
+			"name": "singRIGHT",
+			"prefix": "sunkyRIGHT",
+			"offsets": [
+				-109,
+				-62
+			],
+			"loop": false
+		},
+		{
+			"name": "singUP",
+			"prefix": "sunkyUP",
+			"offsets": [
+				121,
+				157
+			],
+			"loop": false
+		},
+		{
+			"name": "singDOWN",
+			"prefix": "sunkyDOWN",
+			"offsets": [
+				140,
+				150
+			],
+			"loop": false
+		}
+	]
+}

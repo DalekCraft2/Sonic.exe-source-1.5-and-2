@@ -1,0 +1,43 @@
+{
+  "name": "Fleetway",
+  "asset": "characters/Fleetway_Super_Sonic",
+  "barColor": "#ffff00",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Fleetway Idle",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Fleetway Left",
+      "offsets": [221, -129],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Fleetway Right",
+      "offsets": [-62, -64],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Fleetway Up",
+      "offsets": [0, 36],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Fleetway Down",
+      "offsets": [0, -168],
+      "looped": true
+    },
+    {
+      "name": "fastanim",
+      "prefix": "Fleetway HowFast",
+      "offsets": [0, 0]
+    }
+  ]
+}

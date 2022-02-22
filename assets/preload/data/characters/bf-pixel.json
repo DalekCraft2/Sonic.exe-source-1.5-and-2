@@ -1,0 +1,74 @@
+{
+    "name": "Boyfriend (Pixel)",
+    "asset": "characters/BF",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "BF idle dance",
+        "offsets": [-10, 4],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "BF NOTE LEFT0",
+        "offsets": [-11, 4],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "BF NOTE RIGHT0",
+        "offsets": [-10, 3],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "BF NOTE UP0",
+        "offsets": [-214, 3],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "BF NOTE DOWN0",
+        "offsets": [-11, 4],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "BF NOTE LEFT MISS",
+        "offsets": [-14, 3],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "BF NOTE RIGHT MISS",
+        "offsets": [-11, 4],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "BF NOTE UP MISS",
+        "offsets": [-11, 4],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "BF NOTE DOWN MISS",
+        "offsets": [-11, 4],
+        "flipX": true
+      },
+      {
+        "name": "firstDeath",
+        "prefix": "BF dies",
+        "offsets": [-8, 0],
+        "flipX": true
+      },
+      {
+        "name": "deathLoop",
+        "prefix": "BF Dead Loop",
+        "offsets": [0, 0],
+        "flipX": true
+      }
+    ]
+  }

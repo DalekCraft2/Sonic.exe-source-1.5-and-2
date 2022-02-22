@@ -1,0 +1,48 @@
+{
+  "name": "Suisei",
+  "asset": "characters/Suisei",
+  "barColor": "#78abec",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "suiseiIDLE",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "suiseiLEFT",
+      "offsets": [271, 99]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "suiseiRIGHT",
+      "offsets": [-35,  -15]
+    },
+    {
+      "name": "singUP",
+      "prefix": "suiseiUP",
+      "offsets": [-5, 51]
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "suiseiDOWN",
+      "offsets": [18, -4]
+    },
+    {
+      "name": "singDOWN-alt",
+      "prefix": "suiseiUP",
+      "offsets": [-5, 51]
+    },
+    {
+      "name": "singLAUGH",
+      "prefix": "suiseiUP",
+      "offsets": [-5, 51]
+    },
+    {
+      "name": "iamgod",
+      "prefix": "suiseiIDLE",
+      "offsets": [0, 0]
+    }
+  ]
+}

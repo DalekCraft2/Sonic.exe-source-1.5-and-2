@@ -1,0 +1,38 @@
+{
+  "name": "Knuckles",
+  "asset": "characters/KnucklesEXE",
+  "barColor": "#ff0000",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Knux Idle",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Knux Left",
+      "offsets": [-59, -65],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Knux Right",
+      "offsets": [124, -59],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Knux Up",
+      "offsets": [29, 49],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Knux Down",
+      "offsets": [26, -95],
+      "looped": true
+    }
+  ]
+}

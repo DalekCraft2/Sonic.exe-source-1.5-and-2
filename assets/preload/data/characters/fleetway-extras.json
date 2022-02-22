@@ -1,0 +1,38 @@
+{
+  "name": "Fleetway (Extras)",
+  "asset": "characters/fleetway1",
+  "barColor": "#ffff00",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "a",
+      "prefix": "Fleetway StepItUp",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "b",
+      "prefix": "Fleetway Laugh",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "c",
+      "prefix": "Fleetway Too Slow",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "d",
+      "prefix": "Fleetway YoureFinished",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "e",
+      "prefix": "Fleetway WHAT?!",
+      "offsets": [0, 0]
+    },
+    {
+      "name": "f",
+      "prefix": "Fleetway Grrr",
+      "offsets": [0, 0]
+    }
+  ]
+}

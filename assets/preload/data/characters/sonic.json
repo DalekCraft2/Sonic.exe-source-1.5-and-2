@@ -1,0 +1,55 @@
+{
+  "name": "Sonic.exe",
+  "asset": "characters/Sonic_EXE_Assets",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "SONICmoveIDLE",
+      "offsets": [0, 0],
+      "loop": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "SONICmoveLEFT",
+      "offsets": [152, -15],
+      "loop": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "SONICmoveRIGHT",
+      "offsets": [16, 14],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "SONICmoveUP",
+      "offsets": [14, 47],
+      "loop": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "SONICmoveDOWN",
+      "offsets": [77, -12],
+      "loop": true
+    },
+    {
+      "name": "singDOWN-alt",
+      "prefix": "SONIClaugh",
+      "offsets": [50, -10],
+      "loop": true
+    },
+    {
+      "name": "singLAUGH",
+      "prefix": "SONIClaugh",
+      "offsets": [50, -10],
+      "loop": true
+    },
+    {
+      "name": "iamgod",
+      "prefix": "sonicImmagetya",
+      "offsets": [127, 10]
+    }
+  ]
+}

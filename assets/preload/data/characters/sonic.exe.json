@@ -1,0 +1,39 @@
+{
+  "name": "Sonic.exe",
+  "asset": "characters/P2Sonic_Assets",
+  "barColor": "#001366",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "NewPhase2Sonic Idle instance 1",
+      "offsets": [-18, 70]
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "NewPhase2Sonic Left instance 1",
+      "offsets": [159, -105]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "NewPhase2Sonic Right instance 1",
+      "offsets": [42, -127],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "NewPhase2Sonic Up instance 1",
+      "offsets": [-4, 60]
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "NewPhase2Sonic Down instance 1",
+      "offsets": [-15, -57]
+    },
+    {
+      "name": "laugh",
+      "prefix": "NewPhase2Sonic Laugh instance 1",
+      "offsets": [0, 0]
+    }
+  ]
+}

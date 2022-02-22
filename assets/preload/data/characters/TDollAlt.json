@@ -1,0 +1,38 @@
+{
+  "name": "Tails Doll (Alt)",
+  "asset": "characters/Tails_Doll_Alt",
+  "barColor": "#ffa500",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "TailsDoll IDLE instance",
+      "offsets": [-21, 189],
+      "loop": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "TailsDoll LEFT instance",
+      "offsets": [80, 156],
+      "loop": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "TailsDoll RIGHT instance",
+      "offsets": [-164, 187],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "TailsDoll UP instance",
+      "offsets": [0, 297],
+      "loop": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "TailsDoll DOWN instance",
+      "offsets": [-34, 70],
+      "loop": true
+    }
+  ]
+}

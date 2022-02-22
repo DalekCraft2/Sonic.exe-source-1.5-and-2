@@ -1,0 +1,44 @@
+{
+  "name": "Eggman",
+  "asset": "characters/eggman_soul",
+  "barColor": "#ff0000",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Eggman_Idle",
+      "offsets": [-5, 5],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Eggman_Left",
+      "offsets": [237, 97],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Eggman_Right",
+      "offsets": [40, 174],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Eggman_Up",
+      "offsets": [110, 231],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Eggman_Down",
+      "offsets": [49, -95],
+      "looped": true
+    },
+    {
+      "name": "laugh",
+      "prefix": "Eggman_Laugh",
+      "offsets": [-10, 210],
+      "frameRate": 35
+    }
+  ]
+}

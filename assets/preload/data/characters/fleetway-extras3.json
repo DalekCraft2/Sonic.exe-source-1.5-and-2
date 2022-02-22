@@ -1,0 +1,13 @@
+{
+  "name": "Fleetway (Extras 3)",
+  "asset": "characters/fleetway3",
+  "barColor": "#ffff00",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "a",
+      "prefix": "Fleetway Laser Blast",
+      "offsets": [0, 0]
+    }
+  ]
+}

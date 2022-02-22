@@ -1,0 +1,38 @@
+{
+  "name": "Exe",
+  "asset": "characters/Exe_Assets",
+  "barColor": "#3c008a",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Exe Idle",
+      "offsets": [0, 248],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Exe left",
+      "offsets": [236, 243],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Exe Right",
+      "offsets": [31, 217],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Exe Up",
+      "offsets": [95, 290],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Exe Down",
+      "offsets": [185, 44],
+      "looped": true
+    }
+  ]
+}

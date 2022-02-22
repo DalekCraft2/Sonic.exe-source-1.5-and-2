@@ -1,0 +1,62 @@
+{
+    "name": "Boyfriend (Super)",
+    "asset": "characters/Super_BoyFriend_Assets",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "BF Super idle dance instance 1",
+        "offsets": [56, 11],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "BF NOTE LEFT instance 1",
+        "offsets": [64, 14],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "BF NOTE RIGHT instance 1",
+        "offsets": [13, 9],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "BF NOTE UP instance 1",
+        "offsets": [51, 40],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "BF NOTE DOWN instance 1",
+        "offsets": [60, -71],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "BF NOTE LEFT MISS instance 1",
+        "offsets": [55, 13],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "BF NOTE RIGHT MISS instance 1",
+        "offsets": [3, 11],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "BF NOTE UP MISS instance 1",
+        "offsets": [48, 36],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "BF NOTE DOWN MISS instance 1",
+        "offsets": [56, -72],
+        "flipX": true
+      }
+    ]
+  }

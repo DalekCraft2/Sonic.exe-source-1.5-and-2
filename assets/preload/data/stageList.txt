@@ -1,6 +1,7 @@
 stage
 sonicStage
 sonicexeStage
+trioStage
 sonicfunStage
 LordXStage
 sunkStage
@@ -8,4 +9,3 @@ TDStage
 fakerStage
 exeStage
 chamber
-trioStage

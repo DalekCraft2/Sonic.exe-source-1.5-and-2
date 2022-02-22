@@ -1,0 +1,38 @@
+{
+  "name": "Xenophanes (Fixed for flipped camera)",
+  "asset": "characters/Beast",
+  "barColor": "#ff0000",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Beast_IDLE",
+      "offsets": [-18, 70]
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Beast_LEFT",
+      "offsets": [177, -24]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Beast_RIGHT",
+      "offsets": [-260, 11]
+    },
+    {
+      "name": "singUP",
+      "prefix": "Beast_UP",
+      "offsets": [22, 143]
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Beast_DOWN",
+      "offsets": [-15, -57]
+    },
+    {
+      "name": "laugh",
+      "prefix": "Beast_LAUGH",
+      "offsets": [-78, -128]
+    }
+  ]
+}

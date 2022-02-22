@@ -1,0 +1,38 @@
+{
+  "name": "Majin Sonic",
+  "asset": "characters/SonicFunAssets",
+  "barColor": "#3c008a",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "SONICFUNIDLE",
+      "offsets": [-21, 66],
+      "loop": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "SONICFUNLEFT",
+      "offsets": [393, -60],
+      "loop": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "SONICFUNRIGHT",
+      "offsets": [-86, 15],
+      "loop": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "SONICFUNUP",
+      "offsets": [21, 70],
+      "loop": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "SONICFUNDOWN",
+      "offsets": [46, -80],
+      "loop": true
+    }
+  ]
+}

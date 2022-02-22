@@ -1,0 +1,26 @@
+{
+  "name": "Girlfriend (EXE)",
+  "asset": "characters/exe_gf_assets",
+  "barColor": "#a5004d",
+  "startingAnim": "danceRight",
+  "animations": [
+    {
+      "name": "danceLeft",
+      "prefix": "gf dance",
+      "offsets": [0, -9],
+      "frameIndices": [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    },
+    {
+      "name": "danceRight",
+      "prefix": "gf dance",
+      "offsets": [0, -9],
+      "frameIndices": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+    },
+    {
+      "name": "sad",
+      "prefix": "gf miss",
+      "offsets": [-9, 20],
+      "frameIndices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    }
+  ]
+}

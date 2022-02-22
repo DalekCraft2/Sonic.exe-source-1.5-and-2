@@ -1,0 +1,62 @@
+{
+    "name": "Boyfriend (Perspective)",
+    "asset": "characters/BFPhase3_Perspective",
+    "barColor": "#31b0d1",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "Idle",
+        "offsets": [5, 4],
+        "flipX": true
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "Sing_Left",
+        "offsets": [31, 9],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "Sing_Right",
+        "offsets": [-75, -15],
+        "flipX": true
+      },
+      {
+        "name": "singUP",
+        "prefix": "Sing_Up",
+        "offsets": [23, 63],
+        "flipX": true
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "Sing_Down",
+        "offsets": [-51, -1],
+        "flipX": true
+      },
+      {
+        "name": "singLEFTmiss",
+        "prefix": "Left_Miss",
+        "offsets": [-70, 85],
+        "flipX": true
+      },
+      {
+        "name": "singRIGHTmiss",
+        "prefix": "Miss_Right",
+        "offsets": [10, 92],
+        "flipX": true
+      },
+      {
+        "name": "singUPmiss",
+        "prefix": "Up_Miss",
+        "offsets": [20, 135],
+        "flipX": true
+      },
+      {
+        "name": "singDOWNmiss",
+        "prefix": "Down_Miss",
+        "offsets": [-53, 10],
+        "flipX": true
+      }
+    ]
+  }

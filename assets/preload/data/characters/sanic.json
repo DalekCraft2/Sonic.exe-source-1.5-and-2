@@ -1,0 +1,38 @@
+{
+  "name": "Sanic",
+  "asset": "characters/sanic",
+  "barColor": "#3c008a",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "sanic idle",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "sanic left",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "sanic right",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "sanic up",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "sanic down",
+      "offsets": [0, 0],
+      "looped": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Tails",
+  "asset": "characters/Tails",
+  "barColor": "#6c6c6c",
+  "startingAnim": "idle",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Tails IDLE",
+      "offsets": [0, 0],
+      "looped": true
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Tails LEFT",
+      "offsets": [158, -14],
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Tails RIGHT",
+      "offsets": [14, -16],
+      "looped": true
+    },
+    {
+      "name": "singUP",
+      "prefix": "Tails UP",
+      "offsets": [29, 49],
+      "looped": true
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Tails DOWN",
+      "offsets": [33, -60],
+      "looped": true
+    }
+  ]
+}
